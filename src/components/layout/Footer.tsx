@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 
-export default function Footer() {
+function Footer() {
   return (
-    <div className="flex w-full justify-center text-title text-h4">
-      <div className="flex bg-white m-4 w-page justify-between">
+    <div className="flex w-full justify-center text-title text-h4 p-4">
+      <div className="flex bg-white w-page justify-between">
         <div className="">
           <nav className="text-gray">
             <a href="/chinh-sach-bao-hanh/" className="text-link">
@@ -54,3 +54,5 @@ export default function Footer() {
     </div>
   );
 }
+
+export default memo(Footer);

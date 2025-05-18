@@ -5,6 +5,7 @@ export default {
     extend: {
       width: {
         page: "1180px",
+        ic: "24px",
       },
       height: {
         ic: "24px",

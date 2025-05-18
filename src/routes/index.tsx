@@ -9,7 +9,7 @@ export default function AppRouter() {
       <Route
         path="/"
         element={
-          <Layout>
+          <Layout isNavigate={true} isFilter={true}>
             <Home />
           </Layout>
         }

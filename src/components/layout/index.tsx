@@ -1,17 +1,27 @@
-import React, { ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import { ChildrenProps } from "../../types";
+import Navigate from "./Navigate";
+import Filter from "./Filter";
 
 interface Props {
-  children: ReactNode;
+  isNavigate?: boolean;
+  isFilter?: boolean;
 }
 
-export default function Layout({ children }: Props) {
+export default function Layout({
+  children,
+  isNavigate = false,
+  isFilter = false,
+}: Props & ChildrenProps) {
   return (
     <div>
       <Header />
-      <div className="bg-main w-full flex justify-center items-center">
-        <div className="w-page">{children}</div>
+      {isNavigate && <Navigate />}
+      <div className="bg-main w-full flex justify-center items-center px-4">
+        <div className="w-page">
+          {isFilter ? <Filter>{children}</Filter> : children}
+        </div>
       </div>
       <Footer />
     </div>

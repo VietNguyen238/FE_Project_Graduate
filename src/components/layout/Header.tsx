@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
+import Button from "../ui/Button";
 
 const mockResults = [
   "Mạch giảm áp (hạ áp)",
@@ -19,7 +20,7 @@ const mockResults = [
   "Board Arduino",
 ];
 
-export default function Header() {
+function Header() {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -42,9 +43,9 @@ export default function Header() {
   );
 
   return (
-    <div className="h-[52px] bg-white w-full">
-      <div className="fixed justify-center w-full">
-        <div className="flex justify-center text-[14px] relative z-50 w-full">
+    <div className="h-[52px] w-full">
+      <div className="fixed justify-center bg-white w-full z-50">
+        <div className="flex justify-center text-[14px] relative w-full px-4">
           <div className="w-page flex h-[52px] justify-between items-center">
             <Link to="/">
               <img
@@ -95,9 +96,9 @@ export default function Header() {
                     <p className="p-4 text-gray-500">Không tìm thấy kết quả.</p>
                   ) : (
                     <ul>
-                      {filteredResults.map((item, idx) => (
+                      {filteredResults.map((item, index) => (
                         <li
-                          key={idx}
+                          key={index}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                         >
                           {item}
@@ -108,28 +109,12 @@ export default function Header() {
                 </div>
               )}
             </div>
-            <div className="flex">
-              <Link
-                className="flex justify-center items-center p-2 m-2 cursor-pointer"
-                to="/cart"
-              >
-                <img
-                  className="h-ic mr-2"
-                  src="./src/assets/svgs/ic_cart.svg"
-                  alt="ic_cart"
-                />
-                Giỏ hàng
+            <div className="flex gap-2">
+              <Link to="/cart">
+                <Button icon="ic_cart" title="Giỏ hàng" />
               </Link>
-              <Link
-                className="flex justify-center items-center p-2 m-2 cursor-pointer"
-                to="/account"
-              >
-                <img
-                  className="h-ic mr-2"
-                  src="./src/assets/svgs/ic_person.svg"
-                  alt="ic_person"
-                />
-                Tài khoản
+              <Link to="/account">
+                <Button icon="ic_person" title="Tài khoản" />
               </Link>
             </div>
           </div>
@@ -138,3 +123,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default memo(Header);

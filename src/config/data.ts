@@ -56,7 +56,7 @@ export const dataProduct = [
   {
     title: "Động cơ giảm tốc GA12-N20 12V 235 rpm",
     price: 1123000,
-    newPrice: 9000000,
+    newPrice: 900000000,
     image: "im_dong_co",
   },
   {
@@ -117,7 +117,8 @@ export const dataProducts = [
     image: "im_dong_co",
   },
   {
-    title: "Động cơ giảm tốc GA12-N20 12V 235 rpm",
+    title:
+      "Động cơ giảm tốc GA12-N20 12V 235 rpmsss sssss ssssssssssssssssssssssssssssssss",
     price: 1123000,
     newPrice: 0,
     image: "im_dong_co",

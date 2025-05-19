@@ -17,12 +17,16 @@ export default function ProductCard({ title, image, newPrice, price }: Props) {
       />
       <div className="p-2">
         <div className="line-clamp-2 text-sm mt-2 text-h5">{title}</div>
-        <div className="flex gap-5 font-medium">
-          {newPrice > 0 && (
+        {newPrice > 0 ? (
+          <div className="flex justify-between font-medium mt-1">
             <div className="text-h4">{formatPrice(newPrice)}đ</div>
-          )}
-          <div className="text-h4">{formatPrice(price)}đ</div>
-        </div>
+            <div className="text-h4 line-through text-gray">
+              {formatPrice(price)}đ
+            </div>
+          </div>
+        ) : (
+          <div className="text-h4 font-medium mt-1">{formatPrice(price)}đ</div>
+        )}
       </div>
     </div>
   );

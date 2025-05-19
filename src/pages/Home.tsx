@@ -1,4 +1,3 @@
-import React from "react";
 import SlideShow from "../components/ui/SlideShow";
 import ProductCard from "../components/ui/ProductCard";
 import { dataProduct, dataProducts } from "../config/data";

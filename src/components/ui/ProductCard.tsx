@@ -1,4 +1,3 @@
-import React from "react";
 import { formatPrice } from "../../config/format_price";
 
 interface Props {

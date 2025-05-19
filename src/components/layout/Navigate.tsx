@@ -14,7 +14,7 @@ function Navigate() {
               {item.link == navigate ? (
                 <div
                   key={index}
-                  className="text-white text-h4 font-bold border-b pb-1 px-2"
+                  className="text-white text-h4 font-bold border-b"
                   onClick={() => setNavigate(item.link)}
                 >
                   {item.title}

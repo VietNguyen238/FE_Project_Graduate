@@ -1,26 +1,35 @@
 import React, { memo, useState } from "react";
 import { Link } from "react-router";
+import { header } from "../../constants";
 
 function Navigate() {
   const [showPhone, setShowPhone] = useState(false);
+  const [navigate, setNavigate] = useState("");
   return (
     <div className="bg-dark_blue flex items-center justify-center h-[49px] px-4">
       <div className="w-page flex justify-between items-center">
         <div className="flex gap-6">
-          <Link to="/trang-chu">
-            <div className="text-white text-h4 font-bold">Trang chủ</div>
-          </Link>
-          <Link to="/products">
-            <div className="text-white text-h4 font-bold">Sản phẩm</div>
-          </Link>
-          <Link to="/blog">
-            <div className="text-white text-h4 font-bold">Blog</div>
-          </Link>
-          <Link to="/he-thong-cua-hang">
-            <div className="text-white text-h4 font-bold">
-              Hệ thống cửa hàng
-            </div>
-          </Link>
+          {header.map((item, index) => (
+            <Link to={`/${item.link}`}>
+              {item.link == navigate ? (
+                <div
+                  key={index}
+                  className="text-white text-h4 font-bold border-b pb-1 px-2"
+                  onClick={() => setNavigate(item.link)}
+                >
+                  {item.title}
+                </div>
+              ) : (
+                <div
+                  key={index}
+                  className="text-white text-h4 font-bold"
+                  onClick={() => setNavigate(item.link)}
+                >
+                  {item.title}
+                </div>
+              )}
+            </Link>
+          ))}
         </div>
         <div className="flex gap-3">
           <div className="text-white text-h4 flex justify-center items-center gap-[2px]">

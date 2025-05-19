@@ -11,3 +11,34 @@ export const listFilter = [
   { icon: "im_han", title: "Phụ kiện, Dụng cụ" },
   { icon: "im_robot", title: "Robot, Phụ kiện DIY" },
 ];
+
+export const fadeImages = [
+  {
+    url: "./src/assets/images/im_slide_show.gif",
+  },
+  {
+    url: "./src/assets/images/im_slide_show1.gif",
+  },
+  {
+    url: "./src/assets/images/im_slide_show2.gif",
+  },
+];
+
+export const header = [
+  {
+    link: "",
+    title: "Trang chủ",
+  },
+  {
+    link: "products",
+    title: "Sản phẩm",
+  },
+  {
+    link: "blog",
+    title: "Blog",
+  },
+  {
+    link: "he-thong-cua-hang",
+    title: "Hệ thống cửa hàng",
+  },
+];

@@ -24,6 +24,14 @@ export default function AppRouter() {
         }
       />
       <Route
+        path="/category/:categoryTitle"
+        element={
+          <Layout isNavigate={true} isFilter={true}>
+            <Product />
+          </Layout>
+        }
+      />
+      <Route
         path="/blog"
         element={
           <Layout isNavigate={true} isFilter={true}>

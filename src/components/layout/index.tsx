@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import { ChildrenProps } from "../../types";
 import Navigate from "./Navigate";
 import Filter from "./Filter";
+import { FilterProvider } from "../../context/FilterContext";
 
 interface Props {
   isNavigate?: boolean;
@@ -20,7 +21,13 @@ export default function Layout({
       {isNavigate && <Navigate />}
       <div className="bg-main w-full flex justify-center items-center px-4">
         <div className="w-page">
-          {isFilter ? <Filter>{children}</Filter> : children}
+          {isFilter ? (
+            <FilterProvider>
+              <Filter>{children}</Filter>
+            </FilterProvider>
+          ) : (
+            children
+          )}
         </div>
       </div>
       <Footer />

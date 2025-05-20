@@ -1,6 +1,7 @@
 import { Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import { fadeImages } from "../../constants";
+import { assetsSvg } from "../../constants/assets";
 
 export default function SlideShow() {
   return (
@@ -10,18 +11,12 @@ export default function SlideShow() {
         duration={2000}
         nextArrow={
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <img
-              src="./src/assets/svgs/ic_arows_right.svg"
-              alt="ic_arows_right"
-            />
+            <img src={assetsSvg.ic_arows_right} alt="ic_arows_right" />
           </div>
         }
         prevArrow={
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <img
-              src="./src/assets/svgs/ic_arows_left.svg"
-              alt="ic_arows_left"
-            />
+            <img src={assetsSvg.ic_arows_left} alt="ic_arows_left" />
           </div>
         }
       >

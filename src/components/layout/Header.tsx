@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
 import Button from "../ui/Button";
+import { assetsSvg } from "../../constants/assets";
 
 const mockResults = [
   "Mạch giảm áp (hạ áp)",
@@ -50,7 +51,7 @@ function Header() {
             <Link to="/">
               <img
                 className="h-[52px] py-[9px]"
-                src="./src/assets/svgs/ic_logo.svg"
+                src={assetsSvg.ic_logo}
                 alt="ic_logo"
               />
             </Link>
@@ -65,11 +66,7 @@ function Header() {
                 }}
               >
                 <span className="mr-2 text-gray-400">
-                  <img
-                    className="h-ic p-1"
-                    src="./src/assets/svgs/ic_search.svg"
-                    alt=""
-                  />
+                  <img className="h-ic p-1" src={assetsSvg.ic_search} alt="" />
                 </span>
                 <input
                   ref={inputRef}
@@ -111,10 +108,10 @@ function Header() {
             </div>
             <div className="flex gap-2">
               <Link to="/cart">
-                <Button icon="ic_cart" title="Giỏ hàng" />
+                <Button icon={assetsSvg.ic_cart} title="Giỏ hàng" />
               </Link>
               <Link to="/account">
-                <Button icon="ic_person" title="Tài khoản" />
+                <Button icon={assetsSvg.ic_person} title="Tài khoản" />
               </Link>
             </div>
           </div>

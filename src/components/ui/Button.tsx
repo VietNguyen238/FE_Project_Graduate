@@ -4,7 +4,7 @@ interface Props {
   //   isArows?: boolean;
   isSvg?: boolean;
   current?: number;
-  item?: number;
+  index?: number;
   show?: boolean;
   isColor?: boolean;
   onClick?: () => void;
@@ -17,13 +17,13 @@ export default function Button({
   isSvg = true,
   onClick,
   current,
-  item,
+  index,
   isColor = false,
 }: Props) {
   return (
     <div
       className={`flex justify-between items-center p-1 my-1 cursor-pointer text-h4 text-title group 
-         ${isColor && current === item && "bg-white rounded-[4px]"}`}
+         ${isColor && current === index && "bg-white rounded-[4px]"}`}
       onClick={() => {
         if (onClick) {
           onClick();
@@ -31,16 +31,10 @@ export default function Button({
       }}
     >
       <div className="flex items-center">
-        <img
-          className={`h-ic mr-2 w-ic`}
-          src={`./src/assets/${
-            isSvg ? `svgs/${icon}.svg` : `images/${icon}.png`
-          }`}
-          alt={icon}
-        />
+        <img className={`h-ic mr-2 w-ic`} src={icon} alt={icon} />
         <div
           className={`group-hover:text-link ${
-            isColor && current === item && "font-medium "
+            isColor && current === index && "font-medium "
           }`}
         >
           {title}

@@ -2,10 +2,19 @@ import { useState } from "react";
 import { listFilter } from "../../constants";
 import { ChildrenProps } from "../../types";
 import Button from "../ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFilter } from "../../context/FilterContext";
+import { assetsSvg } from "../../constants/assets";
 
 export default function Filter({ children }: ChildrenProps) {
-  const [current, setCurrent] = useState(99);
+  const { currentCategory, setCurrentCategory } = useFilter();
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (index: number, params: string) => {
+    setCurrentCategory(index);
+    navigate(`/category/${params}`);
+  };
+
   return (
     <div className="flex gap-5 my-5">
       <div className="sticky top-[52px] h-full z-10">
@@ -13,30 +22,31 @@ export default function Filter({ children }: ChildrenProps) {
           DANH MỤC SẢN PHẨM
         </div>
         {listFilter.map((item, index) => (
-          <Button
+          <div
             key={index}
-            item={index}
-            icon={`${item.icon}`}
-            title={`${item.title}`}
-            isSvg={false}
-            current={current}
-            isColor={true}
-            onClick={() => {
-              setCurrent(index);
-            }}
-          />
+            onClick={() => handleCategoryClick(index, item.params)}
+          >
+            <Button
+              index={index}
+              icon={`${item.icon}`}
+              title={`${item.title}`}
+              isSvg={false}
+              current={currentCategory}
+              isColor={true}
+            />
+          </div>
         ))}
         <div className="font-bold text-h3 mb-3 mt-5 w-[240px]">
           KẾT NỐI VỚI NSHOP
         </div>
         <a href="https://www.facebook.com/1781446968819273/">
-          <Button icon={`ic_face`} title={`Linh kiện điện tử NShop`} />
+          <Button icon={assetsSvg.ic_face} title={`Linh kiện điện tử NShop`} />
         </a>
         <a href="https://www.facebook.com/groups/543064839510264/">
-          <Button icon={`ic_people`} title={`Hội đam mê cơ điện tử`} />
+          <Button icon={assetsSvg.ic_people} title={`Hội đam mê cơ điện tử`} />
         </a>
         <a href="https://www.youtube.com/channel/UCvlCbgZr1NoSazbmxspIZEw">
-          <Button icon={`ic_ytb`} title={`Kênh Youtube của Nshop`} />
+          <Button icon={assetsSvg.ic_ytb} title={`Kênh Youtube của Nshop`} />
         </a>
         <div className="font-bold text-h3 mb-3 mt-5 w-[240px]">KHÁC</div>
         <div className="flex flex-col text-h4 gap-2">

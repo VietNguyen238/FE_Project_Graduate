@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { assetsImage } from "../../constants/assets";
 
 function Footer() {
   return (
@@ -41,12 +42,12 @@ function Footer() {
         <div className="flex justify-center items-center gap-2">
           <img
             className="h-[28px]"
-            src="./src/assets/images/im_protect.png"
+            src={assetsImage.im_protect}
             alt="im_protect"
           />
           <img
             className="w-[180px]"
-            src="./src/assets/images/im_dathongbao.png"
+            src={assetsImage.im_dathongbao}
             alt="im_dathongbao"
           />
         </div>

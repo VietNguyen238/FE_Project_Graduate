@@ -17,6 +17,7 @@ export default function Home() {
               image={item.image}
               newPrice={item.newPrice}
               price={item.price}
+              quantity={item.quantity}
             />
           </div>
         ))}
@@ -31,6 +32,7 @@ export default function Home() {
               image={item.image}
               newPrice={item.newPrice}
               price={item.price}
+              quantity={item.quantity}
             />
           </div>
         ))}
@@ -45,6 +47,7 @@ export default function Home() {
               image={item.image}
               newPrice={item.newPrice}
               price={item.price}
+              quantity={item.quantity}
             />
           </div>
         ))}

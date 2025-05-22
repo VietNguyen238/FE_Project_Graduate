@@ -448,3 +448,60 @@ export const dataProducts = [
     image: assetsImage.im_dong_co,
   },
 ];
+
+export const dataBlog = [
+  {
+    title:
+      "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
+    content:
+      "ESP8266 là một module WiFi phổ biến trong các dự án IoT, thường được sử dụng với chip nạp CH340 do tính năng đơn giản và giá thành rẻ. Tuy nhiên, khi kết hợp hai thiết bị này, người dùng đôi khi sẽ gặp phải một số lỗi phổ biến. Dưới đây là một số […]",
+    image: assetsImage.im_ui,
+    label: "tài liệu hướng dẫn",
+    date: "20/02/2023",
+  },
+  {
+    title:
+      "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
+    content:
+      "ESP8266 là một module WiFi phổ biến trong các dự án IoT, thường được sử dụng với chip nạp CH340 do tính năng đơn giản và giá thành rẻ. Tuy nhiên, khi kết hợp hai thiết bị này, người dùng đôi khi sẽ gặp phải một số lỗi phổ biến. Dưới đây là một số […]",
+    image: assetsImage.im_ui,
+    label: "tài liệu hướng dẫn",
+    date: "20/02/2023",
+  },
+  {
+    title:
+      "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
+    content:
+      "ESP8266 là một module WiFi phổ biến trong các dự án IoT, thường được sử dụng với chip nạp CH340 do tính năng đơn giản và giá thành rẻ. Tuy nhiên, khi kết hợp hai thiết bị này, người dùng đôi khi sẽ gặp phải một số lỗi phổ biến. Dưới đây là một số […]",
+    image: assetsImage.im_ui,
+    label: "tài liệu hướng dẫn",
+    date: "20/02/2023",
+  },
+  {
+    title:
+      "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
+    content:
+      "ESP8266 là một module WiFi phổ biến trong các dự án IoT, thường được sử dụng với chip nạp CH340 do tính năng đơn giản và giá thành rẻ. Tuy nhiên, khi kết hợp hai thiết bị này, người dùng đôi khi sẽ gặp phải một số lỗi phổ biến. Dưới đây là một số […]",
+    image: assetsImage.im_ui,
+    label: "tài liệu hướng dẫn",
+    date: "20/02/2023",
+  },
+  {
+    title:
+      "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
+    content:
+      "ESP8266 là một module WiFi phổ biến trong các dự án IoT, thường được sử dụng với chip nạp CH340 do tính năng đơn giản và giá thành rẻ. Tuy nhiên, khi kết hợp hai thiết bị này, người dùng đôi khi sẽ gặp phải một số lỗi phổ biến. Dưới đây là một số […]",
+    image: assetsImage.im_ui,
+    label: "tài liệu hướng dẫn",
+    date: "20/02/2023",
+  },
+  {
+    title:
+      "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
+    content:
+      "ESP8266 là một module WiFi phổ biến trong các dự án IoT, thường được sử dụng với chip nạp CH340 do tính năng đơn giản và giá thành rẻ. Tuy nhiên, khi kết hợp hai thiết bị này, người dùng đôi khi sẽ gặp phải một số lỗi phổ biến. Dưới đây là một số […]",
+    image: assetsImage.im_ui,
+    label: "tài liệu hướng dẫn",
+    date: "20/02/2023",
+  },
+];

@@ -24,6 +24,7 @@ export default {
         h3: "16px",
         h2: "19px",
         h1: "29px",
+        caption: "12px",
       },
     },
   },

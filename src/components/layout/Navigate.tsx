@@ -1,16 +1,25 @@
-import { memo, useState } from "react";
-import { Link } from "react-router";
+import { memo, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { header } from "../../constants";
 import { assetsSvg } from "../../constants/assets";
+import { useFilter } from "../../context/FilterContext";
 
 function Navigate() {
   const [navigate, setNavigate] = useState("");
+  const { categoryTitle } = useParams();
+  const { setCurrentCategory } = useFilter();
+
+  useEffect(() => {
+    if (categoryTitle) setNavigate(categoryTitle);
+    setCurrentCategory(99);
+  }, [categoryTitle, setCurrentCategory]);
+
   return (
     <div className="bg-dark_blue flex items-center justify-center h-[49px] px-4">
       <div className="w-page flex justify-between items-center">
         <div className="flex gap-6">
           {header.map((item, index) => (
-            <Link to={`/${item.link}`}>
+            <Link to={`/${item.link}`} key={index}>
               {item.link == navigate ? (
                 <div
                   key={index}

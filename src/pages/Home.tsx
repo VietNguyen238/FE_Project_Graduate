@@ -10,9 +10,8 @@ export default function Home() {
       <Title title="Sản phẩm đề xuất" quantity={dataProduct} link="products" />
       <div className="grid grid-cols-5 gap-3">
         {dataProduct.slice(0, 10).map((item, index) => (
-          <div className="col-span-1">
+          <div key={index} className="col-span-1">
             <ProductCard
-              key={index}
               title={item.title}
               image={item.image}
               newPrice={item.newPrice}
@@ -25,9 +24,8 @@ export default function Home() {
       <Title title="Sản phẩm mới" quantity={dataProducts} link="products" />
       <div className="grid grid-cols-5 gap-3">
         {dataProducts.slice(0, 10).map((item, index) => (
-          <div className="col-span-1">
+          <div key={index} className="col-span-1">
             <ProductCard
-              key={index}
               title={item.title}
               image={item.image}
               newPrice={item.newPrice}
@@ -40,9 +38,8 @@ export default function Home() {
       <Title title="Sản phẩm nổi bật" quantity={dataProduct} link="products" />
       <div className="grid grid-cols-5 gap-3">
         {dataProduct.slice(0, 10).map((item, index) => (
-          <div className="col-span-1">
+          <div key={index} className="col-span-1">
             <ProductCard
-              key={index}
               title={item.title}
               image={item.image}
               newPrice={item.newPrice}

@@ -2,7 +2,6 @@ interface Props {
   icon: string;
   title: string;
   //   isArows?: boolean;
-  isSvg?: boolean;
   current?: number;
   index?: number;
   show?: boolean;
@@ -14,7 +13,6 @@ export default function Button({
   icon,
   title,
   //   isArows = false,
-  isSvg = true,
   onClick,
   current,
   index,

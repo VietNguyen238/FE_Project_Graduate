@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { listFilter } from "../../constants";
 import { ChildrenProps } from "../../types";
 import Button from "../ui/Button";
@@ -30,7 +29,6 @@ export default function Filter({ children }: ChildrenProps) {
               index={index}
               icon={`${item.icon}`}
               title={`${item.title}`}
-              isSvg={false}
               current={currentCategory}
               isColor={true}
             />

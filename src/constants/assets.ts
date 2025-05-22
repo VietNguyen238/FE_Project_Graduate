@@ -30,6 +30,7 @@ import im_han from "./../../src/assets/images/im_han.png";
 import im_may_in from "./../../src/assets/images/im_may_in.png";
 import im_module from "./../../src/assets/images/im_module.png";
 import im_robot from "./../../src/assets/images/im_robot.png";
+import im_ui from "./../../src/assets/images/im_ui.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
@@ -53,6 +54,7 @@ export const assetsSvg = {
 
 export const assetsImage = {
   im_protect: im_protect,
+  im_ui: im_ui,
   im_robot: im_robot,
   im_module: im_module,
   im_may_in: im_may_in,

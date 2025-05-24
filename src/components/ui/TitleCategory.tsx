@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router";
+import { Link } from "react-router";
 
 interface Props {
   title: string;

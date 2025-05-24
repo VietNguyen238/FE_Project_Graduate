@@ -103,3 +103,26 @@ export const selectSort = [
     title: "Giá cao",
   },
 ];
+
+export const dataStoreSystem = [
+  {
+    title: "Điện tử NShop – Quận 9",
+    workingTime: "từ 8h00 đến 18h00",
+    address: "7 Trần Hưng Đạo, Hiệp Phú, Quận 9, TP. HCM",
+    phone1: "093 27 23 186",
+    phone2: "093 27 34 186",
+    technicalNumber: "0339 449 749",
+    image: assetsImage.im_quan_9,
+    map: { lat: 10.847163, lng: 106.774902 },
+  },
+  {
+    title: "Điện tử NShop – Tân Phú",
+    workingTime: "từ 8h00 – 12h00 và 13h00 – 18h00 (nghỉ trưa 12h-13h)",
+    address: "1 Bùi Xuân Phái, Tây Thạnh, Tân Phú, TP. HCM",
+    phone1: "0902 64 39 78",
+    phone2: "0904 83 35 36",
+    technicalNumber: "033 944 9749",
+    image: assetsImage.im_tan_phu,
+    map: { lat: 10.80648, lng: 106.62832 },
+  },
+];

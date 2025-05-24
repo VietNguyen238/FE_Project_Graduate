@@ -15,6 +15,7 @@ import ic_phone from "./../../src/assets/svgs/ic_phone.svg";
 import ic_plus from "./../../src/assets/svgs/ic_plus.svg";
 import ic_search from "./../../src/assets/svgs/ic_search.svg";
 import ic_ytb from "./../../src/assets/svgs/ic_ytb.svg";
+import ic_youtobe from "./../../src/assets/svgs/ic_youtobe.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -31,6 +32,8 @@ import im_may_in from "./../../src/assets/images/im_may_in.png";
 import im_module from "./../../src/assets/images/im_module.png";
 import im_robot from "./../../src/assets/images/im_robot.png";
 import im_ui from "./../../src/assets/images/im_ui.png";
+import im_quan_9 from "./../../src/assets/images/im_quan_9.png";
+import im_tan_phu from "./../../src/assets/images/im_tan_phu.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
@@ -50,10 +53,13 @@ export const assetsSvg = {
   ic_plus: ic_plus,
   ic_search: ic_search,
   ic_ytb: ic_ytb,
+  ic_youtobe: ic_youtobe,
 };
 
 export const assetsImage = {
   im_protect: im_protect,
+  im_quan_9: im_quan_9,
+  im_tan_phu: im_tan_phu,
   im_ui: im_ui,
   im_robot: im_robot,
   im_module: im_module,

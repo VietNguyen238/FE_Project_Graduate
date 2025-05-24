@@ -20,7 +20,7 @@ export default function Button({
 }: Props) {
   return (
     <div
-      className={`flex justify-between items-center p-1 my-1 cursor-pointer text-h4 text-title group 
+      className={`flex justify-between items-center p-1 my-1 cursor-pointer text-h4 text-title_color group 
          ${isColor && current === index && "bg-white rounded-[4px]"}`}
       onClick={() => {
         if (onClick) {

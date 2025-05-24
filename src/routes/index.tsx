@@ -3,6 +3,7 @@ import Layout from "../components/layout";
 import Home from "../pages/Home";
 import Product from "../pages/Product";
 import Blog from "../pages/Blog";
+import StoreSystem from "../pages/StoreSystem";
 
 export default function AppRouter() {
   return (
@@ -36,6 +37,14 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFilter={true}>
             <Blog />
+          </Layout>
+        }
+      />
+      <Route
+        path="/he-thong-cua-hang"
+        element={
+          <Layout isNavigate={true} isFilter={true}>
+            <StoreSystem />
           </Layout>
         }
       />

@@ -3,7 +3,7 @@ import { assetsImage } from "../../constants/assets";
 
 function Footer() {
   return (
-    <div className="flex w-full justify-center text-title text-h4 p-4">
+    <div className="flex w-full justify-center text-title_color text-h4 p-4">
       <div className="flex bg-white w-page justify-between">
         <div className="">
           <nav className="text-gray">

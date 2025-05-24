@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import ProductCard from "./ProductCard";
 
@@ -20,6 +20,12 @@ export default function PaginatedItems({
   filteredProducts,
 }: PaginatedItemsProps) {
   const [itemOffset, setItemOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  useEffect(() => {
+    setItemOffset(0);
+    setCurrentPage(0);
+  }, [filteredProducts]);
 
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -33,6 +39,7 @@ export default function PaginatedItems({
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
     setItemOffset(newOffset);
+    setCurrentPage(event.selected);
   };
 
   return (
@@ -58,17 +65,18 @@ export default function PaginatedItems({
           pageCount={pageCount}
           previousLabel="<"
           renderOnZeroPageCount={null}
-          className="flex items-center gap-2"
-          pageClassName="px-3 py-1 rounded hover:bg-gray-100 transition-colors"
-          pageLinkClassName="text-gray-700 hover:text-gray-900"
+          className="flex items-center gap-3"
+          pageClassName="py-1 rounded hover:bg-gray-100 transition-colors"
+          pageLinkClassName="text-gray-700 hover:text-gray-900 px-3 py-1"
           activeClassName="bg-blue-500 text-white hover:bg-blue-600"
           activeLinkClassName="text-white"
           previousClassName="px-3 py-1 rounded hover:bg-gray-100 transition-colors"
-          nextClassName="px-3 py-1 rounded hover:bg-gray-100 transition-colors"
+          nextClassName=" py-1 rounded hover:bg-gray-100 transition-colors"
           previousLinkClassName="text-gray-700 hover:text-gray-900"
-          nextLinkClassName="text-gray-700 hover:text-gray-900"
+          nextLinkClassName="text-gray-700 hover:text-gray-900 px-3 py-1"
           disabledClassName="opacity-50 cursor-not-allowed"
           breakClassName="px-2"
+          forcePage={currentPage}
         />
       </div>
     </div>

@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Product from "../pages/Product";
 import Blog from "../pages/Blog";
 import StoreSystem from "../pages/StoreSystem";
+import Cart from "../pages/Cart";
 
 export default function AppRouter() {
   return (
@@ -45,6 +46,14 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFilter={true}>
             <StoreSystem />
+          </Layout>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Cart />
           </Layout>
         }
       />

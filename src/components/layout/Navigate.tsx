@@ -1,13 +1,14 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { header } from "../../constants";
 import { assetsSvg } from "../../constants/assets";
 import { useFilter } from "../../context/FilterContext";
+import { useNavigateContext } from "../../context/NavigateContext";
 
 function Navigate() {
-  const [navigate, setNavigate] = useState("");
   const { categoryTitle } = useParams();
   const { setCurrentCategory } = useFilter();
+  const { navigate, setNavigate } = useNavigateContext();
 
   useEffect(() => {
     if (categoryTitle) setNavigate(categoryTitle);
@@ -31,7 +32,7 @@ function Navigate() {
               ) : (
                 <div
                   key={index}
-                  className="text-white text-h4 font-bold"
+                  className="text-white text-h4 font-bold border-b border-transparent"
                   onClick={() => setNavigate(item.link)}
                 >
                   {item.title}

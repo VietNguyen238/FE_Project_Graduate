@@ -6,7 +6,7 @@ interface Props {
   date: string;
 }
 
-export default function BlogCart({
+export default function BlogCard({
   title,
   content,
   image,

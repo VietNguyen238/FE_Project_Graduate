@@ -16,7 +16,11 @@ export default function ProductCard({
   quantity,
 }: Props) {
   return (
-    <div className="flex flex-col justify-center items-center bg-white rounded-lg cursor-pointer hover:scale-105 shadow-md">
+    <div
+      className={`flex flex-col justify-center items-center bg-white rounded-lg ${
+        quantity <= 0 ? "cursor-not-allowed" : "cursor-pointer hover:scale-105"
+      } shadow-md`}
+    >
       <div className="relative">
         <img
           className="h-[178px] w-[178px] rounded-t-lg"

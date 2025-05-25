@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
-import Button from "../ui/Button";
+import Button from "../ui/ButtonLayout";
 import { assetsSvg } from "../../constants/assets";
+import { useNavigateContext } from "../../context/NavigateContext";
 
 const mockResults = [
   "Mạch giảm áp (hạ áp)",
@@ -25,6 +26,7 @@ function Header() {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { setNavigate } = useNavigateContext();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -107,10 +109,10 @@ function Header() {
               )}
             </div>
             <div className="flex gap-2">
-              <Link to="/cart">
+              <Link to="/cart" onClick={() => setNavigate("/cart")}>
                 <Button icon={assetsSvg.ic_cart} title="Giỏ hàng" />
               </Link>
-              <Link to="/account">
+              <Link to="/account" onClick={() => setNavigate("/account")}>
                 <Button icon={assetsSvg.ic_person} title="Tài khoản" />
               </Link>
             </div>

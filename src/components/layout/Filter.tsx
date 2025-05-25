@@ -1,6 +1,6 @@
 import { listFilter } from "../../constants";
 import { ChildrenProps } from "../../types";
-import Button from "../ui/Button";
+import Button from "../ui/ButtonLayout";
 import { Link, useNavigate } from "react-router-dom";
 import { useFilter } from "../../context/FilterContext";
 import { assetsSvg } from "../../constants/assets";

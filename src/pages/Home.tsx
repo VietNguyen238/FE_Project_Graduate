@@ -1,7 +1,7 @@
 import SlideShow from "../components/ui/SlideShow";
 import ProductCard from "../components/ui/ProductCard";
 import { dataProduct, dataProducts } from "../config/data";
-import Title from "../components/ui/Title";
+import Title from "../components/ui/TitleProduct";
 
 export default function Home() {
   return (

@@ -7,23 +7,25 @@ import Filter from "./Filter";
 interface Props {
   isNavigate?: boolean;
   isFilter?: boolean;
+  isFooter?: boolean;
 }
 
 export default function Layout({
   children,
   isNavigate = false,
   isFilter = false,
+  isFooter = true,
 }: Props & ChildrenProps) {
   return (
     <div>
       <Header />
       {isNavigate && <Navigate />}
       <div className="bg-main w-full flex justify-center items-center px-4">
-        <div className="w-page">
+        <div className={`w-page ${isFooter == false && "h-screen"}`}>
           {isFilter ? <Filter>{children}</Filter> : children}
         </div>
       </div>
-      <Footer />
+      {isFooter && <Footer />}
     </div>
   );
 }

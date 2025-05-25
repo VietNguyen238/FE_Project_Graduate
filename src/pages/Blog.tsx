@@ -1,4 +1,4 @@
-import BlogCart from "../components/ui/BlogCart";
+import BlogCart from "../components/ui/BlogCard";
 import TitleCategory from "../components/ui/TitleCategory";
 import { dataBlog } from "../config/data";
 

@@ -15,7 +15,10 @@ import ic_phone from "./../../src/assets/svgs/ic_phone.svg";
 import ic_plus from "./../../src/assets/svgs/ic_plus.svg";
 import ic_search from "./../../src/assets/svgs/ic_search.svg";
 import ic_ytb from "./../../src/assets/svgs/ic_ytb.svg";
-import ic_youtobe from "./../../src/assets/svgs/ic_youtobe.svg";
+import ic_minus_dark from "./../../src/assets/svgs/ic_minus_dark.svg";
+import ic_plus_dark from "./../../src/assets/svgs/ic_plus_dark.svg";
+import ic_close from "./../../src/assets/svgs/ic_close.svg";
+import ic_tick from "./../../src/assets/svgs/ic_tick.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -37,6 +40,10 @@ import im_tan_phu from "./../../src/assets/images/im_tan_phu.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
+  ic_close: ic_close,
+  ic_tick: ic_tick,
+  ic_minus_dark: ic_minus_dark,
+  ic_plus_dark: ic_plus_dark,
   ic_advise: ic_advise,
   ic_arows_down: ic_arows_down,
   ic_arows_left: ic_arows_left,
@@ -53,7 +60,6 @@ export const assetsSvg = {
   ic_plus: ic_plus,
   ic_search: ic_search,
   ic_ytb: ic_ytb,
-  ic_youtobe: ic_youtobe,
 };
 
 export const assetsImage = {

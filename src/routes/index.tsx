@@ -5,6 +5,8 @@ import Product from "../pages/Product";
 import Blog from "../pages/Blog";
 import StoreSystem from "../pages/StoreSystem";
 import Cart from "../pages/Cart";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
 
 export default function AppRouter() {
   return (
@@ -54,6 +56,22 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFooter={false}>
             <Cart />
+          </Layout>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Register />
+          </Layout>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Login />
           </Layout>
         }
       />

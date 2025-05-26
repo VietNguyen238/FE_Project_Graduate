@@ -19,6 +19,8 @@ import ic_minus_dark from "./../../src/assets/svgs/ic_minus_dark.svg";
 import ic_plus_dark from "./../../src/assets/svgs/ic_plus_dark.svg";
 import ic_close from "./../../src/assets/svgs/ic_close.svg";
 import ic_tick from "./../../src/assets/svgs/ic_tick.svg";
+import ic_google from "./../../src/assets/svgs/ic_google.svg";
+import ic_facebook from "./../../src/assets/svgs/ic_facebook.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -40,6 +42,8 @@ import im_tan_phu from "./../../src/assets/images/im_tan_phu.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
+  ic_facebook: ic_facebook,
+  ic_google: ic_google,
   ic_close: ic_close,
   ic_tick: ic_tick,
   ic_minus_dark: ic_minus_dark,

@@ -112,8 +112,8 @@ function Header() {
               <Link to="/cart" onClick={() => setNavigate("/cart")}>
                 <Button icon={assetsSvg.ic_cart} title="Giỏ hàng" />
               </Link>
-              <Link to="/account" onClick={() => setNavigate("/account")}>
-                <Button icon={assetsSvg.ic_person} title="Tài khoản" />
+              <Link to="/login" onClick={() => setNavigate("/login")}>
+                <Button icon={assetsSvg.ic_person} title="Đăng nhập" />
               </Link>
             </div>
           </div>

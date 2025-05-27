@@ -12,6 +12,7 @@ export default function Home() {
         {dataProduct.slice(0, 10).map((item, index) => (
           <div key={index} className="col-span-1">
             <ProductCard
+              id={item.id}
               title={item.title}
               image={item.image}
               newPrice={item.newPrice}
@@ -26,6 +27,7 @@ export default function Home() {
         {dataProducts.slice(0, 10).map((item, index) => (
           <div key={index} className="col-span-1">
             <ProductCard
+              id={item.id}
               title={item.title}
               image={item.image}
               newPrice={item.newPrice}
@@ -40,6 +42,7 @@ export default function Home() {
         {dataProduct.slice(0, 10).map((item, index) => (
           <div key={index} className="col-span-1">
             <ProductCard
+              id={item.id}
               title={item.title}
               image={item.image}
               newPrice={item.newPrice}

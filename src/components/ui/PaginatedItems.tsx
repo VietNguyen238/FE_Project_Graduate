@@ -1,19 +1,7 @@
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import ProductCard from "./ProductCard";
-
-interface Product {
-  title: string;
-  price: number;
-  image: string;
-  newPrice?: number;
-  quantity: number;
-}
-
-interface PaginatedItemsProps {
-  itemsPerPage: number;
-  filteredProducts: Product[];
-}
+import { PaginatedItemsProps, ProductProps } from "../../types";
 
 export default function PaginatedItems({
   itemsPerPage,
@@ -28,16 +16,12 @@ export default function PaginatedItems({
   }, [filteredProducts]);
 
   const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = filteredProducts.slice(itemOffset, endOffset);
-  console.log("requested", currentItems);
   const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
 
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % filteredProducts.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+
     setItemOffset(newOffset);
     setCurrentPage(event.selected);
   };
@@ -45,8 +29,9 @@ export default function PaginatedItems({
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
-        {currentItems.map((product: Product, index: number) => (
+        {currentItems.map((product: ProductProps, index: number) => (
           <ProductCard
+            id={product.id}
             key={`${product.title}-${index}`}
             price={product.price}
             image={product.image}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { assetsSvg } from "../../constants/assets";
-import { formatPrice } from "../../config/format_price";
+import { formatPrice } from "../utils/format_price";
 
 interface Props {
   title: string;

@@ -20,7 +20,8 @@
     "react-router": "^7.6.0",
     "react-router-dom": "^7.6.0",
     "react-slideshow-image": "^4.3.2",
-    "react-youtube": "^10.1.0"
+    "react-youtube": "^10.1.0",
+    "zod": "^3.25.30"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

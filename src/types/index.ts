@@ -31,3 +31,17 @@ export interface FormField {
   title: string;
   type: InputType;
 }
+
+export interface ProductProps {
+  title: string;
+  id: string;
+  price: number;
+  image: string;
+  newPrice?: number;
+  quantity: number;
+}
+
+export interface PaginatedItemsProps {
+  itemsPerPage: number;
+  filteredProducts: ProductProps[];
+}

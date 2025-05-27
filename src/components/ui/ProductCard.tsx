@@ -1,12 +1,6 @@
-import { formatPrice } from "../../config/format_price";
-
-interface Props {
-  title: string;
-  image: string;
-  newPrice?: number;
-  price: number;
-  quantity: number;
-}
+import { formatPrice } from "../utils/format_price";
+import { useNavigate } from "react-router-dom";
+import { ProductProps } from "../../types";
 
 export default function ProductCard({
   title,
@@ -14,9 +8,16 @@ export default function ProductCard({
   newPrice,
   price,
   quantity,
-}: Props) {
+  id,
+}: ProductProps) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/product/${id}`);
+  };
+
   return (
     <div
+      onClick={handleClick}
       className={`flex flex-col justify-center items-center bg-white rounded-lg cursor-pointer hover:scale-105 shadow-md`}
     >
       <div className="relative">

@@ -2,7 +2,7 @@ import Button from "../components/ui/Button";
 import CartCard from "../components/ui/CartCard";
 import ProgressBar from "../components/ui/ProgressBar";
 import Title from "../components/ui/Title";
-import { formatPrice } from "../config/format_price";
+import { formatPrice } from "../components/utils/format_price";
 import { useEffect, useState } from "react";
 
 interface CartItem {

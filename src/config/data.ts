@@ -2,7 +2,7 @@ import { assetsImage } from "../constants/assets";
 
 export const dataProduct = [
   {
-    id: 1,
+    id: "1",
     title: "Arduino UNO R3",
     price: 1123000,
     newPrice: 0,
@@ -11,7 +11,7 @@ export const dataProduct = [
     quantity: 5,
   },
   {
-    id: 2,
+    id: "2",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -20,7 +20,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 3,
+    id: "3",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -29,7 +29,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 4,
+    id: "4",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -38,7 +38,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 5,
+    id: "5",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -47,7 +47,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 6,
+    id: "6",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -56,7 +56,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 7,
+    id: "7",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -65,7 +65,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 8,
+    id: "8",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -74,7 +74,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 9,
+    id: "9",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -83,7 +83,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 10,
+    id: "10",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -92,7 +92,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 11,
+    id: "11",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -101,7 +101,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 12,
+    id: "12",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -110,7 +110,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 13,
+    id: "13",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -119,7 +119,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 14,
+    id: "14",
     title: "LED RGB 5mm",
     price: 5000,
     newPrice: 0,
@@ -128,7 +128,7 @@ export const dataProduct = [
     category: "Đèn LED, Điều khiển LED",
   },
   {
-    id: 15,
+    id: "15",
     title: "Công tắc 2 chiều",
     price: 25000,
     newPrice: 0,
@@ -137,7 +137,7 @@ export const dataProduct = [
     category: "Điện dân dụng và Công nghiệp",
   },
   {
-    id: 16,
+    id: "16",
     title: "Tấm pin năng lượng mặt trời 100W",
     price: 1500000,
     newPrice: 0,
@@ -146,7 +146,7 @@ export const dataProduct = [
     category: "Điện năng lượng mặt trời",
   },
   {
-    id: 17,
+    id: "17",
     title: "Đồng hồ vạn năng DT830B",
     price: 150000,
     newPrice: 120000,
@@ -155,7 +155,7 @@ export const dataProduct = [
     category: "Đồng hồ vạn năng",
   },
   {
-    id: 18,
+    id: "18",
     title: "Máy in 3D Ender 3",
     price: 5000000,
     newPrice: 4500000,
@@ -164,7 +164,7 @@ export const dataProduct = [
     category: "Máy in 3D, Công nghệ",
   },
   {
-    id: 19,
+    id: "19",
     title: "Module Relay 4 kênh",
     price: 85000,
     newPrice: 0,
@@ -173,7 +173,7 @@ export const dataProduct = [
     category: "Module, Mạch điện",
   },
   {
-    id: 20,
+    id: "20",
     title: "Mỏ hàn điện tử",
     price: 150000,
     newPrice: 0,
@@ -182,7 +182,7 @@ export const dataProduct = [
     category: "Phụ kiện, Dụng cụ",
   },
   {
-    id: 21,
+    id: "21",
     title: "Robot Arduino Car",
     price: 1200000,
     newPrice: 0,
@@ -191,7 +191,7 @@ export const dataProduct = [
     category: "Robot, Phụ kiện DIY",
   },
   {
-    id: 22,
+    id: "22",
     title: "Arduino Nano",
     price: 850000,
     newPrice: 0,
@@ -200,7 +200,7 @@ export const dataProduct = [
     category: "Arduino",
   },
   {
-    id: 23,
+    id: "23",
     title: "Cảm biến siêu âm HC-SR04",
     price: 35000,
     newPrice: 0,
@@ -209,7 +209,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 24,
+    id: "24",
     title: "LED Strip RGB 1m",
     price: 150000,
     newPrice: 120000,
@@ -218,7 +218,7 @@ export const dataProduct = [
     category: "Đèn LED, Điều khiển LED",
   },
   {
-    id: 25,
+    id: "25",
     title: "Mạch điều khiển LED WS2812",
     price: 250000,
     newPrice: 0,
@@ -227,7 +227,7 @@ export const dataProduct = [
     category: "Module, Mạch điện",
   },
   {
-    id: 26,
+    id: "26",
     title: "Arduino UNO R3",
     price: 1123000,
     newPrice: 0,
@@ -236,7 +236,7 @@ export const dataProduct = [
     quantity: 5,
   },
   {
-    id: 27,
+    id: "27",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -245,7 +245,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 28,
+    id: "28",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -254,7 +254,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 29,
+    id: "29",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -263,7 +263,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 30,
+    id: "30",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -272,7 +272,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 31,
+    id: "31",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -281,7 +281,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 32,
+    id: "32",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -290,7 +290,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 33,
+    id: "33",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -299,7 +299,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 34,
+    id: "34",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -308,7 +308,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 35,
+    id: "35",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -317,7 +317,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 36,
+    id: "36",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -326,7 +326,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 37,
+    id: "37",
     title: "Cảm biến nhiệt độ DHT11",
     price: 1145000,
     newPrice: 35000,
@@ -335,7 +335,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 38,
+    id: "38",
     title: "Combo Arduino + Cảm biến",
     price: 1500000,
     newPrice: 1200000,
@@ -344,7 +344,7 @@ export const dataProduct = [
     category: "Combo khuyến mãi",
   },
   {
-    id: 39,
+    id: "39",
     title: "LED RGB 5mm",
     price: 5000,
     newPrice: 0,
@@ -353,7 +353,7 @@ export const dataProduct = [
     category: "Đèn LED, Điều khiển LED",
   },
   {
-    id: 40,
+    id: "40",
     title: "Công tắc 2 chiều",
     price: 25000,
     newPrice: 0,
@@ -362,7 +362,7 @@ export const dataProduct = [
     category: "Điện dân dụng và Công nghiệp",
   },
   {
-    id: 41,
+    id: "41",
     title: "Tấm pin năng lượng mặt trời 100W",
     price: 1500000,
     newPrice: 0,
@@ -371,7 +371,7 @@ export const dataProduct = [
     category: "Điện năng lượng mặt trời",
   },
   {
-    id: 42,
+    id: "42",
     title: "Đồng hồ vạn năng DT830B",
     price: 150000,
     newPrice: 120000,
@@ -380,7 +380,7 @@ export const dataProduct = [
     category: "Đồng hồ vạn năng",
   },
   {
-    id: 43,
+    id: "43",
     title: "Máy in 3D Ender 3",
     price: 5000000,
     newPrice: 4500000,
@@ -389,7 +389,7 @@ export const dataProduct = [
     category: "Máy in 3D, Công nghệ",
   },
   {
-    id: 44,
+    id: "44",
     title: "Module Relay 4 kênh",
     price: 85000,
     newPrice: 0,
@@ -398,7 +398,7 @@ export const dataProduct = [
     category: "Module, Mạch điện",
   },
   {
-    id: 45,
+    id: "45",
     title: "Mỏ hàn điện tử",
     price: 150000,
     newPrice: 0,
@@ -407,7 +407,7 @@ export const dataProduct = [
     category: "Phụ kiện, Dụng cụ",
   },
   {
-    id: 46,
+    id: "46",
     title: "Robot Arduino Car",
     price: 1200000,
     newPrice: 0,
@@ -416,7 +416,7 @@ export const dataProduct = [
     category: "Robot, Phụ kiện DIY",
   },
   {
-    id: 47,
+    id: "47",
     title: "Arduino Nano",
     price: 850000,
     newPrice: 0,
@@ -425,7 +425,7 @@ export const dataProduct = [
     category: "Arduino",
   },
   {
-    id: 48,
+    id: "48",
     title: "Cảm biến siêu âm HC-SR04",
     price: 35000,
     newPrice: 0,
@@ -434,7 +434,7 @@ export const dataProduct = [
     category: "Cảm biến",
   },
   {
-    id: 49,
+    id: "49",
     title: "LED Strip RGB 1m",
     price: 150000,
     newPrice: 120000,
@@ -443,7 +443,7 @@ export const dataProduct = [
     category: "Đèn LED, Điều khiển LED",
   },
   {
-    id: 50,
+    id: "50",
     title: "Mạch điều khiển LED WS2812",
     price: 250000,
     newPrice: 0,
@@ -455,7 +455,7 @@ export const dataProduct = [
 
 export const dataProducts = [
   {
-    id: 1,
+    id: "1",
     title: "Động cơ giảm tốc GA12-N20 12V 235 rpm",
     price: 1123000,
     newPrice: 0,
@@ -463,7 +463,7 @@ export const dataProducts = [
     image: assetsImage.im_dong_co,
   },
   {
-    id: 2,
+    id: "2",
     title: "Động cơ giảm tốc GA12-N20 12V 235 rpm",
     price: 1123000,
     newPrice: 0,
@@ -471,7 +471,7 @@ export const dataProducts = [
     image: assetsImage.im_dong_co,
   },
   {
-    id: 3,
+    id: "3",
     title: "Động cơ giảm tốc GA12-N20 12V 235 rpm",
     price: 1123000,
     newPrice: 0,
@@ -479,7 +479,7 @@ export const dataProducts = [
     image: assetsImage.im_dong_co,
   },
   {
-    id: 4,
+    id: "4",
     title: "Động cơ giảm tốc GA12-N20 12V 235 rpm",
     price: 1123000,
     newPrice: 0,
@@ -487,7 +487,7 @@ export const dataProducts = [
     image: assetsImage.im_dong_co,
   },
   {
-    id: 5,
+    id: "5",
     title:
       "Động cơ giảm tốc GA12-N20 12V 235 rpmsss sssss ssssssssssssssssssssssssssssssss",
     price: 1123000,
@@ -496,7 +496,7 @@ export const dataProducts = [
     image: assetsImage.im_dong_co,
   },
   {
-    id: 6,
+    id: "6",
     title: "Động cơ giảm tốc GA12-N20 12V 235 rpm",
     price: 1123000,
     newPrice: 0,
@@ -507,7 +507,7 @@ export const dataProducts = [
 
 export const dataBlog = [
   {
-    id: 1,
+    id: "1",
     title:
       "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
     content:
@@ -517,7 +517,7 @@ export const dataBlog = [
     date: "20/02/2023",
   },
   {
-    id: 2,
+    id: "2",
     title:
       "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
     content:
@@ -527,7 +527,7 @@ export const dataBlog = [
     date: "20/02/2023",
   },
   {
-    id: 3,
+    id: "3",
     title:
       "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
     content:
@@ -537,7 +537,7 @@ export const dataBlog = [
     date: "20/02/2023",
   },
   {
-    id: 4,
+    id: "4",
     title:
       "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
     content:
@@ -547,7 +547,7 @@ export const dataBlog = [
     date: "20/02/2023",
   },
   {
-    id: 5,
+    id: "5",
     title:
       "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
     content:
@@ -557,7 +557,7 @@ export const dataBlog = [
     date: "20/02/2023",
   },
   {
-    id: 6,
+    id: "6",
     title:
       "Các Lỗi Thường Gặp Khi Sử Dụng ESP8266 Với Chip Nạp CH340 Và Cách Khắc Phục",
     content:

@@ -5,6 +5,8 @@ interface Props {
   onClick?: () => void;
   icon?: string;
   isBorder?: boolean;
+  disabled?: boolean;
+  className?: string;
 }
 
 export default function Button({
@@ -14,15 +16,19 @@ export default function Button({
   onClick,
   icon,
   isBorder = false,
+  disabled = false,
+  className = "",
 }: Props) {
   return (
     <div
-      onClick={onClick}
-      className={`w-full font-normal ${bg_color} ${text_color} p-2 text-h3 cursor-pointer rounded-md flex justify-center items-center gap-2 ${
+      onClick={disabled ? undefined : onClick}
+      className={`w-full font-normal ${bg_color} ${text_color} p-2 text-h3 rounded-md flex justify-center items-center gap-2 ${
         isBorder && "border border-zinc-200"
-      }`}
+      } ${
+        disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+      } ${className}`}
     >
-      {icon && <img className="h-ic w-ic" src={icon} alt={icon} />}
+      {icon && <img className="h-ic w-ic p-[2px]" src={icon} alt={icon} />}
       {title}
     </div>
   );

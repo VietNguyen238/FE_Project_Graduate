@@ -7,6 +7,7 @@ import StoreSystem from "../pages/StoreSystem";
 import Cart from "../pages/Cart";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import ProductDetail from "../pages/ProductDetail";
 
 export default function AppRouter() {
   return (
@@ -32,6 +33,14 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFilter={true}>
             <Product />
+          </Layout>
+        }
+      />
+      <Route
+        path="/product/:id"
+        element={
+          <Layout isNavigate={true} isFilter={true}>
+            <ProductDetail />
           </Layout>
         }
       />

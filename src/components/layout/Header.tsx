@@ -110,7 +110,7 @@ function Header() {
             </div>
             <div className="flex gap-2">
               <Link to="/cart" onClick={() => setNavigate("/cart")}>
-                <Button icon={assetsSvg.ic_cart} title="Giỏ hàng" />
+                <Button icon={assetsSvg.ic_cart_dark} title="Giỏ hàng" />
               </Link>
               <Link to="/login" onClick={() => setNavigate("/login")}>
                 <Button icon={assetsSvg.ic_person} title="Đăng nhập" />

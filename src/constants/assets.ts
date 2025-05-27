@@ -21,6 +21,7 @@ import ic_close from "./../../src/assets/svgs/ic_close.svg";
 import ic_tick from "./../../src/assets/svgs/ic_tick.svg";
 import ic_google from "./../../src/assets/svgs/ic_google.svg";
 import ic_facebook from "./../../src/assets/svgs/ic_facebook.svg";
+import ic_cart_dark from "./../../src/assets/svgs/ic_cart_dark.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -39,9 +40,12 @@ import im_robot from "./../../src/assets/images/im_robot.png";
 import im_ui from "./../../src/assets/images/im_ui.png";
 import im_quan_9 from "./../../src/assets/images/im_quan_9.png";
 import im_tan_phu from "./../../src/assets/images/im_tan_phu.png";
+import im_membership from "./../../src/assets/images/im_membership.png";
+import im_car from "./../../src/assets/images/im_car.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
+  ic_cart_dark: ic_cart_dark,
   ic_facebook: ic_facebook,
   ic_google: ic_google,
   ic_close: ic_close,
@@ -84,4 +88,6 @@ export const assetsImage = {
   im_combo: im_combo,
   im_cam_bien: im_cam_bien,
   im_arduino: im_arduino,
+  im_membership: im_membership,
+  im_car: im_car,
 };

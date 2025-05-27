@@ -45,3 +45,17 @@ export interface PaginatedItemsProps {
   itemsPerPage: number;
   filteredProducts: ProductProps[];
 }
+
+export interface Location {
+  code: string;
+  name: string;
+}
+
+export interface OptionProps {
+  title: string;
+  selected: string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  list: Location[];
+  option: string;
+  htmlFor: string;
+}

@@ -22,6 +22,8 @@ import ic_tick from "./../../src/assets/svgs/ic_tick.svg";
 import ic_google from "./../../src/assets/svgs/ic_google.svg";
 import ic_facebook from "./../../src/assets/svgs/ic_facebook.svg";
 import ic_cart_dark from "./../../src/assets/svgs/ic_cart_dark.svg";
+import ic_shipping from "./../../src/assets/svgs/ic_shipping.svg";
+import ic_shipping_express from "./../../src/assets/svgs/ic_shipping_express.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -45,6 +47,8 @@ import im_car from "./../../src/assets/images/im_car.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
+  ic_shipping: ic_shipping,
+  ic_shipping_express: ic_shipping_express,
   ic_cart_dark: ic_cart_dark,
   ic_facebook: ic_facebook,
   ic_google: ic_google,

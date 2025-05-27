@@ -3,8 +3,10 @@ import InputText from "../components/ui/InputText";
 import Title from "../components/ui/Title";
 import Button from "../components/ui/Button";
 import { FormField, RegisterProps } from "../types";
-import { assetsSvg } from "../constants/assets";
 import { Link } from "react-router";
+import { FormAuth } from "../components/utils/validate";
+import { z } from "zod";
+import Extensions from "../components/ui/Extensions";
 
 export default function Register() {
   const [formData, setFormData] = useState<RegisterProps>({
@@ -13,6 +15,7 @@ export default function Register() {
     name: "",
     password: "",
   });
+  const [errors, setErrors] = useState<Partial<RegisterProps>>({});
   const firstInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -23,15 +26,33 @@ export default function Register() {
     (field: keyof RegisterProps) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData({ phone: "", email: "", name: "", password: "" });
-    firstInputRef.current?.focus();
+
+    try {
+      FormAuth.parse(formData);
+      console.log(formData);
+      setFormData({ phone: "", email: "", name: "", password: "" });
+      setErrors({});
+      firstInputRef.current?.focus();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors: Partial<RegisterProps> = {};
+        error.errors.forEach((err) => {
+          if (err.path && err.path.length > 0) {
+            formattedErrors[err.path[0] as keyof RegisterProps] = err.message;
+          }
+        });
+        setErrors(formattedErrors);
+      } else {
+        console.error("An unexpected error occurred:", error);
+      }
+    }
   };
 
   const formFields: FormField[] = [
@@ -48,14 +69,20 @@ export default function Register() {
         <div className="bg-white p-6 shadow">
           <form onSubmit={handleSubmit}>
             {formFields.map(({ field, title, type }, index) => (
-              <InputText
-                key={field as keyof RegisterProps}
-                title={title}
-                value={formData[field as keyof RegisterProps]}
-                type={type}
-                onChange={handleChange(field as keyof RegisterProps)}
-                ref={index === 0 ? firstInputRef : null}
-              />
+              <div className="mb-4" key={field as keyof RegisterProps}>
+                <InputText
+                  title={title}
+                  value={formData[field as keyof RegisterProps]}
+                  type={type}
+                  onChange={handleChange(field as keyof RegisterProps)}
+                  ref={index === 0 ? firstInputRef : null}
+                />
+                {errors[field as keyof RegisterProps] && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors[field as keyof RegisterProps]}
+                  </p>
+                )}
+              </div>
             ))}
             <div className="mt-1">
               <button onClick={handleSubmit} className="w-full">
@@ -73,27 +100,7 @@ export default function Register() {
               Đăng nhập ngay bây giờ
             </Link>
           </div>
-          <div className="px-4 bg-white flex w-full justify-center items-center mt-4">
-            <hr className="border border-zinc-200 w-full"></hr>
-            <div className="px-3">Hoặc</div>
-            <hr className="border border-zinc-200 w-full"></hr>
-          </div>
-          <div className="flex justify-between items-center mt-4 gap-4">
-            <Button
-              isBorder={true}
-              icon={assetsSvg.ic_facebook}
-              title="Google"
-              bg_color="bg-white"
-              text_color="text-zinc-700"
-            />
-            <Button
-              isBorder={true}
-              icon={assetsSvg.ic_google}
-              title="Facebook"
-              bg_color="bg-white"
-              text_color="text-zinc-700"
-            />
-          </div>
+          <Extensions />
         </div>
       </div>
     </div>

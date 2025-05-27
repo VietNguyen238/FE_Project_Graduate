@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.6",
+    "@react-oauth/google": "^0.12.2",
+    "axios": "^1.9.0",
     "leaflet": "^1.9.4",
     "rc-progress": "^4.0.0",
     "react": "^19.0.0",
@@ -21,6 +23,7 @@
     "react-router-dom": "^7.6.0",
     "react-slideshow-image": "^4.3.2",
     "react-youtube": "^10.1.0",
+    "sub-vn": "^0.0.2",
     "zod": "^3.25.30"
   },
   "devDependencies": {

@@ -2,15 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import Title from "../components/ui/Title";
 import InputText from "../components/ui/InputText";
 import Button from "../components/ui/Button";
-import { assetsSvg } from "../constants/assets";
 import { FormField, LoginProps } from "../types";
 import { Link } from "react-router";
+import { FormAuth } from "../components/utils/validate";
+import * as z from "zod";
+import Extensions from "../components/ui/Extensions";
 
 export default function Login() {
   const [formData, setFormData] = useState<LoginProps>({
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState<Partial<LoginProps>>({});
   const firstInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -20,15 +23,38 @@ export default function Login() {
   const handleChange =
     (field: keyof LoginProps) => (e: React.ChangeEvent<HTMLInputElement>) => {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+      if (errors[field]) {
+        setErrors((prev) => ({ ...prev, [field]: undefined }));
+      }
     };
+
+  const validateForm = () => {
+    try {
+      FormAuth.parse(formData);
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const newErrors: Partial<LoginProps> = {};
+        error.errors.forEach((err) => {
+          const field = err.path[0] as keyof LoginProps;
+          newErrors[field] = err.message;
+        });
+        setErrors(newErrors);
+      }
+      return false;
+    }
+  };
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData({ email: "", password: "" });
-    firstInputRef.current?.focus();
+    if (validateForm()) {
+      console.log(formData);
+      setFormData({ email: "", password: "" });
+      firstInputRef.current?.focus();
+    }
   };
 
   const formFields: FormField[] = [
@@ -43,14 +69,20 @@ export default function Login() {
         <div className="bg-white p-6 shadow">
           <form onSubmit={handleSubmit}>
             {formFields.map(({ field, title, type }, index) => (
-              <InputText
-                key={field as keyof LoginProps}
-                title={title}
-                value={formData[field as keyof LoginProps]}
-                type={type}
-                onChange={handleChange(field as keyof LoginProps)}
-                ref={index === 0 ? firstInputRef : null}
-              />
+              <div className="mb-4" key={field as keyof LoginProps}>
+                <InputText
+                  title={title}
+                  value={formData[field as keyof LoginProps]}
+                  type={type}
+                  onChange={handleChange(field as keyof LoginProps)}
+                  ref={index === 0 ? firstInputRef : null}
+                />
+                {errors[field as keyof LoginProps] && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors[field as keyof LoginProps]}
+                  </p>
+                )}
+              </div>
             ))}
             <div className="mt-1">
               <button onClick={handleSubmit} className="w-full">
@@ -68,27 +100,7 @@ export default function Login() {
               Đăng ký
             </Link>
           </div>
-          <div className="px-4 bg-white flex w-full justify-center items-center mt-4">
-            <hr className="border border-zinc-200 w-full"></hr>
-            <div className="px-3">Hoặc</div>
-            <hr className="border border-zinc-200 w-full"></hr>
-          </div>
-          <div className="flex justify-between items-center mt-4 gap-4">
-            <Button
-              isBorder={true}
-              icon={assetsSvg.ic_facebook}
-              title="Google"
-              bg_color="bg-white"
-              text_color="text-zinc-700"
-            />
-            <Button
-              isBorder={true}
-              icon={assetsSvg.ic_google}
-              title="Facebook"
-              bg_color="bg-white"
-              text_color="text-zinc-700"
-            />
-          </div>
+          <Extensions />
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ const InputText = forwardRef<HTMLInputElement, Props>(
         </div>
         <input
           ref={ref}
-          className="w-full p-2 border border-zinc-400 rounded-md mt-2 mb-4"
+          className="w-full p-2 border border-zinc-400 rounded-md mt-2"
           placeholder={`Nhập ${title}`}
           onChange={onChange}
           value={value}

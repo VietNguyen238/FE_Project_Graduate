@@ -8,6 +8,8 @@ import Cart from "../pages/Cart";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import ProductDetail from "../pages/ProductDetail";
+import Shipping from "../pages/Shipping";
+import Checkout from "../pages/Checkout";
 
 export default function AppRouter() {
   return (
@@ -81,6 +83,22 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFooter={false}>
             <Login />
+          </Layout>
+        }
+      />
+      <Route
+        path="/checkout"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Checkout />
+          </Layout>
+        }
+      />
+      <Route
+        path="/checkout/shipping"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Shipping />
           </Layout>
         }
       />

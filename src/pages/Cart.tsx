@@ -73,7 +73,7 @@ export default function Cart() {
             </div>
           ))
         ) : (
-          <div className="text-h4 text-title_color flex justify-center">
+          <div className="text-h4 text-title_color flex justify-center mb-40">
             Chưa có sản phẩm nào trong giỏ hàng
           </div>
         )}

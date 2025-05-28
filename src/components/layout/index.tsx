@@ -21,7 +21,7 @@ export default function Layout({
       <Header />
       {isNavigate && <Navigate />}
       <div className="bg-main w-full flex justify-center items-center px-4">
-        <div className={`w-page ${isFooter == false && "h-screen"}`}>
+        <div className={`w-page ${isFooter == false && "h-full"}`}>
           {isFilter ? <Filter>{children}</Filter> : children}
         </div>
       </div>

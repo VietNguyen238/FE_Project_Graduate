@@ -1,4 +1,5 @@
-import { assetsImage } from "./assets";
+import { FormField } from "../types";
+import { assetsImage, assetsSvg } from "./assets";
 
 export const listFilter = [
   { icon: assetsImage.im_arduino, title: "Arduino", params: "arduino" },
@@ -125,4 +126,25 @@ export const dataStoreSystem = [
     image: assetsImage.im_tan_phu,
     map: { lat: 10.80648, lng: 106.62832 },
   },
+];
+
+export const shippingMethods = [
+  {
+    id: "express",
+    name: "Giao hàng nhanh",
+    icon: assetsSvg.ic_shipping,
+    price: 24000,
+  },
+  {
+    id: "super-express",
+    name: "Giao siêu tốc (1h)",
+    icon: assetsSvg.ic_shipping_express,
+    price: 26000,
+  },
+];
+
+export const formFields: FormField[] = [
+  { field: "phone", title: "số điện thoại", type: "text" },
+  { field: "email", title: "email", type: "email" },
+  { field: "name", title: "tên", type: "text" },
 ];

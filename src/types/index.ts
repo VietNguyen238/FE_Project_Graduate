@@ -21,6 +21,12 @@ export interface RegisterProps {
   password: string;
 }
 
+export interface CheckoutProps {
+  phone: string;
+  email: string;
+  name: string;
+}
+
 export interface LoginProps {
   email: string;
   password: string;
@@ -59,3 +65,12 @@ export interface OptionProps {
   option: string;
   htmlFor: string;
 }
+
+export type OrderProps = {
+  province: string;
+  district: string;
+  ward: string;
+  address: string;
+  shippingMethod: string;
+  shippingFee: number;
+};

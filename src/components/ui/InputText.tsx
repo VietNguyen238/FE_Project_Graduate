@@ -13,12 +13,12 @@ const InputText = forwardRef<HTMLInputElement, Props>(
 
     return (
       <div className="">
-        <div className="text-h3 text-title_color font-medium">
+        <div className="text-h4 text-title_color font-medium">
           {capitalizedTitle}:
         </div>
         <input
           ref={ref}
-          className="w-full p-2 border border-zinc-400 rounded-md mt-2"
+          className="w-full px-2 py-1 border border-zinc-400 rounded-md mt-2"
           placeholder={`Nhập ${title}`}
           onChange={onChange}
           value={value}

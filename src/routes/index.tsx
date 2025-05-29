@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import ProductDetail from "../pages/ProductDetail";
 import Shipping from "../pages/Shipping";
 import Checkout from "../pages/Checkout";
+import CheckPayment from "../pages/CheckPayment";
 
 export default function AppRouter() {
   return (
@@ -99,6 +100,14 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFooter={false}>
             <Shipping />
+          </Layout>
+        }
+      />
+      <Route
+        path="/payment"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <CheckPayment />
           </Layout>
         }
       />

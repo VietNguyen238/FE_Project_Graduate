@@ -32,9 +32,9 @@ export default function Checkout() {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      console.log(formData);
       FormCheckout.parse(formData);
       setErrors({});
+      console.log(formData);
       navigate("/checkout/shipping");
     } catch (error) {
       if (error instanceof ZodError) {

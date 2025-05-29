@@ -14,6 +14,7 @@ import ShippingMethodList from "../components/ui/ShippingMethodList";
 import { shippingMethods } from "../constants";
 import { useNavigate } from "react-router";
 import { OrderProps } from "../types";
+import axios from "axios";
 
 export default function Shipping() {
   const [formData, setFormData] = useState<OrderProps>({
@@ -78,9 +79,9 @@ export default function Shipping() {
         shippingFee: formData.shippingFee,
         shippingMethod: selectedMethodName,
       };
-      console.log(formattedData);
       FormAddress.parse(formattedData);
       setErrors({});
+      console.log(formattedData);
       navigate("/payment");
       return true;
     } catch (error) {
@@ -126,6 +127,18 @@ export default function Shipping() {
       value: formData.ward,
     },
   ];
+
+  const handlePayment = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/api/v1/payment/create_payment?amount=${200000}`
+      );
+
+      window.location.href = data.paymentUrl;
+    } catch (error) {
+      console.error("Payment error:", error);
+    }
+  };
 
   return (
     <div className="flex justify-center items-center py-8">
@@ -185,7 +198,7 @@ export default function Shipping() {
               <p className="mt-2 text-sm text-red-600">{errors.shippingFee}</p>
             )}
           </div>
-          <ButtonOrder onClick={handleSubmit} />
+          <ButtonOrder onClick={handlePayment} />
         </div>
       </div>
     </div>

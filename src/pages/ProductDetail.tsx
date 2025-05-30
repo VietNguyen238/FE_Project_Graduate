@@ -2,6 +2,9 @@ import { useState } from "react";
 import Button from "../components/ui/Button";
 import { assetsImage, assetsSvg } from "../constants/assets";
 import Freeship from "../components/ui/Freeship";
+import { useParams } from "react-router-dom";
+import { dataProduct } from "../config/data";
+import { formatPrice } from "../components/utils/format_price";
 
 const colorProducts = [
   { colorProduct: "xanh" },
@@ -15,16 +18,18 @@ const colorClassMap = {
   vàng: "bg-yellow-500 text-white",
 };
 
-const images = [
-  { src: assetsImage.im_arduino },
-  { src: assetsImage.im_cam_bien },
-  { src: assetsImage.im_den_led },
-];
-
 export default function ProductDetail() {
-  const [image, setImage] = useState(assetsImage.im_arduino);
+  const { id } = useParams();
+  const product = dataProduct.find((item) => item.id === id);
+  const [image, setImage] = useState(product?.image || "");
   const [color, setColor] = useState("");
   const [isShow, setIsShow] = useState(false);
+
+  const images = [
+    { src: product?.image || "" },
+    { src: assetsImage.im_cam_bien },
+    { src: assetsImage.im_den_led },
+  ];
 
   const handlePrevious = () => {
     const currentIndex = images.findIndex((img) => img.src === image);
@@ -38,6 +43,54 @@ export default function ProductDetail() {
     setImage(images[nextIndex].src);
   };
 
+  const handleBuy = () => {
+    if (product) {
+      const cartItem = {
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        newPrice: product.newPrice || 0,
+        image: image,
+        color: color,
+        quantity: 1,
+      };
+
+      try {
+        const existingCart = localStorage.getItem("cart");
+        let cartItems = [];
+        if (existingCart) {
+          try {
+            cartItems = JSON.parse(existingCart);
+            if (!Array.isArray(cartItems)) {
+              cartItems = [];
+            }
+          } catch (parseError) {
+            cartItems = [];
+          }
+        }
+
+        const existingItemIndex = cartItems.findIndex(
+          (item: any) => item.id === product.id && item.color === color
+        );
+
+        if (existingItemIndex !== -1) {
+          cartItems[existingItemIndex].quantity += 1;
+        } else {
+          cartItems.push(cartItem);
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        alert("Đã thêm sản phẩm vào giỏ hàng!");
+      } catch (error) {
+        alert("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!");
+      }
+    }
+  };
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
   return (
     <div>
       <div className="p-4 shadow grid grid-cols-12 bg-white">
@@ -45,7 +98,7 @@ export default function ProductDetail() {
           <div className="h-[354px] w-full relative">
             <img
               src={image}
-              alt="im_arduino"
+              alt={product.title}
               className="aspect-square w-full"
             />
             <button
@@ -82,15 +135,13 @@ export default function ProductDetail() {
           </div>
         </div>
         <div className="col-span-7 text-title_color">
-          <div className="text-h2 font-medium">
-            Mạch điều khiển máy in 3D RAMPS 1.6
+          <div className="text-h2 font-medium">{product.title}</div>
+          <div className="text-h4 text-gray">{product.category}</div>
+          <div className="text-h2 font-bold text-rose-600 mt-2">
+            {formatPrice(product.newPrice ? product.newPrice : product.price)}₫
           </div>
-          <div className="text-h4 text-gray">
-            Driver circuit 3D printer RAMPS 1.6
-          </div>
-          <div className="text-h2 font-bold text-rose-600 mt-2">149.000₫</div>
-          <div className="text-h4  mt-2">
-            Mã sản phẩm: <span className="font-medium">7JXU</span>
+          <div className="text-h4 mt-2">
+            Mã sản phẩm: <span className="font-medium">{product.id}</span>
           </div>
           <div className="mt-2 w-[145px]">
             <Button
@@ -98,16 +149,21 @@ export default function ProductDetail() {
               bg_color="bg-red-500"
               text_color="text-white"
               title="Mua hàng"
-              disabled={true}
+              disabled={product.quantity === 0}
+              onClick={handleBuy}
             />
           </div>
-          <div className="text-red-600 font-medium mt-2">
-            Sản phẩm hiện đang hết hàng.
-          </div>
+          {product.quantity === 0 ? (
+            <div className="text-red-600 font-medium mt-2">
+              Sản phẩm hiện đang hết hàng.
+            </div>
+          ) : (
+            <div className="text-green-600 font-medium mt-2">
+              Sản phẩm hiện đang còn hàng.
+            </div>
+          )}
           <div className="text-h4 mt-3">
-            Mạch điều khiển máy in 3D RAMPS 1.6 Chân I2C và SPI có sẵn để mở
-            rộng thêm, Có led báo trạng thái hoạt động, Tích hợp cầu chì tự phục
-            hồi 5A bảo vệ toàn bộ mạch
+            {product.description || "Chưa có mô tả sản phẩm"}
           </div>
           <div className="text-h4 font-bold mt-6">SẢN PHẨM CÙNG LOẠI</div>
           <div className="text-h4 mt-2 flex gap-4">
@@ -123,8 +179,7 @@ export default function ProductDetail() {
                     : ""
                 }`}
               >
-                {" "}
-                {item.colorProduct}{" "}
+                {item.colorProduct}
               </div>
             ))}
           </div>
@@ -144,7 +199,7 @@ export default function ProductDetail() {
             onClick={() => setIsShow(!isShow)}
           >
             <img className="h-ic w-ic" src={assetsImage.im_car} alt="im_car" />
-            <div className="">
+            <div>
               <span>
                 Đơn hàng có giá trị từ 300.000 (đ), miễn phí vận chuyển [ tối đa
                 15.000 (đ) ].
@@ -161,12 +216,10 @@ export default function ProductDetail() {
       {isShow && <Freeship isOpen={isShow} onClose={() => setIsShow(false)} />}
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Chi tiết sản phẩm</div>
-        <div className="text-h3"></div>
       </div>
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Sản phẩm liên quan</div>
       </div>
-      <div className=""></div>
     </div>
   );
 }

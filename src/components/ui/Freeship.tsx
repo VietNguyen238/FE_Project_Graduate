@@ -27,7 +27,7 @@ export default function Freeship({ isOpen, onClose }: FreeshipProps) {
             alt="ic_close"
           />
         </a>
-        <div className="">
+        <div className="h-[700px]">
           <h1 className="text-h3 font-medium mb-4 text-left">
             MIỄN PHÍ VẬN CHUYỂN
             <hr className="text-zinc-300"></hr>

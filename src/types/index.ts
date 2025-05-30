@@ -45,6 +45,8 @@ export interface ProductProps {
   image: string;
   newPrice?: number;
   quantity: number;
+  category: string;
+  description?: string;
 }
 
 export interface PaginatedItemsProps {

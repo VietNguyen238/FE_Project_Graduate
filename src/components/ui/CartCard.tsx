@@ -9,6 +9,9 @@ interface Props {
   price: number;
   newPrice: number;
   image: string;
+  id: number;
+  onQuantityChange: (id: number, newQuantity: number) => void;
+  onDelete: (id: number) => void;
 }
 
 export default function CartCard({
@@ -18,17 +21,24 @@ export default function CartCard({
   quantities = 1,
   price,
   image,
+  id,
+  onQuantityChange,
+  onDelete,
 }: Props) {
   const [quantity, setQuantity] = useState(quantities);
 
   const handelMinus = () => {
     if (quantity > 1) {
-      setQuantity(quantity - 1);
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      onQuantityChange(id, newQuantity);
     }
   };
 
   const handelPlus = () => {
-    setQuantity(quantity + 1);
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    onQuantityChange(id, newQuantity);
   };
 
   return (
@@ -50,9 +60,10 @@ export default function CartCard({
             </div>
           </div>
           <img
-            className="h-ic w-ic p-1"
+            className="h-ic w-ic p-1 cursor-pointer"
             src={assetsSvg.ic_close}
             alt="ic_close"
+            onClick={() => onDelete(id)}
           />
         </div>
         <div className="flex justify-between items-center">

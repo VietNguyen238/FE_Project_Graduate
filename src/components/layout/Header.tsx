@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import Button from "../ui/ButtonLayout";
 import { assetsSvg } from "../../constants/assets";
 import { useNavigateContext } from "../../context/NavigateContext";
+import { getUser } from "../../services/userService";
+import { UserProps } from "../../types";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getACart } from "../../services/cartService";
 
 const mockResults = [
   "Mạch giảm áp (hạ áp)",
@@ -24,9 +29,30 @@ const mockResults = [
 
 function Header() {
   const [query, setQuery] = useState("");
+  const dispatch = useDispatch();
+  const user = useSelector(
+    (state: { user: { user: UserProps } }) => state.user.user
+  );
+  const cart = useSelector((state: any) => state.cart.items);
+  console.log(cart);
   const [showResults, setShowResults] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { setNavigate } = useNavigateContext();
+
+  const totalQuantity = Array.isArray(cart)
+    ? cart.reduce(
+        (acc: number, item: { quantity: number }) => acc + item.quantity,
+        0
+      )
+    : 0;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      await getUser(dispatch);
+      await getACart(dispatch);
+    };
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -110,11 +136,43 @@ function Header() {
             </div>
             <div className="flex gap-2">
               <Link to="/cart" onClick={() => setNavigate("/cart")}>
-                <Button icon={assetsSvg.ic_cart_dark} title="Giỏ hàng" />
+                <div className="relative">
+                  <Button icon={assetsSvg.ic_cart_dark} title="Giỏ hàng" />
+                  {totalQuantity > 0 && (
+                    <div className="absolute top-[-4px] left-[18px] text-[9px] font-medium bg-blue_ac h-4 w-4 flex justify-center items-center rounded-full text-white border-white border-[3px] p-[8px]">
+                      {totalQuantity}
+                    </div>
+                  )}
+                </div>
               </Link>
-              <Link to="/login" onClick={() => setNavigate("/login")}>
-                <Button icon={assetsSvg.ic_person} title="Đăng nhập" />
-              </Link>
+              {user && user.name ? (
+                <div className="flex items-center gap-2">
+                  <Link to="/account" className="flex items-center">
+                    <div className="flex justify-between items-center">
+                      {user.image ? (
+                        <div className="h-[40px] w-[40px] mr-2 rounded-full overflow-hidden">
+                          <img
+                            src={user.image}
+                            alt={user.name}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          className={`h-ic mr-2 w-ic`}
+                          src={assetsSvg.ic_person}
+                          alt={assetsSvg.ic_person}
+                        />
+                      )}
+                      <div className="">{user.name}</div>
+                    </div>
+                  </Link>
+                </div>
+              ) : (
+                <Link to="/login" onClick={() => setNavigate("/login")}>
+                  <Button icon={assetsSvg.ic_person} title="Đăng nhập" />
+                </Link>
+              )}
             </div>
           </div>
         </div>

@@ -3,10 +3,12 @@ import InputText from "../components/ui/InputText";
 import Title from "../components/ui/Title";
 import Button from "../components/ui/Button";
 import { FormField, RegisterProps } from "../types";
-import { Link } from "react-router";
-import { FormAuth } from "../components/utils/validate";
+import { Link, useNavigate } from "react-router";
+import { FormRegister } from "../components/utils/validate";
 import { z } from "zod";
 import Extensions from "../components/ui/Extensions";
+import { register } from "../services/authService";
+import { toastSuccess } from "../components/utils/toast";
 
 export default function Register() {
   const [formData, setFormData] = useState<RegisterProps>({
@@ -17,6 +19,7 @@ export default function Register() {
   });
   const [errors, setErrors] = useState<Partial<RegisterProps>>({});
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     firstInputRef.current?.focus();
@@ -29,17 +32,16 @@ export default function Register() {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+    setErrors({});
 
     try {
-      FormAuth.parse(formData);
-      console.log(formData);
-      setFormData({ phone: "", email: "", name: "", password: "" });
-      setErrors({});
-      firstInputRef.current?.focus();
+      FormRegister.parse(formData);
+      register(formData);
+      navigate("/login");
     } catch (error) {
       if (error instanceof z.ZodError) {
         const formattedErrors: Partial<RegisterProps> = {};
@@ -49,8 +51,6 @@ export default function Register() {
           }
         });
         setErrors(formattedErrors);
-      } else {
-        console.error("An unexpected error occurred:", error);
       }
     }
   };

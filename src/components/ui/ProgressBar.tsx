@@ -1,5 +1,6 @@
 import { Line } from "rc-progress";
 import { assetsSvg } from "../../constants/assets";
+import { formatPrice } from "../utils/format_price";
 
 interface Props {
   totalProduct: number;
@@ -46,7 +47,7 @@ export default function ProgressBar({ totalProduct }: Props) {
       <div className="text-h5 text-title_color flex justify-center w-full">
         {totalProduct >= 300000
           ? "Đơn hàng đã đủ điều kiện Freeship"
-          : `Mua thêm ${reamainingPrice}₫ để được Freeship`}
+          : `Mua thêm ${formatPrice(reamainingPrice)}₫ để được Freeship`}
       </div>
     </div>
   );

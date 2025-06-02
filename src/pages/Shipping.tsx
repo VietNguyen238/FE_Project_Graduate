@@ -4,7 +4,7 @@ import {
   getDistrictsByProvinceCode,
   getWardsByDistrictCode,
 } from "sub-vn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Option from "../components/ui/Option";
 import InputText from "../components/ui/InputText";
 import ButtonOrder from "../components/ui/ButtonOrder";
@@ -15,6 +15,14 @@ import { shippingMethods } from "../constants";
 import { useNavigate } from "react-router";
 import { OrderProps } from "../types";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import {
+  addAddress,
+  getAddress,
+  updateUserAddress,
+} from "../services/addressService";
+import { useDispatch } from "react-redux";
+import { getUser } from "../services/userService";
 
 export default function Shipping() {
   const [formData, setFormData] = useState<OrderProps>({
@@ -25,6 +33,9 @@ export default function Shipping() {
     shippingMethod: "",
     shippingFee: 0,
   });
+  const dispatch = useDispatch();
+  const address = useSelector((state: any) => state.user.address);
+  const user = useSelector((state: any) => state.user.user);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
 
@@ -58,7 +69,7 @@ export default function Shipping() {
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
       const selectedProvinceName =
@@ -76,12 +87,17 @@ export default function Shipping() {
         district: selectedDistrictName,
         ward: selectedWardName,
         address: formData.address,
+        userId: user.id,
         shippingFee: formData.shippingFee,
         shippingMethod: selectedMethodName,
       };
       FormAddress.parse(formattedData);
       setErrors({});
-      console.log(formattedData);
+      if (address && address.userId) {
+        await updateUserAddress(formattedData, dispatch);
+      } else {
+        await addAddress(formattedData, dispatch);
+      }
       navigate("/payment");
       return true;
     } catch (error) {
@@ -99,6 +115,47 @@ export default function Shipping() {
       return false;
     }
   };
+
+  useEffect(() => {
+    const fetchAddress = async () => {
+      await getAddress(dispatch);
+      await getUser(dispatch);
+    };
+
+    fetchAddress();
+  }, []);
+
+  useEffect(() => {
+    if (address) {
+      // Find province code by name
+      const provinceCode =
+        provinces.find((p) => p.name === address.province)?.code || "";
+      // Get districts for the province
+      const districtsList = provinceCode
+        ? getDistrictsByProvinceCode(provinceCode)
+        : [];
+      // Find district code by name
+      const districtCode =
+        districtsList.find((d) => d.name === address.district)?.code || "";
+      // Get wards for the district
+      const wardsList = districtCode
+        ? getWardsByDistrictCode(districtCode)
+        : [];
+      // Find ward code by name
+      const wardCode =
+        wardsList.find((w) => w.name === address.ward)?.code || "";
+
+      setFormData((prev) => ({
+        ...prev,
+        province: provinceCode,
+        district: districtCode,
+        ward: wardCode,
+        address: address.address || "",
+        shippingMethod: address.shippingMethod || "",
+        shippingFee: address.shippingFee || 0,
+      }));
+    }
+  }, [address]);
 
   const availableShippingMethods = shippingMethods.filter(
     (method) => method.id !== "super-express" || formData.province === "79"
@@ -131,7 +188,7 @@ export default function Shipping() {
   const handlePayment = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/api/v1/payment/create_payment?amount=${200000}`
+        `http://localhost:4000/api/v1/payment/create_payment?amount=${200000}`
       );
 
       window.location.href = data.paymentUrl;
@@ -198,7 +255,12 @@ export default function Shipping() {
               <p className="mt-2 text-sm text-red-600">{errors.shippingFee}</p>
             )}
           </div>
-          <ButtonOrder onClick={handlePayment} />
+          <ButtonOrder
+            onClick={(e) => {
+              handlePayment();
+              handleSubmit(e);
+            }}
+          />
         </div>
       </div>
     </div>

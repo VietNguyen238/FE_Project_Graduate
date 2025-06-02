@@ -1,91 +1,80 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/ui/Button";
 import { assetsImage, assetsSvg } from "../constants/assets";
 import Freeship from "../components/ui/Freeship";
 import { useParams } from "react-router-dom";
-import { dataProduct } from "../config/data";
 import { formatPrice } from "../components/utils/format_price";
-
-const colorProducts = [
-  { colorProduct: "xanh" },
-  { colorProduct: "đỏ" },
-  { colorProduct: "vàng" },
-];
-
-const colorClassMap = {
-  xanh: "bg-green-500 text-white",
-  đỏ: "bg-red-500 text-white",
-  vàng: "bg-yellow-500 text-white",
-};
+import { getAProduct } from "../services/productService";
+import { ProductDetailProps } from "../types";
+import { colorClassMap } from "../constants";
+import { addCart, updateUserCart, getACart } from "../services/cartService";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const product = dataProduct.find((item) => item.id === id);
-  const [image, setImage] = useState(product?.image || "");
+  const [product, setProduct] = useState<ProductDetailProps | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [color, setColor] = useState("");
   const [isShow, setIsShow] = useState(false);
-
-  const images = [
-    { src: product?.image || "" },
-    { src: assetsImage.im_cam_bien },
-    { src: assetsImage.im_den_led },
-  ];
+  const user = useSelector((state: any) => state.user.user);
+  const cart = useSelector((state: any) => state.cart.items);
+  console.log(cart);
+  const dispatch = useDispatch();
 
   const handlePrevious = () => {
-    const currentIndex = images.findIndex((img) => img.src === image);
-    const previousIndex = (currentIndex - 1 + images.length) % images.length;
-    setImage(images[previousIndex].src);
+    if (product?.imageUrl) {
+      const newIndex =
+        (currentImageIndex - 1 + product.imageUrl.length) %
+        product.imageUrl.length;
+      setCurrentImageIndex(newIndex);
+    }
   };
 
   const handleNext = () => {
-    const currentIndex = images.findIndex((img) => img.src === image);
-    const nextIndex = (currentIndex + 1) % images.length;
-    setImage(images[nextIndex].src);
-  };
-
-  const handleBuy = () => {
-    if (product) {
-      const cartItem = {
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        newPrice: product.newPrice || 0,
-        image: image,
-        color: color,
-        quantity: 1,
-      };
-
-      try {
-        const existingCart = localStorage.getItem("cart");
-        let cartItems = [];
-        if (existingCart) {
-          try {
-            cartItems = JSON.parse(existingCart);
-            if (!Array.isArray(cartItems)) {
-              cartItems = [];
-            }
-          } catch (parseError) {
-            cartItems = [];
-          }
-        }
-
-        const existingItemIndex = cartItems.findIndex(
-          (item: any) => item.id === product.id && item.color === color
-        );
-
-        if (existingItemIndex !== -1) {
-          cartItems[existingItemIndex].quantity += 1;
-        } else {
-          cartItems.push(cartItem);
-        }
-
-        localStorage.setItem("cart", JSON.stringify(cartItems));
-        alert("Đã thêm sản phẩm vào giỏ hàng!");
-      } catch (error) {
-        alert("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!");
-      }
+    if (product?.imageUrl) {
+      const newIndex = (currentImageIndex + 1) % product.imageUrl.length;
+      setCurrentImageIndex(newIndex);
     }
   };
+
+  console.log(cart);
+  const handleBuy = () => {
+    const existingCartItem = cart.find(
+      (item: any) => item.productId._id === product?._id
+    );
+
+    if (existingCartItem) {
+      updateUserCart(
+        { quantity: existingCartItem.quantity + 1 },
+        dispatch,
+        existingCartItem._id
+      );
+    } else {
+      addCart(
+        {
+          userId: user.id,
+          productId: product?._id,
+          quantity: 1,
+        },
+        dispatch
+      );
+    }
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (id) {
+        const apiProducts = await getAProduct(id);
+        if (apiProducts) {
+          setProduct(apiProducts);
+          setCurrentImageIndex(0);
+        }
+      }
+    };
+
+    fetchProducts();
+  }, [id]);
 
   if (!product) {
     return <div>Product not found</div>;
@@ -95,53 +84,59 @@ export default function ProductDetail() {
     <div>
       <div className="p-4 shadow grid grid-cols-12 bg-white">
         <div className="col-span-5 mr-4">
-          <div className="h-[354px] w-full relative">
+          <div className="h-[354px] w-full relative mb-4">
             <img
-              src={image}
-              alt={product.title}
+              src={product?.imageUrl[currentImageIndex]}
+              alt={product?.nameProduct}
               className="aspect-square w-full"
             />
-            <button
-              onClick={handlePrevious}
-              className="absolute left-2 top-1/2 -translate-y-1/2 hover:bg-white/25 p-2 rounded-full"
-            >
-              <img
-                className="h-ic w-ic p-1"
-                src={assetsSvg.ic_arows_left}
-                alt="ic_arows_left"
-              />
-            </button>
-            <button
-              onClick={handleNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-white/25 p-2 rounded-full"
-            >
-              <img
-                className="h-ic w-ic p-1"
-                src={assetsSvg.ic_arows_right}
-                alt="ic_arows_right"
-              />
-            </button>
+            {product?.imageUrl && product.imageUrl.length > 1 && (
+              <>
+                <button
+                  onClick={handlePrevious}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 hover:bg-white/25 p-2 rounded-full"
+                >
+                  <img
+                    className="h-ic w-ic p-1"
+                    src={assetsSvg.ic_arows_left}
+                    alt="ic_arows_left"
+                  />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-white/25 p-2 rounded-full"
+                >
+                  <img
+                    className="h-ic w-ic p-1"
+                    src={assetsSvg.ic_arows_right}
+                    alt="ic_arows_right"
+                  />
+                </button>
+              </>
+            )}
           </div>
           <div className="grid grid-cols-4 gap-2">
-            {images.map((item, index) => (
+            {product?.imageUrl.map((imageUrl, index) => (
               <img
-                onMouseEnter={() => setImage(item.src)}
+                onMouseEnter={() => setCurrentImageIndex(index)}
                 key={index}
-                src={item.src}
-                alt={item.src}
+                src={imageUrl}
+                alt={`${product.nameProduct} - ${index + 1}`}
                 className="col-span-1 w-full aspect-square object-cover cursor-pointer"
               />
             ))}
           </div>
         </div>
         <div className="col-span-7 text-title_color">
-          <div className="text-h2 font-medium">{product.title}</div>
-          <div className="text-h4 text-gray">{product.category}</div>
+          <div className="text-h2 font-medium">{product.nameProduct}</div>
+          <div className="text-h4 text-gray">
+            {product.categoryId?.name || "Chưa phân loại"}
+          </div>
           <div className="text-h2 font-bold text-rose-600 mt-2">
             {formatPrice(product.newPrice ? product.newPrice : product.price)}₫
           </div>
           <div className="text-h4 mt-2">
-            Mã sản phẩm: <span className="font-medium">{product.id}</span>
+            Mã sản phẩm: <span className="font-medium">{product._id}</span>
           </div>
           <div className="mt-2 w-[145px]">
             <Button
@@ -167,21 +162,23 @@ export default function ProductDetail() {
           </div>
           <div className="text-h4 font-bold mt-6">SẢN PHẨM CÙNG LOẠI</div>
           <div className="text-h4 mt-2 flex gap-4">
-            {colorProducts.map((item, index) => (
-              <div
-                key={index}
-                onClick={() => setColor(item.colorProduct)}
-                className={`px-3 shadow rounded cursor-pointer py-1 ${
-                  color === item.colorProduct
-                    ? colorClassMap[
-                        item.colorProduct as keyof typeof colorClassMap
-                      ]
-                    : ""
-                }`}
-              >
-                {item.colorProduct}
-              </div>
-            ))}
+            {product.color?.map(
+              (item: { colorProduct: string }, index: number) => (
+                <div
+                  key={index}
+                  onClick={() => setColor(item.colorProduct)}
+                  className={`px-3 shadow rounded cursor-pointer py-1 ${
+                    color === item.colorProduct
+                      ? colorClassMap[
+                          item.colorProduct as keyof typeof colorClassMap
+                        ]
+                      : ""
+                  }`}
+                >
+                  {item.colorProduct}
+                </div>
+              )
+            )}
           </div>
           <div className="text-h4 font-bold mt-6">
             DỊCH VỤ & KHUYẾN MÃI LIÊN QUAN
@@ -216,6 +213,7 @@ export default function ProductDetail() {
       {isShow && <Freeship isOpen={isShow} onClose={() => setIsShow(false)} />}
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Chi tiết sản phẩm</div>
+        <div className="">{product.description}</div>
       </div>
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Sản phẩm liên quan</div>

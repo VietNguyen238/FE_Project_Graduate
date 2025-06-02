@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import { assetsSvg } from "../../constants/assets";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { loginGoogle } from "../../services/authService";
+import { useDispatch } from "react-redux";
 
 export default function Extensions() {
   const [userInfo, setUserInfo] = useState();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo) {
+      loginGoogle(userInfo, dispatch);
+      navigate("/");
+    }
+  }, [userInfo, dispatch, navigate]);
+
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const res = await axios.get(
@@ -20,11 +31,9 @@ export default function Extensions() {
       );
       const { given_name, email_verified, family_name, ...data } = res.data;
       setUserInfo(data);
-      navigate("/");
     },
     onError: (errorResponse) => console.log(errorResponse),
   });
-  console.log(userInfo);
 
   return (
     <div>

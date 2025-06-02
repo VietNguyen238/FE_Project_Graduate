@@ -7,13 +7,15 @@ import { ZodError } from "zod";
 import ButtonOrder from "../components/ui/ButtonOrder";
 import { useNavigate } from "react-router-dom";
 import { formFields } from "../constants";
+import { useSelector } from "react-redux";
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const user = useSelector((state: { user: { user: any } }) => state.user.user);
   const [formData, setFormData] = useState<CheckoutProps>({
-    phone: "",
-    email: "",
-    name: "",
+    phone: user?.phone || "",
+    email: user?.email || "",
+    name: user?.name || "",
   });
   const [errors, setErrors] = useState<Partial<CheckoutProps>>({});
   const firstInputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +36,6 @@ export default function Checkout() {
     try {
       FormCheckout.parse(formData);
       setErrors({});
-      console.log(formData);
       navigate("/checkout/shipping");
     } catch (error) {
       if (error instanceof ZodError) {

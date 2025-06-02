@@ -28,7 +28,7 @@ export interface CheckoutProps {
 }
 
 export interface LoginProps {
-  email: string;
+  phone: string;
   password: string;
 }
 
@@ -39,13 +39,13 @@ export interface FormField {
 }
 
 export interface ProductProps {
-  title: string;
-  id: string;
+  _id: string;
+  nameProduct: string;
   price: number;
-  image: string;
+  imageUrl: string;
   newPrice?: number;
   quantity: number;
-  category: string;
+  category?: string;
   description?: string;
 }
 
@@ -76,3 +76,47 @@ export type OrderProps = {
   shippingMethod: string;
   shippingFee: number;
 };
+
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+  products: string[];
+  isActive: boolean;
+  __v: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProductDetailProps {
+  _id: string;
+  nameProduct: string;
+  price: number;
+  newPrice?: number;
+  imageUrl: string[];
+  categoryId?: Category;
+  quantity: number;
+  description?: string;
+  color?: { colorProduct: string }[];
+}
+
+export interface UserProps {
+  name: string;
+  phone: string;
+  email: string;
+  dateOfBirth: string;
+  sex: string;
+  image: string;
+  admin: boolean;
+  addressUserId: AddressProps[];
+  orderId: string[];
+}
+
+export interface AddressProps {
+  province: string;
+  district: string;
+  ward: string;
+  address: string;
+}

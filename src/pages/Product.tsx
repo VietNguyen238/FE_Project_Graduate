@@ -2,19 +2,28 @@ import TitleCategory from "../components/ui/TitleCategory";
 import FilterUi from "../components/ui/FilterUi";
 import { useFilter } from "../context/FilterContext";
 import { listFilter } from "../constants";
-import { dataProduct } from "../config/data";
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { selectFilter, selectSort } from "../constants/action";
 import PaginatedItems from "../components/ui/PaginatedItems";
+import { getAllProduct } from "../services/productService";
 
 export default function Product() {
   const { currentCategory, setCurrentCategory, selectedFilter, selectedSort } =
     useFilter();
+  const [products, setProducts] = useState([]);
   const { categoryTitle } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      const apiProducts = await getAllProduct();
+      if (apiProducts) {
+        setProducts(apiProducts);
+      }
+    };
+
+    fetchProducts();
     if (categoryTitle) {
       const categoryIndex = listFilter.findIndex(
         (item) => item.params === categoryTitle
@@ -35,16 +44,19 @@ export default function Product() {
     : listFilter[currentCategory]?.title;
 
   const filteredProducts = useMemo(() => {
-    let products =
-      filterCategory === "Sản phẩm"
-        ? [...dataProduct]
-        : dataProduct.filter((product) => product.category === filterCategory);
+    let currentProducts: any[] = products;
 
-    products = selectFilter(selectedFilter, products);
-    products = selectSort(selectedSort, products);
+    if (categoryTitle) {
+      currentProducts = products.filter((product: any) => {
+        return product.categoryId?.slug === categoryTitle;
+      });
+    }
 
-    return products;
-  }, [filterCategory, selectedFilter, selectedSort, dataProduct]);
+    currentProducts = selectFilter(selectedFilter, currentProducts);
+    currentProducts = selectSort(selectedSort, currentProducts);
+
+    return currentProducts;
+  }, [categoryTitle, selectedFilter, selectedSort, products, filterCategory]);
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { env } from "../../config/env";
 
 interface MapProps {
   center?: google.maps.LatLngLiteral;
@@ -26,7 +27,7 @@ function Map({
   width = "100%",
   options = defaultMapOptions,
 }: MapProps) {
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const apiKey = env.GOOGLE_MAPS_API_KEY;
 
   if (!apiKey) {
     return (

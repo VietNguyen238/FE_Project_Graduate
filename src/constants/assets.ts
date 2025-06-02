@@ -24,6 +24,12 @@ import ic_facebook from "./../../src/assets/svgs/ic_facebook.svg";
 import ic_cart_dark from "./../../src/assets/svgs/ic_cart_dark.svg";
 import ic_shipping from "./../../src/assets/svgs/ic_shipping.svg";
 import ic_shipping_express from "./../../src/assets/svgs/ic_shipping_express.svg";
+import ic_address from "./../../src/assets/svgs/ic_address.svg";
+import ic_logout from "./../../src/assets/svgs/ic_logout.svg";
+import ic_order from "./../../src/assets/svgs/ic_order.svg";
+import ic_person_email from "./../../src/assets/svgs/ic_person_email.svg";
+import ic_person_password from "./../../src/assets/svgs/ic_person_password.svg";
+import ic_person_white from "./../../src/assets/svgs/ic_person_white.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -47,6 +53,12 @@ import im_car from "./../../src/assets/images/im_car.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
+  ic_person_white: ic_person_white,
+  ic_address: ic_address,
+  ic_order: ic_order,
+  ic_logout: ic_logout,
+  ic_person_email: ic_person_email,
+  ic_person_password: ic_person_password,
   ic_shipping: ic_shipping,
   ic_shipping_express: ic_shipping_express,
   ic_cart_dark: ic_cart_dark,

@@ -17,6 +17,7 @@ export default {
         title_color: "#111111",
         link: "#3273DC",
         main: "#f1f2f6",
+        blue_ac: "#4483b6",
       },
       fontSize: {
         h5: "13px",

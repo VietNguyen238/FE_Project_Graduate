@@ -3,18 +3,24 @@ import Title from "../components/ui/Title";
 import InputText from "../components/ui/InputText";
 import Button from "../components/ui/Button";
 import { FormField, LoginProps } from "../types";
-import { Link } from "react-router";
-import { FormAuth } from "../components/utils/validate";
+import { Link, useNavigate } from "react-router";
+import { FormLogin } from "../components/utils/validate";
 import * as z from "zod";
 import Extensions from "../components/ui/Extensions";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../services/authService";
 
 export default function Login() {
   const [formData, setFormData] = useState<LoginProps>({
-    email: "",
+    phone: "",
     password: "",
   });
   const [errors, setErrors] = useState<Partial<LoginProps>>({});
+  const [loginError, setLoginError] = useState<string>("");
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pending, error } = useSelector((state: any) => state.user.user);
 
   useEffect(() => {
     firstInputRef.current?.focus();
@@ -26,11 +32,12 @@ export default function Login() {
       if (errors[field]) {
         setErrors((prev) => ({ ...prev, [field]: undefined }));
       }
+      setLoginError("");
     };
 
   const validateForm = () => {
     try {
-      FormAuth.parse(formData);
+      FormLogin.parse(formData);
       setErrors({});
       return true;
     } catch (error) {
@@ -46,19 +53,28 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log(formData);
-      setFormData({ email: "", password: "" });
-      firstInputRef.current?.focus();
+      try {
+        await login(formData, dispatch);
+        if (!error) {
+          setFormData({ phone: "", password: "" });
+          firstInputRef.current?.focus();
+          navigate("/");
+        } else {
+          setLoginError("Số điện thoại hoặc mật khẩu không đúng");
+        }
+      } catch (err) {
+        setLoginError("Đã có lỗi xảy ra, vui lòng thử lại sau");
+      }
     }
   };
 
   const formFields: FormField[] = [
-    { field: "email", title: "email", type: "email" },
+    { field: "phone", title: "số điện thoại", type: "text" },
     { field: "password", title: "mật khẩu", type: "password" },
   ];
 
@@ -84,10 +100,17 @@ export default function Login() {
                 )}
               </div>
             ))}
+            {loginError && (
+              <p className="text-red-500 text-sm mb-4">{loginError}</p>
+            )}
             <div className="mt-1">
-              <button onClick={handleSubmit} className="w-full">
+              <button
+                onClick={handleSubmit}
+                className="w-full"
+                disabled={pending}
+              >
                 <Button
-                  title="Đăng nhập"
+                  title={pending ? "Đang đăng nhập..." : "Đăng nhập"}
                   bg_color="bg-red-500"
                   text_color="text-white"
                 />

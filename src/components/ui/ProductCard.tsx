@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { ProductProps } from "../../types";
 
 export default function ProductCard({
-  title,
-  image,
+  nameProduct,
+  imageUrl,
   newPrice,
   price,
   quantity,
-  id,
+  _id,
 }: ProductProps) {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${_id}`);
   };
 
   return (
@@ -23,8 +23,8 @@ export default function ProductCard({
       <div className="relative">
         <img
           className="h-[178px] w-[178px] rounded-t-lg"
-          src={image}
-          alt={image}
+          src={imageUrl}
+          alt={imageUrl}
         />
         {quantity <= 0 && (
           <>
@@ -36,17 +36,19 @@ export default function ProductCard({
         )}
       </div>
       <div className="p-2 w-full">
-        <div className="line-clamp-2 text-sm h-[40px] text-h5">{title}</div>
+        <div className="line-clamp-2 text-sm h-[40px] text-h5">
+          {nameProduct}
+        </div>
         {newPrice && newPrice > 0 ? (
           <div className="flex justify-between font-medium mt-1">
-            <div className="text-h4">{formatPrice(newPrice).trim()}đ</div>
+            <div className="text-h4">{formatPrice(newPrice).trim()}₫</div>
             <div className="text-h4 line-through text-gray">
-              {formatPrice(price).trim()}đ
+              {formatPrice(price).trim()}₫
             </div>
           </div>
         ) : (
           <div className="flex text-h4 font-medium mt-1">
-            {formatPrice(price).trim()}đ
+            {formatPrice(price).trim()}₫
           </div>
         )}
       </div>

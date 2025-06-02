@@ -31,11 +31,11 @@ export default function PaginatedItems({
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
         {currentItems.map((product: ProductProps, index: number) => (
           <ProductCard
-            id={product.id}
-            key={`${product.title}-${index}`}
+            _id={product._id}
+            key={index}
             price={product.price}
-            image={product.image}
-            title={product.title}
+            imageUrl={product.imageUrl[0]}
+            nameProduct={product.nameProduct}
             newPrice={product.newPrice}
             quantity={product.quantity}
           />

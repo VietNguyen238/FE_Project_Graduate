@@ -148,3 +148,14 @@ export const formFields: FormField[] = [
   { field: "email", title: "email", type: "email" },
   { field: "name", title: "tên", type: "text" },
 ];
+
+export const colorClassMap: { [key: string]: string } = {
+  xanh: "bg-green-500 text-white",
+  đỏ: "bg-red-500 text-white",
+  vàng: "bg-yellow-500 text-white",
+  trắng: "bg-white text-black",
+  đen: "bg-black text-white",
+  xám: "bg-gray-500 text-white",
+  nâu: "bg-brown-500 text-white",
+  tím: "bg-purple-500 text-white",
+};

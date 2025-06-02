@@ -49,7 +49,7 @@ export default function ShippingMethodList({
               </div>
               <div className="block text-sm text-gray-500">
                 {address
-                  ? `${formatPrice(method.price)}đ`
+                  ? `${formatPrice(method.price)}₫`
                   : "Chưa nhập địa chỉ"}
               </div>
             </label>

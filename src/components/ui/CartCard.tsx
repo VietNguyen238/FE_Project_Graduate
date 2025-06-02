@@ -9,9 +9,9 @@ interface Props {
   price: number;
   newPrice: number;
   image: string;
-  id: number;
-  onQuantityChange: (id: number, newQuantity: number) => void;
-  onDelete: (id: number) => void;
+  id: string;
+  onQuantityChange: (id: string, newQuantity: number) => void;
+  onDelete: (id: string) => void;
 }
 
 export default function CartCard({
@@ -71,13 +71,13 @@ export default function CartCard({
             <div className="text-h3">
               Giá:{" "}
               <span className="font-medium text-h4">
-                {newPrice == 0 ? formatPrice(price) : formatPrice(newPrice)}đ
+                {newPrice == 0 ? formatPrice(price) : formatPrice(newPrice)}₫
               </span>
             </div>
             <div className="text-h3">
               Tạm tính:{" "}
               <span className="font-medium text-h4">
-                {formatPrice((newPrice == 0 ? price : newPrice) * quantity)}đ
+                {formatPrice((newPrice == 0 ? price : newPrice) * quantity)}₫
               </span>{" "}
             </div>
           </div>

@@ -11,7 +11,6 @@ function CheckPayment() {
   useEffect(() => {
     (async () => {
       try {
-        console.log(searchParams.toString());
         const { data } = await axios.get(
           `http://localhost:3000/api/v1/payment/check_payment?${searchParams.toString()}`
         );

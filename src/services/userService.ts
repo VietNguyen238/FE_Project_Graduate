@@ -1,3 +1,4 @@
+import { toastSuccess } from "../components/utils/toast";
 import { axiosGet, axiosPost } from "../config/axios";
 import { updateError, updateStart, updateSuccess } from "../store/userSlice";
 
@@ -16,6 +17,7 @@ export const uddateUser = async (form: any, dispatch: any) => {
   try {
     const user = await axiosPost({ link: "/user/update/me", form });
     dispatch(updateSuccess(user));
+    toastSuccess("Cập nhật thành công!");
   } catch (error) {
     dispatch(updateError());
   }

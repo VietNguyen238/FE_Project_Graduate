@@ -159,3 +159,21 @@ export const colorClassMap: { [key: string]: string } = {
   nâu: "bg-brown-500 text-white",
   tím: "bg-purple-500 text-white",
 };
+
+export const colorShipping = {
+  waitForConfirmation: "bg-yellow-100 text-yellow-800",
+  confirmed: "bg-blue-100 text-blue-800",
+  shipping: "bg-purple-100 text-purple-800",
+  delivered: "bg-green-100 text-green-800",
+  received: "bg-emerald-100 text-emerald-800",
+  canceled: "bg-red-100 text-red-800",
+};
+
+export const statusShipping = {
+  waitForConfirmation: "Chờ xác nhận",
+  confirmed: "Xác nhận",
+  shipping: "Đang vận chuyển",
+  delivered: "Đã giao",
+  received: "Đã nhận hàng",
+  canceled: "Hủy",
+};

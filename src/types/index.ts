@@ -102,6 +102,20 @@ export interface ProductDetailProps {
   color?: { colorProduct: string }[];
 }
 
+export interface ReviewProps {
+  _id: string;
+  userId: {
+    _id: string;
+    name: string;
+    imageUrl: string;
+  };
+  productId: string;
+  image: string;
+  comment: string;
+  rating: number;
+  createdAt: string;
+}
+
 export interface UserProps {
   name: string;
   phone: string;

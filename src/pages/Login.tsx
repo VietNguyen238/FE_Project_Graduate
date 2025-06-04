@@ -16,11 +16,14 @@ export default function Login() {
     password: "",
   });
   const [errors, setErrors] = useState<Partial<LoginProps>>({});
+  const [isShow, setIsShow] = useState(false);
   const [loginError, setLoginError] = useState<string>("");
   const firstInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pending, error } = useSelector((state: any) => state.user.user);
+  console.log(pending);
+  console.log(error);
 
   useEffect(() => {
     firstInputRef.current?.focus();
@@ -59,16 +62,21 @@ export default function Login() {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await login(formData, dispatch);
-        if (!error) {
+        const res = await login(formData, dispatch);
+
+        if (res.success) {
           setFormData({ phone: "", password: "" });
           firstInputRef.current?.focus();
           navigate("/");
         } else {
           setLoginError("Số điện thoại hoặc mật khẩu không đúng");
         }
-      } catch (err) {
-        setLoginError("Đã có lỗi xảy ra, vui lòng thử lại sau");
+      } catch (err: any) {
+        if (err.response && err.response.status === 500) {
+          setLoginError("Đã xảy ra lỗi máy chủ nội bộ, vui lòng thử lại sau.");
+        } else {
+          setLoginError("Đã có lỗi xảy ra, vui lòng thử lại sau");
+        }
       }
     }
   };
@@ -89,9 +97,14 @@ export default function Login() {
                 <InputText
                   title={title}
                   value={formData[field as keyof LoginProps]}
-                  type={type}
+                  type={
+                    type == "password" ? (isShow ? "text" : "password") : "text"
+                  }
                   onChange={handleChange(field as keyof LoginProps)}
                   ref={index === 0 ? firstInputRef : null}
+                  isShowPasword={field == "password"}
+                  isShow={isShow}
+                  onClick={() => setIsShow(!isShow)}
                 />
                 {errors[field as keyof LoginProps] && (
                   <p className="text-red-500 text-sm mt-1">

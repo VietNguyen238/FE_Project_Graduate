@@ -2,24 +2,27 @@ import { useEffect, useState } from "react";
 import Button from "../components/ui/Button";
 import { assetsImage, assetsSvg } from "../constants/assets";
 import Freeship from "../components/ui/Freeship";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { formatPrice } from "../components/utils/format_price";
 import { getAProduct } from "../services/productService";
-import { ProductDetailProps } from "../types";
+import { ProductDetailProps, ReviewProps } from "../types";
 import { colorClassMap } from "../constants";
-import { addCart, updateUserCart, getACart } from "../services/cartService";
+import { addCart, updateUserCart } from "../services/cartService";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { getReviews } from "../services/reviewService";
+import Review from "../components/ui/Review";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductDetailProps | null>(null);
+  const [reviews, setReviews] = useState<ReviewProps[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [color, setColor] = useState("");
   const [isShow, setIsShow] = useState(false);
+  const navigate = useNavigate();
   const user = useSelector((state: any) => state.user.user);
   const cart = useSelector((state: any) => state.cart.items);
-  console.log(cart);
   const dispatch = useDispatch();
 
   const handlePrevious = () => {
@@ -38,27 +41,30 @@ export default function ProductDetail() {
     }
   };
 
-  console.log(cart);
   const handleBuy = () => {
-    const existingCartItem = cart.find(
-      (item: any) => item.productId._id === product?._id
-    );
-
-    if (existingCartItem) {
-      updateUserCart(
-        { quantity: existingCartItem.quantity + 1 },
-        dispatch,
-        existingCartItem._id
-      );
+    if (!user.name) {
+      navigate("/login");
     } else {
-      addCart(
-        {
-          userId: user.id,
-          productId: product?._id,
-          quantity: 1,
-        },
-        dispatch
+      const existingCartItem = cart.find(
+        (item: any) => item.productId._id === product?._id
       );
+
+      if (existingCartItem) {
+        updateUserCart(
+          { quantity: existingCartItem.quantity + 1 },
+          dispatch,
+          existingCartItem._id
+        );
+      } else {
+        addCart(
+          {
+            userId: user.id,
+            productId: product?._id,
+            quantity: 1,
+          },
+          dispatch
+        );
+      }
     }
   };
 
@@ -66,8 +72,11 @@ export default function ProductDetail() {
     const fetchProducts = async () => {
       if (id) {
         const apiProducts = await getAProduct(id);
+        const apiReviews = await getReviews(id);
+        console.log(apiReviews);
         if (apiProducts) {
           setProduct(apiProducts);
+          setReviews(apiReviews);
           setCurrentImageIndex(0);
         }
       }
@@ -136,7 +145,10 @@ export default function ProductDetail() {
             {formatPrice(product.newPrice ? product.newPrice : product.price)}₫
           </div>
           <div className="text-h4 mt-2">
-            Mã sản phẩm: <span className="font-medium">{product._id}</span>
+            Mã sản phẩm:{" "}
+            <span className="font-medium">
+              {product._id.slice(-4).toUpperCase()}
+            </span>
           </div>
           <div className="mt-2 w-[145px]">
             <Button
@@ -154,11 +166,20 @@ export default function ProductDetail() {
             </div>
           ) : (
             <div className="text-green-600 font-medium mt-2">
-              Sản phẩm hiện đang còn hàng.
+              Còn {product.quantity} sản phẩm.
             </div>
           )}
           <div className="text-h4 mt-3">
-            {product.description || "Chưa có mô tả sản phẩm"}
+            {product.description || (
+              <div>
+                <p>– Số lượng quả cân trong 1 hộp: (5g, 10g, 20g, 20g, 50g)</p>
+                <p>
+                  – Cấp độ chính xác: Cấp độ M2 quốc tế (chính xác tuyệt đối)
+                </p>
+                <p>– Chất liệu: thép mạ crom</p>
+                <p>– Bộ sản phẩm bao gồm (5 quả cân, hộp đựng, kẹp gắp)</p>
+              </div>
+            )}
           </div>
           <div className="text-h4 font-bold mt-6">SẢN PHẨM CÙNG LOẠI</div>
           <div className="text-h4 mt-2 flex gap-4">
@@ -217,6 +238,31 @@ export default function ProductDetail() {
       </div>
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Sản phẩm liên quan</div>
+      </div>
+      <div className="p-4 shadow mt-4 bg-white">
+        <div className="font-medium text-h3">Phản hồi từ khách hàng</div>
+        <hr className="border-zinc-300 mt-2" />
+        {reviews.length > 0 ? (
+          reviews
+            .sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            )
+            .map((review, index) => (
+              <Review
+                key={index}
+                comment={review.comment}
+                image={review.userId.imageUrl}
+                name={review.userId.name}
+                rate={review.rating}
+                time={review.createdAt}
+                isLast={reviews.length - 1 == index && true}
+              />
+            ))
+        ) : (
+          <div className="text-h3 mt-2">Chưa có đánh giá sản phẩm</div>
+        )}
       </div>
     </div>
   );

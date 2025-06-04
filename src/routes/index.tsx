@@ -12,6 +12,8 @@ import Shipping from "../pages/Shipping";
 import Checkout from "../pages/Checkout";
 import CheckPayment from "../pages/CheckPayment";
 import Account from "../pages/Account";
+import Order from "../pages/Order";
+import OrderDetail from "../pages/OrderDetail";
 
 export default function AppRouter() {
   return (
@@ -117,6 +119,22 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFooter={false}>
             <Account />
+          </Layout>
+        }
+      />
+      <Route
+        path="/account/orders"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Order />
+          </Layout>
+        }
+      />
+      <Route
+        path="/orders/:id"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <OrderDetail />
           </Layout>
         }
       />

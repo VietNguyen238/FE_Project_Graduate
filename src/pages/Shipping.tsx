@@ -4,6 +4,7 @@ import {
   getDistrictsByProvinceCode,
   getWardsByDistrictCode,
 } from "sub-vn";
+import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import Option from "../components/ui/Option";
 import InputText from "../components/ui/InputText";
@@ -127,21 +128,16 @@ export default function Shipping() {
 
   useEffect(() => {
     if (address) {
-      // Find province code by name
       const provinceCode =
         provinces.find((p) => p.name === address.province)?.code || "";
-      // Get districts for the province
       const districtsList = provinceCode
         ? getDistrictsByProvinceCode(provinceCode)
         : [];
-      // Find district code by name
       const districtCode =
         districtsList.find((d) => d.name === address.district)?.code || "";
-      // Get wards for the district
       const wardsList = districtCode
         ? getWardsByDistrictCode(districtCode)
         : [];
-      // Find ward code by name
       const wardCode =
         wardsList.find((w) => w.name === address.ward)?.code || "";
 
@@ -256,9 +252,11 @@ export default function Shipping() {
             )}
           </div>
           <ButtonOrder
-            onClick={(e) => {
-              handlePayment();
-              handleSubmit(e);
+            onClick={async (e) => {
+              const submitResult = await handleSubmit(e);
+              if (submitResult) {
+                handlePayment();
+              }
             }}
           />
         </div>

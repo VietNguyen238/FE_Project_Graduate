@@ -75,22 +75,20 @@ export default function Account() {
 
           <nav className="user-nav">
             {data.map((item, index) => (
-              <div
-                key={index}
-                className="flex gap-2 items-center p-2 border border-zinc-200 cursor-pointer"
-              >
-                <img
-                  src={item.icon}
-                  alt={item.icon}
-                  className="h-ic w-ic p-1"
-                />
+              <Link to={item.href}>
                 <div
-                  className="text-h4"
+                  key={index}
+                  className="flex gap-2 items-center p-2 border border-zinc-200 cursor-pointer"
                   onClick={item.text === "Đăng xuất" ? handleLogout : undefined}
                 >
-                  {item.text}
+                  <img
+                    src={item.icon}
+                    alt={item.icon}
+                    className="h-ic w-ic p-1"
+                  />
+                  <div className="text-h4">{item.text}</div>
                 </div>
-              </div>
+              </Link>
             ))}
           </nav>
         </div>

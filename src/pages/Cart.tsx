@@ -5,7 +5,7 @@ import Title from "../components/ui/Title";
 import { formatPrice } from "../components/utils/format_price";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteCart, getACart, updateUserCart } from "../services/cartService";
+import { deleteCart, getCart, updateUserCart } from "../services/cartService";
 import { useDispatch, useSelector } from "react-redux";
 
 interface CartItem {
@@ -53,7 +53,7 @@ export default function Cart() {
 
   useEffect(() => {
     const fetchCart = async () => {
-      await getACart(dispatch);
+      await getCart(dispatch);
     };
     fetchCart();
   }, [dispatch]);

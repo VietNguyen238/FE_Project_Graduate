@@ -30,6 +30,9 @@ import ic_order from "./../../src/assets/svgs/ic_order.svg";
 import ic_person_email from "./../../src/assets/svgs/ic_person_email.svg";
 import ic_person_password from "./../../src/assets/svgs/ic_person_password.svg";
 import ic_person_white from "./../../src/assets/svgs/ic_person_white.svg";
+import ic_star from "./../../src/assets/svgs/ic_star.svg";
+import ic_half_star from "./../../src/assets/svgs/ic_half_star.svg";
+import ic_noun_star from "./../../src/assets/svgs/ic_noun_star.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -50,9 +53,13 @@ import im_quan_9 from "./../../src/assets/images/im_quan_9.png";
 import im_tan_phu from "./../../src/assets/images/im_tan_phu.png";
 import im_membership from "./../../src/assets/images/im_membership.png";
 import im_car from "./../../src/assets/images/im_car.png";
+import im_logo from "./../../src/assets/images/im_logo.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
+  ic_star: ic_star,
+  ic_half_star: ic_half_star,
+  ic_noun_star: ic_noun_star,
   ic_person_white: ic_person_white,
   ic_address: ic_address,
   ic_order: ic_order,
@@ -88,6 +95,7 @@ export const assetsSvg = {
 
 export const assetsImage = {
   im_protect: im_protect,
+  im_logo: im_logo,
   im_quan_9: im_quan_9,
   im_tan_phu: im_tan_phu,
   im_ui: im_ui,

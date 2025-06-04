@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
 import Button from "../ui/ButtonLayout";
-import { assetsSvg } from "../../constants/assets";
+import { assetsImage, assetsSvg } from "../../constants/assets";
 import { useNavigateContext } from "../../context/NavigateContext";
 import { getUser } from "../../services/userService";
 import { UserProps } from "../../types";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getACart } from "../../services/cartService";
+import { getCart } from "../../services/cartService";
 
 const mockResults = [
   "Mạch giảm áp (hạ áp)",
@@ -34,7 +34,6 @@ function Header() {
     (state: { user: { user: UserProps } }) => state.user.user
   );
   const cart = useSelector((state: any) => state.cart.items);
-  console.log(cart);
   const [showResults, setShowResults] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { setNavigate } = useNavigateContext();
@@ -49,7 +48,7 @@ function Header() {
   useEffect(() => {
     const fetchUser = async () => {
       await getUser(dispatch);
-      await getACart(dispatch);
+      await getCart(dispatch);
     };
     fetchUser();
   }, []);
@@ -78,9 +77,9 @@ function Header() {
           <div className="w-page flex h-[52px] justify-between items-center">
             <Link to="/">
               <img
-                className="h-[52px] py-[9px]"
-                src={assetsSvg.ic_logo}
-                alt="ic_logo"
+                className="h-[52px] py-1"
+                src={assetsImage.im_logo}
+                alt="im_logo"
               />
             </Link>
             <div className="flex-1 mx-4 relative">
@@ -137,7 +136,11 @@ function Header() {
             <div className="flex gap-2">
               <Link to="/cart" onClick={() => setNavigate("/cart")}>
                 <div className="relative">
-                  <Button icon={assetsSvg.ic_cart_dark} title="Giỏ hàng" />
+                  <Button
+                    icon={assetsSvg.ic_cart_dark}
+                    title="Giỏ hàng"
+                    isHover={false}
+                  />
                   {totalQuantity > 0 && (
                     <div className="absolute top-[-4px] left-[18px] text-[9px] font-medium bg-blue_ac h-4 w-4 flex justify-center items-center rounded-full text-white border-white border-[3px] p-[8px]">
                       {totalQuantity}
@@ -150,7 +153,7 @@ function Header() {
                   <Link to="/account" className="flex items-center">
                     <div className="flex justify-between items-center">
                       {user.image ? (
-                        <div className="h-[40px] w-[40px] mr-2 rounded-full overflow-hidden">
+                        <div className="h-[35px] w-[35px] mr-2 rounded-full overflow-hidden">
                           <img
                             src={user.image}
                             alt={user.name}
@@ -170,7 +173,11 @@ function Header() {
                 </div>
               ) : (
                 <Link to="/login" onClick={() => setNavigate("/login")}>
-                  <Button icon={assetsSvg.ic_person} title="Đăng nhập" />
+                  <Button
+                    icon={assetsSvg.ic_person}
+                    title="Đăng nhập"
+                    isHover={false}
+                  />
                 </Link>
               )}
             </div>

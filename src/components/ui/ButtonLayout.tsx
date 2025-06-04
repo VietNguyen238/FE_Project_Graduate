@@ -6,6 +6,7 @@ interface Props {
   index?: number;
   show?: boolean;
   isColor?: boolean;
+  isHover?: boolean;
   onClick?: () => void;
 }
 
@@ -13,6 +14,7 @@ export default function ButtonLayout({
   icon,
   title,
   //   isArows = false,
+  isHover = true,
   onClick,
   current,
   index,
@@ -31,8 +33,8 @@ export default function ButtonLayout({
       <div className="flex items-center">
         <img className={`h-ic mr-2 w-ic`} src={icon} alt={icon} />
         <div
-          className={`group-hover:text-link ${
-            isColor && current === index && "font-medium "
+          className={`${isHover && "group-hover:text-link"} ${
+            isColor && current === index && "font-medium"
           }`}
         >
           {title}

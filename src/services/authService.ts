@@ -4,9 +4,13 @@ import {
   updateStart,
   updateSuccess,
   clearUser,
+  clearAddress,
 } from "../store/userSlice";
 import axios from "axios";
 import { toastSuccess, toastError } from "../components/utils/toast";
+import { clearCart } from "../store/cartSlice";
+import { getCart } from "./cartService";
+import { clearOrder } from "../store/orderSlice";
 
 const local = env.LOCALHOST;
 
@@ -29,8 +33,11 @@ const login = async (user: any, dispatch: any) => {
     localStorage.setItem("accessToken", res.data.accessToken);
     toastSuccess("Đăng nhập thành công!");
     dispatch(updateSuccess(res.data));
+    getCart(dispatch);
+    return { success: true };
   } catch (error) {
     dispatch(updateError());
+    return { success: false };
   }
 };
 
@@ -41,6 +48,7 @@ const loginGoogle = async (user: any, dispatch: any) => {
     localStorage.setItem("accessToken", res.data.accessToken);
     toastSuccess("Đăng nhập thành công!");
     dispatch(updateSuccess(res.data));
+    dispatch(getCart(dispatch));
   } catch (error) {
     dispatch(updateError());
   }
@@ -51,6 +59,9 @@ const logout = async (dispatch: any) => {
     await axios.post(`${local}/auth/logout`);
     localStorage.removeItem("accessToken");
     dispatch(clearUser());
+    dispatch(clearAddress());
+    dispatch(clearCart());
+    dispatch(clearOrder());
     toastSuccess("Đăng xuất thành công!");
   } catch (error) {
     if (axios.isAxiosError(error)) {

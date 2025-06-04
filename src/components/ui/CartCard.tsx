@@ -56,7 +56,9 @@ export default function CartCard({
               <div className="text-h3 text-title_color font-medium">
                 {title}
               </div>
-              <div className="text-h5 text-gray">màu sắc: {color}</div>
+              <div className="text-h5 text-gray">
+                Mã sản phẩm: {id.slice(-4).toUpperCase()}
+              </div>
             </div>
           </div>
           <img

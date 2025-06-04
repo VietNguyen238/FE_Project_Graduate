@@ -8,7 +8,6 @@ import { FormRegister } from "../components/utils/validate";
 import { z } from "zod";
 import Extensions from "../components/ui/Extensions";
 import { register } from "../services/authService";
-import { toastSuccess } from "../components/utils/toast";
 
 export default function Register() {
   const [formData, setFormData] = useState<RegisterProps>({
@@ -18,6 +17,7 @@ export default function Register() {
     password: "",
   });
   const [errors, setErrors] = useState<Partial<RegisterProps>>({});
+  const [isShow, setIsShow] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -73,9 +73,14 @@ export default function Register() {
                 <InputText
                   title={title}
                   value={formData[field as keyof RegisterProps]}
-                  type={type}
+                  type={
+                    type == "password" ? (isShow ? "text" : "password") : "text"
+                  }
                   onChange={handleChange(field as keyof RegisterProps)}
                   ref={index === 0 ? firstInputRef : null}
+                  isShowPasword={field == "password"}
+                  isShow={isShow}
+                  onClick={() => setIsShow(!isShow)}
                 />
                 {errors[field as keyof RegisterProps] && (
                   <p className="text-red-500 text-sm mt-1">

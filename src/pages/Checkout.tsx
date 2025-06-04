@@ -8,6 +8,8 @@ import ButtonOrder from "../components/ui/ButtonOrder";
 import { useNavigate } from "react-router-dom";
 import { formFields } from "../constants";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { uddateUser } from "../services/userService";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ export default function Checkout() {
   });
   const [errors, setErrors] = useState<Partial<CheckoutProps>>({});
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
+  console.log(user);
 
   useEffect(() => {
     firstInputRef.current?.focus();
@@ -31,11 +35,12 @@ export default function Checkout() {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
       FormCheckout.parse(formData);
       setErrors({});
+      await uddateUser(formData, dispatch);
       navigate("/checkout/shipping");
     } catch (error) {
       if (error instanceof ZodError) {

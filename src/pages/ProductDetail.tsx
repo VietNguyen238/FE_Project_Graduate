@@ -73,7 +73,7 @@ export default function ProductDetail() {
       if (id) {
         const apiProducts = await getAProduct(id);
         const apiReviews = await getReviews(id);
-        console.log(apiReviews);
+
         if (apiProducts) {
           setProduct(apiProducts);
           setReviews(apiReviews);

@@ -79,8 +79,10 @@ export default function Cart() {
             </div>
           ))
         ) : (
-          <div className="text-h4 text-title_color flex justify-center mb-40">
-            Chưa có sản phẩm nào trong giỏ hàng
+          <div className="bg-white p-4 shadow text-h4">
+            <div className="text-center text-gray">
+              Chưa có sản phẩm nào trong giỏ hàng
+            </div>
           </div>
         )}
         {cart && Array.isArray(cart) && cart.length > 0 && (

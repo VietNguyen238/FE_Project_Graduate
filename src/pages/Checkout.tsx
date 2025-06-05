@@ -22,7 +22,6 @@ export default function Checkout() {
   const [errors, setErrors] = useState<Partial<CheckoutProps>>({});
   const firstInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  console.log(user);
 
   useEffect(() => {
     firstInputRef.current?.focus();
@@ -40,7 +39,17 @@ export default function Checkout() {
     try {
       FormCheckout.parse(formData);
       setErrors({});
-      await uddateUser(formData, dispatch);
+
+      const hasChanges = Object.keys(formData).some(
+        (key) =>
+          formData[key as keyof CheckoutProps] !==
+          user[key as keyof CheckoutProps]
+      );
+
+      if (hasChanges) {
+        await uddateUser(formData, dispatch);
+      }
+
       navigate("/checkout/shipping");
     } catch (error) {
       if (error instanceof ZodError) {

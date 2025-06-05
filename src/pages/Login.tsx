@@ -21,9 +21,7 @@ export default function Login() {
   const firstInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { pending, error } = useSelector((state: any) => state.user.user);
-  console.log(pending);
-  console.log(error);
+  const { pending } = useSelector((state: any) => state.user.user);
 
   useEffect(() => {
     firstInputRef.current?.focus();

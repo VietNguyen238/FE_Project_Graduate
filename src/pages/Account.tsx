@@ -35,7 +35,6 @@ export default function Account() {
   const handleLogout = async () => {
     await logout(dispatch);
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("cart");
     navigate("/");
   };
 
@@ -75,7 +74,7 @@ export default function Account() {
 
           <nav className="user-nav">
             {data.map((item, index) => (
-              <Link to={item.href}>
+              <Link to={item.href} key={index}>
                 <div
                   key={index}
                   className="flex gap-2 items-center p-2 border border-zinc-200 cursor-pointer"

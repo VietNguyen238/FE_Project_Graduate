@@ -33,6 +33,10 @@ import ic_person_white from "./../../src/assets/svgs/ic_person_white.svg";
 import ic_star from "./../../src/assets/svgs/ic_star.svg";
 import ic_half_star from "./../../src/assets/svgs/ic_half_star.svg";
 import ic_noun_star from "./../../src/assets/svgs/ic_noun_star.svg";
+import ic_money from "./../../src/assets/svgs/ic_money.svg";
+import ic_payment from "./../../src/assets/svgs/ic_payment.svg";
+import ic_arown_left from "./../../src/assets/svgs/ic_arown_left.svg";
+import ic_arown_right from "./../../src/assets/svgs/ic_arown_right.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -57,6 +61,10 @@ import im_logo from "./../../src/assets/images/im_logo.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
+  ic_money: ic_money,
+  ic_arown_left: ic_arown_left,
+  ic_arown_right: ic_arown_right,
+  ic_payment: ic_payment,
   ic_star: ic_star,
   ic_half_star: ic_half_star,
   ic_noun_star: ic_noun_star,

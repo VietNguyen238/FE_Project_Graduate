@@ -1,7 +1,8 @@
 import { toastSuccess } from "../components/utils/toast";
-import { axiosDelete, axiosGet, axiosPost } from "../config/axios";
+import { axiosGet, axiosPost } from "../config/axios";
 import { updateOrder } from "../store/orderSlice";
 import { getAddress } from "./addressService";
+import { getCart } from "./cartService";
 
 const getIdOrder = async (id: string, dispatch: any) => {
   const order = await axiosGet({ link: `/order/${id}` });
@@ -17,17 +18,14 @@ const getOrder = async (dispatch: any) => {
 const addOrder = async (form: any, dispatch: any) => {
   const order = await axiosPost({ link: "/order/add", form });
   dispatch(updateOrder(order));
+  getCart(dispatch);
   toastSuccess("Đã tạo đơn hàng thành công!");
 };
 
 const updateUserOrder = async (form: any, dispatch: any, id: string) => {
-  await axiosPost({ link: `/order/update/${id}`, form });
+  const order = await axiosPost({ link: `/order/update/${id}`, form });
+  dispatch(updateOrder(order));
   toastSuccess("Đã cập nhật đơn hàng thành công!");
 };
 
-const deleteOrder = async (id: string, dispatch: any) => {
-  await axiosDelete({ link: `/order/delete/${id}` });
-  toastSuccess("Đã hủy đơn hàng thành công!");
-};
-
-export { addOrder, updateUserOrder, deleteOrder, getOrder, getIdOrder };
+export { addOrder, updateUserOrder, getOrder, getIdOrder };

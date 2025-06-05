@@ -4,7 +4,6 @@ import {
   getDistrictsByProvinceCode,
   getWardsByDistrictCode,
 } from "sub-vn";
-import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import Option from "../components/ui/Option";
 import InputText from "../components/ui/InputText";
@@ -14,19 +13,15 @@ import { ZodError } from "zod";
 import ShippingMethodList from "../components/ui/ShippingMethodList";
 import { shippingMethods } from "../constants";
 import { useNavigate } from "react-router";
-import { OrderProps } from "../types";
-import axios from "axios";
+import { ShippingProps } from "../types";
 import { useSelector } from "react-redux";
-import {
-  addAddress,
-  getAddress,
-  updateUserAddress,
-} from "../services/addressService";
+import { getAddress, updateUserAddress } from "../services/addressService";
 import { useDispatch } from "react-redux";
 import { getUser } from "../services/userService";
+import { useOrderContext } from "../context/OrderContext";
 
 export default function Shipping() {
-  const [formData, setFormData] = useState<OrderProps>({
+  const [formData, setFormData] = useState<ShippingProps>({
     province: "",
     district: "",
     ward: "",
@@ -34,12 +29,12 @@ export default function Shipping() {
     shippingMethod: "",
     shippingFee: 0,
   });
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const address = useSelector((state: any) => state.user.address);
   const user = useSelector((state: any) => state.user.user);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-
   const provinces = getProvinces();
   const districts = formData.province
     ? getDistrictsByProvinceCode(formData.province)
@@ -47,8 +42,9 @@ export default function Shipping() {
   const wards = formData.district
     ? getWardsByDistrictCode(formData.district)
     : [];
+  const { setOrder } = useOrderContext();
 
-  const handleChange = (field: keyof OrderProps, value: string | number) => {
+  const handleChange = (field: keyof ShippingProps, value: string | number) => {
     setFormData((prev) => {
       let newData = { ...prev };
       if (field === "province") {
@@ -94,13 +90,20 @@ export default function Shipping() {
       };
       FormAddress.parse(formattedData);
       setErrors({});
+
       if (address && address.userId) {
-        await updateUserAddress(formattedData, dispatch);
-      } else {
-        await addAddress(formattedData, dispatch);
+        const hasChanges =
+          address.province !== formattedData.province ||
+          address.district !== formattedData.district ||
+          address.ward !== formattedData.ward ||
+          address.address !== formattedData.address;
+        if (hasChanges) {
+          await updateUserAddress(formattedData, dispatch);
+        }
       }
-      navigate("/payment");
-      return true;
+
+      setOrder(formattedData as any);
+      navigate("/checkout/payment");
     } catch (error) {
       if (error instanceof ZodError) {
         setErrors(
@@ -113,14 +116,20 @@ export default function Shipping() {
           )
         );
       }
-      return false;
     }
   };
 
   useEffect(() => {
     const fetchAddress = async () => {
-      await getAddress(dispatch);
-      await getUser(dispatch);
+      setIsLoading(true);
+      try {
+        await getAddress(dispatch);
+        await getUser(dispatch);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchAddress();
@@ -153,27 +162,30 @@ export default function Shipping() {
     }
   }, [address]);
 
-  const availableShippingMethods = shippingMethods.filter(
-    (method) => method.id !== "super-express" || formData.province === "79"
-  );
+  const availableShippingMethods = shippingMethods.filter((method) => {
+    if (method.id === "super-express") {
+      return formData.province === "79";
+    }
+    return true;
+  });
 
   const addressFields = [
     {
-      id: "province" as keyof OrderProps,
+      id: "province" as keyof ShippingProps,
       title: "Tỉnh / Thành phố",
       option: "Chọn tỉnh thành...",
       list: provinces,
       value: formData.province,
     },
     {
-      id: "district" as keyof OrderProps,
+      id: "district" as keyof ShippingProps,
       title: "Quận huyện",
       option: "Chọn quận huyện...",
       list: districts,
       value: formData.district,
     },
     {
-      id: "ward" as keyof OrderProps,
+      id: "ward" as keyof ShippingProps,
       title: "Phường xã",
       option: "Chọn Phường xã...",
       list: wards,
@@ -181,17 +193,13 @@ export default function Shipping() {
     },
   ];
 
-  const handlePayment = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:4000/api/v1/payment/create_payment?amount=${200000}`
-      );
-
-      window.location.href = data.paymentUrl;
-    } catch (error) {
-      console.error("Payment error:", error);
-    }
-  };
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center items-center py-8">
@@ -251,14 +259,7 @@ export default function Shipping() {
               <p className="mt-2 text-sm text-red-600">{errors.shippingFee}</p>
             )}
           </div>
-          <ButtonOrder
-            onClick={async (e) => {
-              const submitResult = await handleSubmit(e);
-              if (submitResult) {
-                handlePayment();
-              }
-            }}
-          />
+          <ButtonOrder onClick={handleSubmit} />
         </div>
       </div>
     </div>

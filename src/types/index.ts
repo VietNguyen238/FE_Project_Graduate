@@ -68,7 +68,7 @@ export interface OptionProps {
   htmlFor: string;
 }
 
-export type OrderProps = {
+export type ShippingProps = {
   province: string;
   district: string;
   ward: string;
@@ -133,4 +133,44 @@ export interface AddressProps {
   district: string;
   ward: string;
   address: string;
+}
+
+export interface PaymentProps {
+  id: string;
+  value: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface PaymentCartProps {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  paymentMethod: string;
+}
+
+export interface OrderProps {
+  userId: UserProps;
+  orders: Array<{
+    productId: ProductDetailProps[];
+    nameProduct: string;
+    price: number;
+    newPrice: number;
+    quantity: number;
+  }>;
+  freeship: number;
+  province: string;
+  district: string;
+  ward: string;
+  address: string;
+  status: string;
+  paymentMethod: string;
+  shippingMethod: string;
+  shippingFee: number;
+  total: number;
+  note: string;
 }

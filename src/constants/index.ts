@@ -177,3 +177,20 @@ export const statusShipping = {
   received: "Đã nhận hàng",
   canceled: "Hủy",
 };
+
+export const payments = [
+  {
+    id: "payment_method_cod",
+    value: "cod",
+    title: "Thanh toán tiền mặt khi nhận hàng",
+    description: "Trả tiền mặt cho nhân viên giao hàng khi nhận hàng",
+    icon: assetsSvg.ic_money,
+  },
+  {
+    id: "payment_method_vnpay",
+    value: "vnpay",
+    title: "Chuyển khoản ngân hàng / VnPay",
+    description: "Đơn hàng sẽ được giao sau khi chuyển khoản thành công.",
+    icon: assetsSvg.ic_payment,
+  },
+];

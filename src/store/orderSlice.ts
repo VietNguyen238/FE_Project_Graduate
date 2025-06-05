@@ -12,6 +12,7 @@ const orderSlice = createSlice({
         paymentMethob: "",
         shippingMethod: "",
         shippingFee: 0,
+        total: 0,
         note: "",
       },
     ],

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Title from "../components/ui/Title";
 import { getIdOrder } from "../services/orderService";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { colorShipping, statusShipping } from "../constants";
 import { formatDate } from "../components/utils/formatDate";
@@ -14,7 +14,6 @@ export default function OrderDetail() {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const order = useSelector((state: any) => state.order.orders);
-  const address = useSelector((state: any) => state.user.address);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -105,26 +104,29 @@ export default function OrderDetail() {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td className="border border-gray-300 p-2">
-                    <a
-                      href="/products/163698"
-                      target="_blank"
-                      className="text-blue-600 hover:underline"
-                    >
-                      {order.productId.nameProduct}
-                    </a>
-                  </td>
-                  <td className="border border-gray-300 p-2 text-right">1</td>
-                  <td className="border border-gray-300 p-2 text-right">
-                    {formatPrice(order.productId.price)}₫
-                  </td>
-                  <td className="border border-gray-300 p-2 text-right">
-                    {formatPrice(order.total)}₫
-                  </td>
-                </tr>
-              </tbody>
+              {order.orders.map((item: any, index: number) => (
+                <tbody key={index}>
+                  <tr>
+                    <td className="border border-gray-300 p-2">
+                      <Link
+                        to={`/product/${item.productId._id}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        {item.productId.nameProduct}
+                      </Link>
+                    </td>
+                    <td className="border border-gray-300 p-2 text-right">
+                      {item.quantity}
+                    </td>
+                    <td className="border border-gray-300 p-2 text-right">
+                      {formatPrice(item.productId.price)}₫
+                    </td>
+                    <td className="border border-gray-300 p-2 text-right">
+                      {formatPrice(item.quantity * item.productId.price)}₫
+                    </td>
+                  </tr>
+                </tbody>
+              ))}
               <tfoot>
                 <tr>
                   <th
@@ -145,7 +147,7 @@ export default function OrderDetail() {
                     Tổng cộng:
                   </th>
                   <td className="border border-gray-300 p-2 text-right font-semibold">
-                    54.000₫
+                    {formatPrice(order.total)}₫
                   </td>
                 </tr>
               </tfoot>
@@ -159,10 +161,7 @@ export default function OrderDetail() {
                   <a
                     href="/checkout/processing/?order_id=163832&order_key=wc_order_63k6T5BFnFcAS"
                     className="flex items-center text-red-600 hover:underline mt-1 text-sm"
-                  >
-                    {/* <span className="mr-1">→</span>
-                    <span>Chưa thanh toán, click để thanh toán.</span> */}
-                  </a>
+                  ></a>
                 </div>
               </div>
               <div className="grid grid-cols-5">
@@ -188,24 +187,19 @@ export default function OrderDetail() {
               <div className="grid grid-cols-5">
                 <p className="text-title_color font-medium">Thành phố:</p>
                 <p className="col-span-4">
-                  {address.ward}, {address.district}, {address.province}
+                  {order.ward}, {order.district}, {order.province}
                 </p>
               </div>
               <div className="grid grid-cols-5">
                 <p className="text-title_color font-medium">Địa chỉ:</p>
-                <p className="col-span-4">{address.address}</p>
+                <p className="col-span-4">{order.address}</p>
               </div>
             </div>
             <hr className="my-4" />
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-semibold">Ghi chú</h2>
-              <button className="px-4 py-1 text-sm border border-blue-500 text-blue-500 hover:text-white rounded hover:bg-blue-500">
-                Thêm ghi chú
-              </button>
             </div>
-            <div className="mt-2 h-20 border border-dashed border-gray-300 p-2 text-gray-500 flex items-center justify-center">
-              Chưa có ghi chú
-            </div>
+            <div className="mt-2">{order.note || "Chưa có ghi chú"}</div>
           </div>
         </div>
       </div>

@@ -169,17 +169,8 @@ export default function ProductDetail() {
               Còn {product.quantity} sản phẩm.
             </div>
           )}
-          <div className="text-h4 mt-3">
-            {product.description || (
-              <div>
-                <p>– Số lượng quả cân trong 1 hộp: (5g, 10g, 20g, 20g, 50g)</p>
-                <p>
-                  – Cấp độ chính xác: Cấp độ M2 quốc tế (chính xác tuyệt đối)
-                </p>
-                <p>– Chất liệu: thép mạ crom</p>
-                <p>– Bộ sản phẩm bao gồm (5 quả cân, hộp đựng, kẹp gắp)</p>
-              </div>
-            )}
+          <div className="text-h4 mt-3 whitespace-pre-wrap">
+            {product.description}
           </div>
           <div className="text-h4 font-bold mt-6">SẢN PHẨM CÙNG LOẠI</div>
           <div className="text-h4 mt-2 flex gap-4">
@@ -234,7 +225,7 @@ export default function ProductDetail() {
       {isShow && <Freeship isOpen={isShow} onClose={() => setIsShow(false)} />}
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Chi tiết sản phẩm</div>
-        <div className="">{product.description}</div>
+        <div className="whitespace-pre-wrap">{product.description}</div>
       </div>
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Sản phẩm liên quan</div>

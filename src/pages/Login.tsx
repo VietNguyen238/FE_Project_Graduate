@@ -93,6 +93,7 @@ export default function Login() {
             {formFields.map(({ field, title, type }, index) => (
               <div className="mb-4" key={field as keyof LoginProps}>
                 <InputText
+                  autoComplete={field as string}
                   title={title}
                   value={formData[field as keyof LoginProps]}
                   type={

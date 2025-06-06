@@ -67,4 +67,18 @@ const FormAddress = z.object({
   shippingFee: z.number().min(1, "Vui lòng chọn phương thức vận chuyển"),
 });
 
-export { FormRegister, FormLogin, FormAddress, FormCheckout };
+const FormProfile = z.object({
+  name: z
+    .string()
+    .min(2, "Tên phải có ít nhất 2 ký tự")
+    .max(50, "Tên không được vượt quá 50 ký tự"),
+  province: z.string().min(1, "Vui lòng chọn tỉnh/thành phố"),
+  district: z.string().min(1, "Vui lòng chọn quận/huyện"),
+  ward: z.string().min(1, "Vui lòng chọn phường/xã"),
+  address: z
+    .string()
+    .min(1, "Vui lòng nhập địa chỉ chi tiết")
+    .regex(/^[a-zA-ZÀ-ỹ0-9\s]+$/, "Địa chỉ không được chứa ký tự đặc biệt"),
+});
+
+export { FormRegister, FormLogin, FormAddress, FormCheckout, FormProfile };

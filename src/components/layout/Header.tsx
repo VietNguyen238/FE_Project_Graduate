@@ -1,42 +1,33 @@
 import { useState, useRef, useEffect, memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../ui/ButtonLayout";
 import { assetsImage, assetsSvg } from "../../constants/assets";
 import { useNavigateContext } from "../../context/NavigateContext";
 import { getUser } from "../../services/userService";
 import { UserProps } from "../../types";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../services/cartService";
+import { getAllProduct } from "../../services/productService";
 
-const mockResults = [
-  "Mạch giảm áp (hạ áp)",
-  "Anten",
-  "Nguồn adapter",
-  "Mạch Amply Bluetooth",
-  "Đồng hồ đo dòng điện, điện áp AC",
-  "Cảm biến ánh sáng",
-  "Arduino",
-  "Arduino Shield",
-  "Board Arduino",
-  "Arduino",
-  "Arduino Shield",
-  "Board Arduino",
-  "Arduino",
-  "Arduino Shield",
-  "Board Arduino",
-];
+interface Product {
+  _id: string;
+  nameProduct: string;
+}
 
 function Header() {
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(
     (state: { user: { user: UserProps } }) => state.user.user
   );
   const cart = useSelector((state: any) => state.cart.items);
   const [showResults, setShowResults] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [products, setProducts] = useState<Product[]>([]);
   const { setNavigate } = useNavigateContext();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const totalQuantity = Array.isArray(cart)
     ? cart.reduce(
@@ -46,29 +37,47 @@ function Header() {
     : 0;
 
   useEffect(() => {
-    const fetchUser = async () => {
-      await getUser(dispatch);
-      await getCart(dispatch);
+    const fetchData = async () => {
+      await Promise.all([
+        getUser(dispatch),
+        getCart(dispatch),
+        getAllProduct().then(setProducts),
+      ]);
     };
-    fetchUser();
-  }, []);
+    fetchData();
+  }, [dispatch]);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
+        !inputRef.current.contains(event.target as Node) &&
+        resultsRef.current &&
+        !resultsRef.current.contains(event.target as Node)
       ) {
         setShowResults(false);
       }
-    }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredResults = mockResults.filter((item) =>
-    item.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredResults = products
+    .filter((product) =>
+      product.nameProduct.toLowerCase().includes(query.toLowerCase())
+    )
+    .map((product) => product.nameProduct);
+
+  const handleProductClick = (productName: string) => {
+    const selectedProduct = products.find(
+      (product) => product.nameProduct === productName
+    );
+    if (selectedProduct) {
+      navigate(`/product/${selectedProduct._id}`);
+      setShowResults(false);
+      setQuery("");
+    }
+  };
 
   return (
     <div className="h-[52px] w-full">
@@ -111,7 +120,10 @@ function Header() {
                 />
               </form>
               {showResults && (
-                <div className="absolute left-0 right-0 mt-1 bg-white rounded shadow-lg max-h-72 overflow-y-auto">
+                <div
+                  ref={resultsRef}
+                  className="absolute left-0 right-0 mt-1 bg-white rounded shadow-lg max-h-72 overflow-y-auto"
+                >
                   {query === "" ? (
                     <p className="p-4 text-gray-500">
                       Nhập tên hoặc từ khóa sản phẩm bạn cần tìm.
@@ -124,6 +136,7 @@ function Header() {
                         <li
                           key={index}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                          onClick={() => handleProductClick(item)}
                         >
                           {item}
                         </li>
@@ -148,29 +161,27 @@ function Header() {
                   )}
                 </div>
               </Link>
-              {user && user.name ? (
-                <div className="flex items-center gap-2">
-                  <Link to="/account" className="flex items-center">
-                    <div className="flex justify-between items-center">
-                      {user.image ? (
-                        <div className="h-[35px] w-[35px] mr-2 rounded-full overflow-hidden">
-                          <img
-                            src={user.image}
-                            alt={user.name}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                      ) : (
+              {user?.name ? (
+                <Link to="/account" className="flex items-center">
+                  <div className="flex justify-between items-center">
+                    {user.image ? (
+                      <div className="h-[35px] w-[35px] mr-2 rounded-full overflow-hidden">
                         <img
-                          className={`h-ic mr-2 w-ic`}
-                          src={assetsSvg.ic_person}
-                          alt={assetsSvg.ic_person}
+                          src={user.image}
+                          alt={user.name}
+                          className="h-full w-full object-cover"
                         />
-                      )}
-                      <div className="">{user.name}</div>
-                    </div>
-                  </Link>
-                </div>
+                      </div>
+                    ) : (
+                      <img
+                        className="h-ic mr-2 w-ic"
+                        src={assetsSvg.ic_person}
+                        alt="user"
+                      />
+                    )}
+                    <div>{user.name}</div>
+                  </div>
+                </Link>
               ) : (
                 <Link to="/login" onClick={() => setNavigate("/login")}>
                   <Button

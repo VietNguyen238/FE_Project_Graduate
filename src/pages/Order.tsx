@@ -18,17 +18,26 @@ export default function Order() {
 
     fetchOrder();
   }, []);
+
+  // Sort orders by createdAt in descending order (newest first)
+  const sortedOrders = order
+    ? [...order].sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )
+    : [];
+
   return (
     <div className="flex justify-center mb-8 mt-3">
       <div className="w-[600px]">
         <Title title="Đơn hàng" />
         <div className="bg-white p-4 shadow text-h4">
-          {order && order.length > 0 ? (
-            order.map((item: any, index: number) => (
+          {sortedOrders && sortedOrders.length > 0 ? (
+            sortedOrders.map((item: any, index: number) => (
               <div
                 key={index}
                 className={`flex justify-between items-center ${
-                  index !== order.length - 1 &&
+                  index !== sortedOrders.length - 1 &&
                   "mb-2 pb-2 border-b border-zinc-300"
                 }`}
               >

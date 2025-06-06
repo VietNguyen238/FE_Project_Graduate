@@ -12,7 +12,7 @@ export const getUser = async (dispatch: any) => {
   }
 };
 
-export const uddateUser = async (form: any, dispatch: any) => {
+export const updateUser = async (form: any, dispatch: any) => {
   dispatch(updateStart());
   try {
     const user = await axiosPost({ link: "/user/update/me", form });

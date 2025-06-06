@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import Title from "../components/ui/Title";
-import { getIdOrder } from "../services/orderService";
+import { getIdOrder, updateUserOrder } from "../services/orderService";
 import { useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { colorShipping, statusShipping } from "../constants";
 import { formatDate } from "../components/utils/formatDate";
 import { formatPrice } from "../components/utils/format_price";
 import { getAddress } from "../services/addressService";
+import Button from "../components/ui/Button";
 
 export default function OrderDetail() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const order = useSelector((state: any) => state.order.orders);
@@ -48,6 +50,15 @@ export default function OrderDetail() {
       </div>
     );
   }
+  const handleCancel = async () => {
+    await updateUserOrder({ status: "canceled" }, dispatch, id as string);
+    navigate("/");
+  };
+
+  const handleReceived = async () => {
+    await updateUserOrder({ status: "received" }, dispatch, id as string);
+    navigate("/");
+  };
 
   return (
     <div className="flex justify-center mb-8 mt-3">
@@ -136,7 +147,7 @@ export default function OrderDetail() {
                     Phí vận chuyển:
                   </th>
                   <td className="border border-gray-300 p-2 text-right col-span-4">
-                    24.000₫
+                    {formatPrice(order.shippingFee)}₫
                   </td>
                 </tr>
                 <tr>
@@ -166,7 +177,7 @@ export default function OrderDetail() {
               </div>
               <div className="grid grid-cols-5">
                 <p className="text-title_color font-medium">Vận chuyển:</p>
-                <p className="col-span-4">Giao hàng nhanh</p>
+                <p className="col-span-4">{order.shippingMethod}</p>
               </div>
             </div>
             <hr className="my-4" />
@@ -174,7 +185,7 @@ export default function OrderDetail() {
             <div className="space-y-2">
               <div className="grid grid-cols-5">
                 <p className="text-title_color font-medium">Điện thoại:</p>
-                <p className="col-span-4">{order.userId.phone}0987654321</p>
+                <p className="col-span-4">{order.userId.phone}</p>
               </div>
               <div className="grid grid-cols-5">
                 <p className="text-title_color font-medium">Họ tên:</p>
@@ -199,8 +210,28 @@ export default function OrderDetail() {
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-semibold">Ghi chú</h2>
             </div>
-            <div className="mt-2">{order.note || "Chưa có ghi chú"}</div>
+            <div className="mt-2 whitespace-pre-wrap">
+              {order.note || "Chưa có ghi chú"}
+            </div>
           </div>
+        </div>
+        <div className="flex justify-between items-center gap-4">
+          <Button
+            title="Hủy đơn hàng"
+            bg_color={
+              order.status === "waitForConfirmation" ? "bg-red-400" : "bg-gray"
+            }
+            text_color="text-white"
+            onClick={handleCancel}
+            disabled={order.status !== "waitForConfirmation"}
+          />
+          <Button
+            title="Đã nhận đơn hàng"
+            bg_color={order.status === "delivered" ? "bg-green-400" : "bg-gray"}
+            text_color="text-white"
+            onClick={handleReceived}
+            disabled={order.status !== "delivered"}
+          />
         </div>
       </div>
     </div>

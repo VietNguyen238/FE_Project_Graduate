@@ -192,7 +192,6 @@ export default function Shipping() {
       value: formData.ward,
     },
   ];
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">

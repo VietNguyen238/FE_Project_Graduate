@@ -25,7 +25,7 @@ export default function ShippingMethodList({
       {methods.map((method) => (
         <div
           key={method.id}
-          className={`relative w-[220px] flex items-center rounded-lg border ${
+          className={`relative w-[190px] flex items-center rounded-lg border ${
             selectedMethod === method.id ? "border-blue-500" : "border-gray-300"
           } bg-white p-4 shadow-sm cursor-pointer`}
           onClick={() => onSelect(method.id)}

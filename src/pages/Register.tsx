@@ -71,6 +71,7 @@ export default function Register() {
             {formFields.map(({ field, title, type }, index) => (
               <div className="mb-4" key={field as keyof RegisterProps}>
                 <InputText
+                  autoComplete={field as string}
                   title={title}
                   value={formData[field as keyof RegisterProps]}
                   type={

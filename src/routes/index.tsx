@@ -17,6 +17,7 @@ import OrderDetail from "../pages/OrderDetail";
 import Payment from "../pages/Payment";
 import Review from "../pages/Check";
 import Check from "../pages/Check";
+import Profile from "../pages/Profile";
 
 export default function AppRouter() {
   return (
@@ -122,6 +123,14 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFooter={false}>
             <Check />
+          </Layout>
+        }
+      />
+      <Route
+        path="/account/profile"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Profile />
           </Layout>
         }
       />

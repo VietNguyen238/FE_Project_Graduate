@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { formFields } from "../constants";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { uddateUser } from "../services/userService";
+import { updateUser } from "../services/userService";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ export default function Checkout() {
       );
 
       if (hasChanges) {
-        await uddateUser(formData, dispatch);
+        await updateUser(formData, dispatch);
       }
 
       navigate("/checkout/shipping");
@@ -73,13 +73,34 @@ export default function Checkout() {
         <div className="bg-white p-6 shadow">
           {formFields.map(({ field, title, type }, index) => (
             <div className="mb-4" key={field as keyof CheckoutProps}>
-              <InputText
-                title={title}
-                value={formData[field as keyof CheckoutProps]}
-                type={type}
-                onChange={handleChange(field as keyof CheckoutProps)}
-                ref={index === 0 ? firstInputRef : null}
-              />
+              {field === "phone" || field === "email" ? (
+                formData[field as keyof CheckoutProps] ? (
+                  <div>
+                    <p className="text-sm font-medium text-gray-700">
+                      {title.charAt(0).toUpperCase() + title.slice(1)}:
+                    </p>
+                    <span className="mt-1 text-sm text-gray-900">
+                      {formData[field as keyof CheckoutProps]}
+                    </span>
+                  </div>
+                ) : (
+                  <InputText
+                    title={title}
+                    value={formData[field as keyof CheckoutProps]}
+                    type={type}
+                    onChange={handleChange(field as keyof CheckoutProps)}
+                    ref={index === 0 ? firstInputRef : null}
+                  />
+                )
+              ) : (
+                <InputText
+                  title={title}
+                  value={formData[field as keyof CheckoutProps]}
+                  type={type}
+                  onChange={handleChange(field as keyof CheckoutProps)}
+                  ref={index === 0 ? firstInputRef : null}
+                />
+              )}
               {errors[field as keyof CheckoutProps] && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors[field as keyof CheckoutProps]}

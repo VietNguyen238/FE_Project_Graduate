@@ -8,11 +8,23 @@ interface Props {
   type: "email" | "number" | "text" | "password";
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onClick?: () => void;
+  disabled?: boolean;
+  autoComplete?: string;
 }
 
 const InputText = forwardRef<HTMLInputElement, Props>(
   (
-    { title, value, type, onChange, onClick, isShowPasword = false, isShow },
+    {
+      title,
+      value,
+      type,
+      onChange,
+      onClick,
+      isShowPasword = false,
+      isShow,
+      disabled = false,
+      autoComplete,
+    },
     ref
   ) => {
     const capitalizedTitle = title.charAt(0).toUpperCase() + title.slice(1);
@@ -27,9 +39,11 @@ const InputText = forwardRef<HTMLInputElement, Props>(
             ref={ref}
             className="w-full px-2 py-1 border border-zinc-400 rounded-md mt-2 relative"
             placeholder={`Nhập ${title}`}
+            autoComplete={autoComplete}
             onChange={onChange}
             value={value}
             type={type}
+            disabled={disabled}
           />
           {isShowPasword &&
             (isShow ? (

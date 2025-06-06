@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { assetsSvg } from "../../constants/assets";
 import { formatPrice } from "../utils/format_price";
+import { useNavigate } from "react-router";
 
 interface Props {
   title: string;
@@ -26,6 +27,7 @@ export default function CartCard({
   onDelete,
 }: Props) {
   const [quantity, setQuantity] = useState(quantities);
+  const navigate = useNavigate();
 
   const handelMinus = () => {
     if (quantity > 1) {
@@ -41,9 +43,14 @@ export default function CartCard({
     onQuantityChange(id, newQuantity);
   };
 
+  const handelProduct = (id: string) => navigate(`/product/${id}`);
+
   return (
     <>
-      <div className="bg-white p-4">
+      <div
+        className="bg-white p-4 cursor-pointer"
+        onClick={() => handelProduct(id)}
+      >
         <div className="mb-3 flex justify-between items-start">
           <div className="flex items-center justify-start gap-2">
             <img

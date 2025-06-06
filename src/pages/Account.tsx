@@ -15,11 +15,6 @@ const data = [
     text: "Thông tin khách hàng & địa chỉ",
   },
   {
-    href: "/account/verify-email/",
-    icon: assetsSvg.ic_person_email,
-    text: "Thay đổi email",
-  },
-  {
     href: "/account/change-password/",
     icon: assetsSvg.ic_person_password,
     text: "Đổi mật khẩu",

@@ -4,7 +4,6 @@ import { updateAddress } from "../store/userSlice";
 
 const getAddress = async (dispatch: any) => {
   const address = await axiosGet({ link: `/address/me` });
-  console.log("Address API response:", address);
   dispatch(updateAddress(address));
 };
 

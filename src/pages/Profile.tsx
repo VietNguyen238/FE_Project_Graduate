@@ -14,6 +14,7 @@ import InputText from "../components/ui/InputText";
 import Button from "../components/ui/Button";
 import { FormProfile } from "../components/utils/validate";
 import Option from "../components/ui/Option";
+import { useNavigate } from "react-router";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +29,7 @@ const Profile = () => {
   const [name, setName] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const provinces = getProvinces();
   const districts = formData.province
     ? getDistrictsByProvinceCode(formData.province)
@@ -99,6 +101,8 @@ const Profile = () => {
         await updateUserAddress(validationData, dispatch);
         await getAddress(dispatch);
       }
+
+      navigate("/account");
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -194,12 +198,12 @@ const Profile = () => {
             }}
             className="space-y-4 text-h4"
           >
-            <div className="grid grid-cols-5 items-center py-2 border-b">
+            <div className="grid grid-cols-5 items-center pb-2 border-b">
               <span className="font-medium">Số điện thoại:</span>
               <span className="col-span-4">{user.phone}</span>
             </div>
 
-            <div className="grid grid-cols-5 items-start py-2 border-b">
+            <div className="grid grid-cols-5 items-start pb-2 border-b">
               <span className="w-1/3 font-medium">Email:</span>
               <span className="col-span-4">{user.email}</span>
             </div>

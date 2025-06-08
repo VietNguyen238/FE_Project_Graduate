@@ -93,6 +93,7 @@ interface Category {
 export interface ProductDetailProps {
   _id: string;
   nameProduct: string;
+  basicInformation: string;
   price: number;
   newPrice?: number;
   imageUrl: string[];
@@ -154,7 +155,11 @@ export interface PaymentCartProps {
 }
 
 export interface OrderProps {
-  userId: UserProps;
+  _id: string;
+  userId: {
+    _id: string;
+    name: string;
+  };
   orders: Array<{
     productId: ProductDetailProps[];
     nameProduct: string;
@@ -173,4 +178,21 @@ export interface OrderProps {
   shippingFee: number;
   total: number;
   note: string;
+  createdAt: string;
+}
+
+interface UserStoreProps {
+  user: {
+    id: string;
+    phone: string;
+    name: string;
+    email: string;
+    image: string;
+    pending: boolean;
+    error: boolean;
+  };
+}
+
+export interface UserRootState {
+  user: UserStoreProps;
 }

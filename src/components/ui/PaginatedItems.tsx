@@ -41,29 +41,31 @@ export default function PaginatedItems({
           />
         ))}
       </div>
-      <div className="flex justify-center mt-8 mb-4">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel=">"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="<"
-          renderOnZeroPageCount={null}
-          className="flex items-center gap-3"
-          pageClassName="py-1 rounded hover:bg-gray-100 transition-colors"
-          pageLinkClassName="text-gray-700 hover:text-gray-900 px-3 py-1"
-          activeClassName="bg-blue-500 text-white hover:bg-blue-600"
-          activeLinkClassName="text-white"
-          previousClassName="px-3 py-1 rounded hover:bg-gray-100 transition-colors"
-          nextClassName=" py-1 rounded hover:bg-gray-100 transition-colors"
-          previousLinkClassName="text-gray-700 hover:text-gray-900"
-          nextLinkClassName="text-gray-700 hover:text-gray-900 px-3 py-1"
-          disabledClassName="opacity-50 cursor-not-allowed"
-          breakClassName="px-2"
-          forcePage={currentPage}
-        />
-      </div>
+      {pageCount > 0 && (
+        <div className="flex justify-center mt-8 mb-4">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="<"
+            renderOnZeroPageCount={null}
+            className="flex items-center gap-3"
+            pageClassName="py-1 rounded hover:bg-gray-100 transition-colors"
+            pageLinkClassName="text-gray-700 hover:text-gray-900 px-3 py-1"
+            activeClassName="bg-blue-500 text-white hover:bg-blue-600"
+            activeLinkClassName="text-white"
+            previousClassName="px-3 py-1 rounded hover:bg-gray-100 transition-colors"
+            nextClassName="py-1 rounded hover:bg-gray-100 transition-colors"
+            previousLinkClassName="text-gray-700 hover:text-gray-900"
+            nextLinkClassName="text-gray-700 hover:text-gray-900 px-3 py-1"
+            disabledClassName="opacity-50 cursor-not-allowed"
+            breakClassName="px-2"
+            forcePage={currentPage}
+          />
+        </div>
+      )}
     </div>
   );
 }

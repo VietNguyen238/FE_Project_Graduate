@@ -12,7 +12,7 @@ import { FormAddress } from "../components/utils/validate";
 import { ZodError } from "zod";
 import ShippingMethodList from "../components/ui/ShippingMethodList";
 import { shippingMethods } from "../constants";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { ShippingProps } from "../types";
 import { useSelector } from "react-redux";
 import { getAddress, updateUserAddress } from "../services/addressService";

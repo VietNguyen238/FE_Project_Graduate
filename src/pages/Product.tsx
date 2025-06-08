@@ -3,27 +3,22 @@ import FilterUi from "../components/ui/FilterUi";
 import { useFilter } from "../context/FilterContext";
 import { listFilter } from "../constants";
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { selectFilter, selectSort } from "../constants/action";
 import PaginatedItems from "../components/ui/PaginatedItems";
 import { getAllProduct } from "../services/productService";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function Product() {
   const { currentCategory, setCurrentCategory, selectedFilter, selectedSort } =
     useFilter();
-  const [products, setProducts] = useState([]);
+  const products = useSelector((state: any) => state.product.items);
   const { categoryTitle } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const apiProducts = await getAllProduct();
-      if (apiProducts) {
-        setProducts(apiProducts);
-      }
-    };
-
-    fetchProducts();
     if (categoryTitle) {
       const categoryIndex = listFilter.findIndex(
         (item) => item.params === categoryTitle
@@ -57,6 +52,10 @@ export default function Product() {
 
     return currentProducts;
   }, [categoryTitle, selectedFilter, selectedSort, products, filterCategory]);
+
+  useEffect(() => {
+    getAllProduct(dispatch);
+  }, []);
 
   return (
     <div>

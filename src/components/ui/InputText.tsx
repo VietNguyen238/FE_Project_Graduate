@@ -10,6 +10,7 @@ interface Props {
   onClick?: () => void;
   disabled?: boolean;
   autoComplete?: string;
+  name?: string;
 }
 
 const InputText = forwardRef<HTMLInputElement, Props>(
@@ -24,6 +25,7 @@ const InputText = forwardRef<HTMLInputElement, Props>(
       isShow,
       disabled = false,
       autoComplete,
+      name,
     },
     ref
   ) => {
@@ -37,6 +39,7 @@ const InputText = forwardRef<HTMLInputElement, Props>(
         <div className="relative">
           <input
             ref={ref}
+            name={name}
             className="w-full px-2 py-1 border border-zinc-400 rounded-md mt-2 relative"
             placeholder={`Nhập ${title}`}
             autoComplete={autoComplete}

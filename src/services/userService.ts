@@ -1,4 +1,3 @@
-import axios from "axios";
 import { toastError, toastSuccess } from "../components/utils/toast";
 import { axiosGet, axiosPost } from "../config/axios";
 import { updateError, updateStart, updateSuccess } from "../store/userSlice";
@@ -8,6 +7,7 @@ export const getUser = async (dispatch: any) => {
   try {
     const user = await axiosGet({ link: "/user/me" });
     dispatch(updateSuccess(user));
+    return user;
   } catch (error) {
     dispatch(updateError());
   }

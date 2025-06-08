@@ -25,7 +25,9 @@ export function NavigateProvider({ children }: { children: ReactNode }) {
 export function useNavigateContext() {
   const context = useContext(NavigateContext);
   if (context === undefined) {
-    throw new Error("useNavigate must be used within a NavigateContext");
+    throw new Error(
+      "useNavigateContext must be used within a NavigateProvider"
+    );
   }
   return context;
 }

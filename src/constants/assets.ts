@@ -37,6 +37,8 @@ import ic_money from "./../../src/assets/svgs/ic_money.svg";
 import ic_payment from "./../../src/assets/svgs/ic_payment.svg";
 import ic_arown_left from "./../../src/assets/svgs/ic_arown_left.svg";
 import ic_arown_right from "./../../src/assets/svgs/ic_arown_right.svg";
+import ic_arows_right_light from "./../../src/assets/svgs/ic_arows_right_light.svg";
+import ic_bell from "./../../src/assets/svgs/ic_bell.svg";
 
 import im_protect from "./../../src/assets/images/im_protect.png";
 import im_cam_bien from "./../../src/assets/images/im_cam_bien.png";
@@ -61,7 +63,9 @@ import im_logo from "./../../src/assets/images/im_logo.png";
 
 export const assetsSvg = {
   ic_filter: ic_filter,
+  ic_bell: ic_bell,
   ic_money: ic_money,
+  ic_arows_right_light: ic_arows_right_light,
   ic_arown_left: ic_arown_left,
   ic_arown_right: ic_arown_right,
   ic_payment: ic_payment,

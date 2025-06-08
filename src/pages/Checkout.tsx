@@ -74,7 +74,7 @@ export default function Checkout() {
           {formFields.map(({ field, title, type }, index) => (
             <div className="mb-4" key={field as keyof CheckoutProps}>
               {field === "phone" || field === "email" ? (
-                formData[field as keyof CheckoutProps] ? (
+                user[field as keyof CheckoutProps] ? (
                   <div>
                     <p className="text-sm font-medium text-gray-700">
                       {title.charAt(0).toUpperCase() + title.slice(1)}:

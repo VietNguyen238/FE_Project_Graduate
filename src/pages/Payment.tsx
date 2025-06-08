@@ -5,7 +5,7 @@ import { payments } from "../constants";
 import PaymentCart from "../components/ui/PaymentCart";
 import { useSelector } from "react-redux";
 import { useOrderContext } from "../context/OrderContext";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function Payment() {
   const [paymentMethod, setPaymentMethod] = useState<string>("cod");

@@ -19,8 +19,7 @@ export default function Order() {
     fetchOrder();
   }, []);
 
-  // Sort orders by createdAt in descending order (newest first)
-  const sortedOrders = order
+  const sortedOrders = Array.isArray(order)
     ? [...order].sort(
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

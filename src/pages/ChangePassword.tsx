@@ -5,7 +5,7 @@ import Button from "../components/ui/Button";
 import { FormPassword } from "../components/utils/validate";
 import { updateUser } from "../services/userService";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 type PasswordField = {
   title: string;

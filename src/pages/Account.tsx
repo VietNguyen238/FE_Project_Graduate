@@ -3,29 +3,32 @@ import Title from "../components/ui/Title";
 import { assetsSvg } from "../constants/assets";
 import { logout } from "../services/authService";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUser } from "../services/userService";
 import { useSelector } from "react-redux";
-
-const data = [
-  { href: "/account/orders/", icon: assetsSvg.ic_order, text: "Đơn hàng" },
-  {
-    href: "/account/profile/",
-    icon: assetsSvg.ic_address,
-    text: "Thông tin khách hàng & địa chỉ",
-  },
-  {
-    href: "/account/change-password/",
-    icon: assetsSvg.ic_person_password,
-    text: "Đổi mật khẩu",
-  },
-  { href: "/", icon: assetsSvg.ic_logout, text: "Đăng xuất" },
-];
 
 export default function Account() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
   const user = useSelector((state: any) => state.user.user);
+  const data = [
+    ...(isAdmin
+      ? [{ href: "/admin/", icon: assetsSvg.ic_person, text: "Admin" }]
+      : []),
+    { href: "/account/orders/", icon: assetsSvg.ic_order, text: "Đơn hàng" },
+    {
+      href: "/account/profile/",
+      icon: assetsSvg.ic_address,
+      text: "Thông tin khách hàng & địa chỉ",
+    },
+    {
+      href: "/account/change-password/",
+      icon: assetsSvg.ic_person_password,
+      text: "Đổi mật khẩu",
+    },
+    { href: "/", icon: assetsSvg.ic_logout, text: "Đăng xuất" },
+  ];
 
   const handleLogout = async () => {
     await logout(dispatch);
@@ -35,7 +38,8 @@ export default function Account() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      await getUser(dispatch);
+      const user = await getUser(dispatch);
+      setIsAdmin(user.admin);
     };
     fetchUser();
   }, []);

@@ -7,14 +7,18 @@ import {
   getDistrictsByProvinceCode,
   getWardsByDistrictCode,
 } from "sub-vn";
-import { getAddress, updateUserAddress } from "../services/addressService";
+import {
+  getAddress,
+  updateUserAddress,
+  addAddress,
+} from "../services/addressService";
 import { useDispatch } from "react-redux";
 import { getUser, updateUser } from "../services/userService";
 import InputText from "../components/ui/InputText";
 import Button from "../components/ui/Button";
 import { FormProfile } from "../components/utils/validate";
 import Option from "../components/ui/Option";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +30,9 @@ const Profile = () => {
     ward: address.ward,
     address: address.address,
   });
+  console.log(user);
   const [name, setName] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,6 +61,10 @@ const Profile = () => {
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setErrors((prev) => ({ ...prev, name: "" }));
+  };
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+    setErrors((prev) => ({ ...prev, phone: "" }));
   };
 
   const handleSubmit = async () => {
@@ -87,21 +97,28 @@ const Profile = () => {
       }
 
       if (name !== user?.name) {
-        await updateUser({ name }, dispatch);
+        await updateUser({ name, phone }, dispatch);
         await getUser(dispatch);
       }
 
-      const hasAddressChanged =
-        selectedProvinceName !== address?.province ||
-        selectedDistrictName !== address?.district ||
-        selectedWardName !== address?.ward ||
-        formData.address !== address?.address;
+      if (!address || !address.province) {
+        const addressData = {
+          ...validationData,
+          userId: user.id,
+        };
+        await addAddress(addressData, dispatch);
+      } else {
+        const hasAddressChanged =
+          selectedProvinceName !== address?.province ||
+          selectedDistrictName !== address?.district ||
+          selectedWardName !== address?.ward ||
+          formData.address !== address?.address;
 
-      if (hasAddressChanged) {
-        await updateUserAddress(validationData, dispatch);
-        await getAddress(dispatch);
+        if (hasAddressChanged) {
+          await updateUserAddress(validationData, dispatch);
+        }
       }
-
+      await getAddress(dispatch);
       navigate("/account");
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -111,6 +128,9 @@ const Profile = () => {
   useEffect(() => {
     if (user?.name) {
       setName(user.name);
+    }
+    if (user?.phone) {
+      setPhone(user.phone);
     }
   }, [user]);
 
@@ -198,15 +218,20 @@ const Profile = () => {
             }}
             className="space-y-4 text-h4"
           >
-            <div className="grid grid-cols-5 items-center pb-2 border-b">
-              <span className="font-medium">Số điện thoại:</span>
-              <span className="col-span-4">{user.phone}</span>
-            </div>
-
             <div className="grid grid-cols-5 items-start pb-2 border-b">
               <span className="w-1/3 font-medium">Email:</span>
               <span className="col-span-4">{user.email}</span>
             </div>
+
+            <InputText
+              title="Số điện thoại"
+              value={phone}
+              type="text"
+              onChange={handlePhoneChange}
+            />
+            {errors.phone && (
+              <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+            )}
 
             <InputText
               title="Họ và Tên"

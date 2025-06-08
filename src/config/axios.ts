@@ -8,6 +8,19 @@ interface axiosProps {
 
 const localhost = env.LOCALHOST;
 
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("accessToken");
+      if (!window.location.pathname.includes("/login")) {
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
@@ -16,9 +29,7 @@ axios.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 const axiosPost = async ({ link, form }: axiosProps) => {
@@ -37,7 +48,9 @@ const axiosGet = async ({ link }: axiosProps) => {
     const response = await axios.get(`${localhost}${link}`);
     return response.data;
   } catch (error) {
-    console.error("GET request failed:", error);
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    }
   }
 };
 
@@ -46,7 +59,9 @@ const axiosDelete = async ({ link }: axiosProps) => {
     const response = await axios.delete(`${localhost}${link}`);
     return response.data;
   } catch (error) {
-    console.error("DELETE request failed:", error);
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    }
   }
 };
 

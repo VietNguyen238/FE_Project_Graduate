@@ -43,7 +43,7 @@ export default function OrderDetail() {
     );
   }
 
-  if (!order) {
+  if (!order || !order._id) {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="text-lg">Order not found</div>
@@ -52,12 +52,12 @@ export default function OrderDetail() {
   }
   const handleCancel = async () => {
     await updateUserOrder({ status: "canceled" }, dispatch, id as string);
-    navigate("/");
+    navigate("/account/orders");
   };
 
   const handleReceived = async () => {
     await updateUserOrder({ status: "received" }, dispatch, id as string);
-    navigate("/");
+    navigate("/account/orders");
   };
 
   return (

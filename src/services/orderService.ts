@@ -15,6 +15,11 @@ const getOrder = async (dispatch: any) => {
   dispatch(updateOrder(order));
 };
 
+const getAllOrder = async (dispatch: any) => {
+  const order = await axiosGet({ link: `/order` });
+  dispatch(updateOrder(order));
+};
+
 const addOrder = async (form: any, dispatch: any) => {
   const order = await axiosPost({ link: "/order/add", form });
   dispatch(updateOrder(order));
@@ -28,4 +33,4 @@ const updateUserOrder = async (form: any, dispatch: any, id: string) => {
   toastSuccess("Đã cập nhật đơn hàng thành công!");
 };
 
-export { addOrder, updateUserOrder, getOrder, getIdOrder };
+export { addOrder, updateUserOrder, getOrder, getIdOrder, getAllOrder };

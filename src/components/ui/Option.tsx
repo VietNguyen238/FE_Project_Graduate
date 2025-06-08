@@ -22,8 +22,8 @@ export default function Option({
         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 border border-zinc-400 py-1 px-2"
       >
         <option value="">{option}</option>
-        {list.map((item) => (
-          <option key={item.code} value={item.code}>
+        {list.map((item, index) => (
+          <option key={index} value={item.code}>
             {item.name}
           </option>
         ))}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import { assetsSvg } from "../../constants/assets";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { loginGoogle } from "../../services/authService";
 import { useDispatch } from "react-redux";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { assetsSvg } from "../../constants/assets";
 import { formatPrice } from "../utils/format_price";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;

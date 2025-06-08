@@ -3,7 +3,7 @@ import InputText from "../components/ui/InputText";
 import Title from "../components/ui/Title";
 import Button from "../components/ui/Button";
 import { FormField, RegisterProps } from "../types";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { FormRegister } from "../components/utils/validate";
 import { z } from "zod";
 import Extensions from "../components/ui/Extensions";

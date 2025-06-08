@@ -5,7 +5,7 @@ import { useOrderContext } from "../context/OrderContext";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { formatPrice } from "../components/utils/format_price";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { addOrder } from "../services/orderService";
 import { useDispatch } from "react-redux";
 

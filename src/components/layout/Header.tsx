@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../ui/ButtonLayout";
-import { assetsSvg } from "../../constants/assets";
+import { assetsImage, assetsSvg } from "../../constants/assets";
 import { useNavigateContext } from "../../context/NavigateContext";
 import { getUser } from "../../services/userService";
 import { UserProps } from "../../types";
@@ -29,7 +29,6 @@ function Header({ isAdmin = false }: Props) {
   const [showResults, setShowResults] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const { setNavigate } = useNavigateContext();
-  // const isAdmin = useRef(true);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -99,7 +98,7 @@ function Header({ isAdmin = false }: Props) {
             <Link to="/">
               <img
                 className="h-[52px] py-1"
-                src={assetsSvg.ic_logo}
+                src={assetsImage.im_logo}
                 alt="ic_logo"
               />
             </Link>

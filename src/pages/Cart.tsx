@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteCart, getCart, updateUserCart } from "../services/cartService";
 import { useDispatch, useSelector } from "react-redux";
 import { useOrderContext } from "../context/OrderContext";
+import { useTitleContext } from "../context/TitleContext";
 
 interface CartItem {
   _id: string;
@@ -27,8 +28,13 @@ export default function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { order, setOrder } = useOrderContext();
-  console.log(order);
-  console.log(cart);
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Giỏ hàng");
+  }, [setTitle]);
+
   const totalProduct = useMemo(() => {
     if (!cart || !Array.isArray(cart)) return 0;
     return cart.reduce((total: number, item: CartItem) => {

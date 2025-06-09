@@ -10,7 +10,7 @@ import { formatPrice } from "../components/utils/format_price";
 import { getAddress } from "../services/addressService";
 import Button from "../components/ui/Button";
 import { actionPaymentMethod } from "../constants/action";
-import { ProductDetailProps } from "../types";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function OrderDetail() {
   const dispatch = useDispatch();
@@ -18,7 +18,13 @@ export default function OrderDetail() {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const order = useSelector((state: any) => state.order.orders);
-  console.log(order);
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Chi tiết đơn hàng");
+  }, [setTitle]);
+
   useEffect(() => {
     const fetchOrder = async () => {
       if (id) {

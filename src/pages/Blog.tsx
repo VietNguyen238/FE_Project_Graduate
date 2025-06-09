@@ -1,8 +1,16 @@
+import { useEffect } from "react";
 import BlogCart from "../components/ui/BlogCard";
 import TitleCategory from "../components/ui/TitleCategory";
 import { dataBlog } from "../config/data";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Blog() {
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Blog");
+  }, [setTitle]);
+
   return (
     <div>
       <TitleCategory title={"Blog"} />

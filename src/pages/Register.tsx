@@ -8,6 +8,7 @@ import { FormRegister } from "../components/utils/validate";
 import { z } from "zod";
 import Extensions from "../components/ui/Extensions";
 import { register } from "../services/authService";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Register() {
   const [formData, setFormData] = useState<RegisterProps>({
@@ -20,6 +21,11 @@ export default function Register() {
   const [isShow, setIsShow] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Đăng ký");
+  }, [setTitle]);
 
   useEffect(() => {
     firstInputRef.current?.focus();

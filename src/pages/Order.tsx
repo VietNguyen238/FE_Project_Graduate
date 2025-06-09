@@ -6,10 +6,17 @@ import { useSelector } from "react-redux";
 import { formatDate } from "../components/utils/formatDate";
 import { colorShipping, statusShipping } from "../constants";
 import { formatPrice } from "../components/utils/format_price";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Order() {
   const dispatch = useDispatch();
   const order = useSelector((state: any) => state.order.orders);
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Đơn hàng");
+  }, [setTitle]);
 
   useEffect(() => {
     const fetchOrder = async () => {

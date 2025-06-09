@@ -18,6 +18,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar, Line } from "react-chartjs-2";
+import { useTitleContext } from "../../context/TitleContext";
 
 ChartJS.register(
   CategoryScale,
@@ -50,7 +51,12 @@ export default function Dashboard() {
     0
   );
 
-  // Tính toán dữ liệu cho biểu đồ theo tháng
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Bảng điều khiển");
+  }, [setTitle]);
+
   const getLast6Months = () => {
     const months = [];
     for (let i = 5; i >= 0; i--) {

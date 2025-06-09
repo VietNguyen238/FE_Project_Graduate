@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../components/ui/Title";
 import InputText from "../components/ui/InputText";
 import Button from "../components/ui/Button";
@@ -6,6 +6,7 @@ import { FormPassword } from "../components/utils/validate";
 import { updateUser } from "../services/userService";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTitleContext } from "../context/TitleContext";
 
 type PasswordField = {
   title: string;
@@ -35,6 +36,12 @@ export default function ChangePassword() {
   const [errors, setErrors] = useState(initialPasswords);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Thay đổi mật khẩu");
+  }, [setTitle]);
 
   const validatePassword = (password: string) => {
     const validationResult = FormPassword.safeParse(password);

@@ -19,6 +19,7 @@ import { getAddress, updateUserAddress } from "../services/addressService";
 import { useDispatch } from "react-redux";
 import { getUser } from "../services/userService";
 import { useOrderContext } from "../context/OrderContext";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Shipping() {
   const [formData, setFormData] = useState<ShippingProps>({
@@ -43,6 +44,11 @@ export default function Shipping() {
     ? getWardsByDistrictCode(formData.district)
     : [];
   const { setOrder } = useOrderContext();
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Thông tin vận chuyển");
+  }, [setTitle]);
 
   const handleChange = (field: keyof ShippingProps, value: string | number) => {
     setFormData((prev) => {

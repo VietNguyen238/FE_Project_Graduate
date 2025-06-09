@@ -9,6 +9,7 @@ import * as z from "zod";
 import Extensions from "../components/ui/Extensions";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../services/authService";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Login() {
   const [formData, setFormData] = useState<LoginProps>({
@@ -22,6 +23,12 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pending } = useSelector((state: any) => state.user.user);
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Đăng nhập");
+  }, [setTitle]);
 
   useEffect(() => {
     firstInputRef.current?.focus();

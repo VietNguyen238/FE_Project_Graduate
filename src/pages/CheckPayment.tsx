@@ -5,14 +5,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useOrderContext } from "../context/OrderContext";
 import { addOrder } from "../services/orderService";
 import { useDispatch } from "react-redux";
+import { useTitleContext } from "../context/TitleContext";
 
 function CheckPayment() {
   const searchParams = new URLSearchParams(useLocation().search);
   const [status, setStatus] = useState<"success" | "error">("error");
-  const [title, setTitle] = useState<string>("");
+  const [title, setTitles] = useState<string>("");
   const { order } = useOrderContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Kiểm tra thanh toán");
+  }, [setTitle]);
 
   useEffect(() => {
     (async () => {
@@ -21,11 +28,11 @@ function CheckPayment() {
       );
       if (data.data.vnp_ResponseCode == "00") {
         setStatus("success");
-        setTitle("Thanh toán thành công");
+        setTitles("Thanh toán thành công");
         await addOrder(order, dispatch);
       } else if (data.data.vnp_ResponseCode == "24") {
         setStatus("error");
-        setTitle("Khách hàng hủy thanh toán");
+        setTitles("Khách hàng hủy thanh toán");
       }
     })();
   }, []);

@@ -6,10 +6,17 @@ import { getAllProduct } from "../services/productService";
 import { ProductProps } from "../types";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Home() {
   const dispatch = useDispatch();
   const products = useSelector((state: any) => state.product.items);
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Trang chủ");
+  }, [setTitle]);
 
   useEffect(() => {
     getAllProduct(dispatch);

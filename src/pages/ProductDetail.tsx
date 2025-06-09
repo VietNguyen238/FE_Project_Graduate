@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getReviews } from "../services/reviewService";
 import Review from "../components/ui/Review";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -24,6 +25,11 @@ export default function ProductDetail() {
   const user = useSelector((state: any) => state.user.user);
   const cart = useSelector((state: any) => state.cart.items);
   const dispatch = useDispatch();
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Chi tiết sản phẩm");
+  }, [setTitle]);
 
   const handlePrevious = () => {
     if (product?.imageUrl) {

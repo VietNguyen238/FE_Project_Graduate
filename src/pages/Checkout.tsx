@@ -10,6 +10,7 @@ import { formFields } from "../constants";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../services/userService";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -22,6 +23,12 @@ export default function Checkout() {
   const [errors, setErrors] = useState<Partial<CheckoutProps>>({});
   const firstInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Thông tin khách hàng");
+  }, [setTitle]);
 
   useEffect(() => {
     firstInputRef.current?.focus();

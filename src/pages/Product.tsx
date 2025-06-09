@@ -9,6 +9,7 @@ import PaginatedItems from "../components/ui/PaginatedItems";
 import { getAllProduct } from "../services/productService";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Product() {
   const { currentCategory, setCurrentCategory, selectedFilter, selectedSort } =
@@ -17,6 +18,11 @@ export default function Product() {
   const { categoryTitle } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Danh sách sản phẩm");
+  }, [setTitle]);
 
   useEffect(() => {
     if (categoryTitle) {

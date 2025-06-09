@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getUser } from "../services/userService";
 import { useSelector } from "react-redux";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Account() {
   const dispatch = useDispatch();
@@ -29,6 +30,12 @@ export default function Account() {
     },
     { href: "/", icon: assetsSvg.ic_logout, text: "Đăng xuất" },
   ];
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Tài khoản");
+  }, [setTitle]);
 
   const handleLogout = async () => {
     await logout(dispatch);

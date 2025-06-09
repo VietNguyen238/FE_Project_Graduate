@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonOrder from "../components/ui/ButtonOrder";
 import Title from "../components/ui/Title";
 import { payments } from "../constants";
@@ -6,12 +6,19 @@ import PaymentCart from "../components/ui/PaymentCart";
 import { useSelector } from "react-redux";
 import { useOrderContext } from "../context/OrderContext";
 import { useNavigate } from "react-router-dom";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Payment() {
   const [paymentMethod, setPaymentMethod] = useState<string>("cod");
   const cart = useSelector((state: any) => state.cart.items);
   const { order, setOrder } = useOrderContext();
   const navigate = useNavigate();
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Thanh toán");
+  }, [setTitle]);
 
   const handlePaymentMethodChange = (
     e: React.ChangeEvent<HTMLInputElement>

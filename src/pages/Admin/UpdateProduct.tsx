@@ -8,6 +8,7 @@ import Option from "../../components/ui/Option";
 import { getCategory } from "../../services/CategoryService";
 import { getAProduct, updateProduct } from "../../services/productService";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTitleContext } from "../../context/TitleContext";
 
 interface FormData {
   nameProduct: string;
@@ -34,6 +35,12 @@ export default function UpdateProduct() {
   const navigate = useNavigate();
   const category = useSelector((state: any) => state.category.items);
   const { id } = useParams();
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Cập nhật sản phẩm");
+  }, [setTitle]);
 
   const [formData, setFormData] = useState<FormData>({
     nameProduct: "",

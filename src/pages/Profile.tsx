@@ -19,6 +19,7 @@ import Button from "../components/ui/Button";
 import { FormProfile } from "../components/utils/validate";
 import Option from "../components/ui/Option";
 import { useNavigate } from "react-router-dom";
+import { useTitleContext } from "../context/TitleContext";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +31,11 @@ const Profile = () => {
     ward: address.ward,
     address: address.address,
   });
-  console.log(user);
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Thông tin tài khoản");
+  }, [setTitle]);
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});

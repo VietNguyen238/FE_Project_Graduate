@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { addOrder } from "../services/orderService";
 import { useDispatch } from "react-redux";
 import { actionPaymentMethod } from "../constants/action";
+import { useTitleContext } from "../context/TitleContext";
 
 export default function Check() {
   const [note, setNote] = useState<string>("");
@@ -16,6 +17,12 @@ export default function Check() {
   const user = useSelector((state: any) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Kiểm tra đơn hàng");
+  }, [setTitle]);
 
   useEffect(() => {
     setOrder({ ...order, note: note, status: "waitForConfirmation" });

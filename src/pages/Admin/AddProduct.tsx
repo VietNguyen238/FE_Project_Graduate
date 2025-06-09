@@ -8,6 +8,7 @@ import Option from "../../components/ui/Option";
 import { getCategory } from "../../services/CategoryService";
 import { createProduct } from "../../services/productService";
 import { useNavigate } from "react-router-dom";
+import { useTitleContext } from "../../context/TitleContext";
 
 interface FormData {
   nameProduct: string;
@@ -46,6 +47,12 @@ export default function AddProduct() {
   });
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [basicPreviewUrls, setBasicPreviewUrls] = useState<string[]>([]);
+
+  const { setTitle } = useTitleContext();
+
+  useEffect(() => {
+    setTitle("Thêm sản phẩm");
+  }, [setTitle]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

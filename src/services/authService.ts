@@ -58,6 +58,7 @@ const logout = async (dispatch: any) => {
   try {
     await axios.post(`${local}/auth/logout`);
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("order");
     dispatch(clearUser());
     dispatch(clearAddress());
     dispatch(clearCart());

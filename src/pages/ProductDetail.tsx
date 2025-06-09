@@ -48,29 +48,30 @@ export default function ProductDetail() {
   };
 
   const handleBuy = () => {
-    if (!user.name) {
+    if (!user.id) {
       navigate("/login");
-    } else {
-      const existingCartItem = cart.find(
-        (item: any) => item.productId._id === product?._id
-      );
+      return;
+    }
 
-      if (existingCartItem) {
-        updateUserCart(
-          { quantity: existingCartItem.quantity + 1 },
-          dispatch,
-          existingCartItem._id
-        );
-      } else {
-        addCart(
-          {
-            userId: user.id,
-            productId: product?._id,
-            quantity: 1,
-          },
-          dispatch
-        );
-      }
+    const existingCartItem = cart.find(
+      (item: any) => item.productId._id === product?._id
+    );
+
+    if (existingCartItem) {
+      updateUserCart(
+        { quantity: existingCartItem.quantity + 1 },
+        dispatch,
+        existingCartItem._id
+      );
+    } else {
+      addCart(
+        {
+          userId: user.id,
+          productId: product?._id,
+          quantity: 1,
+        },
+        dispatch
+      );
     }
   };
 

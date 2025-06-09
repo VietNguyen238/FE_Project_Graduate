@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
-  color: string;
   quantities: number;
   price: number;
   newPrice: number;
@@ -17,7 +16,6 @@ interface Props {
 
 export default function CartCard({
   title,
-  color,
   newPrice,
   quantities = 1,
   price,

@@ -23,20 +23,13 @@ function Footer() {
               Điều khoản
             </a>
           </nav>{" "}
+          <p>Hộ kinh doanh Linh kiện điện tử Vshop</p>{" "}
           <p>
-            Hộ kinh doanh Linh kiện điện tử Nshop / GPĐKKD số: 41X8035261 do
-            UBND Quận Tân Phú cấp ngày 08/05/2019
+            <strong>Linh kiện điện tử VShop</strong>: 71 Nguyễn Duy, Khuê Trung,
+            Cẩm Lệ, TP. Đà Nẵng – 📞 0389 58 72 53
           </p>{" "}
           <p>
-            <strong>Điện tử NShop Tân Phú</strong>: 1 Bùi Xuân Phái, Tây Thạnh,
-            Tân Phú, TP. HCM – 📞 0902 64 39 78
-          </p>{" "}
-          <p>
-            <strong>Điện tử NShop Quận 9</strong>: 7 Trần Hưng Đạo, Hiệp Phú,
-            Quận 9, TP. HCM – 📞 093 27 23 186
-          </p>{" "}
-          <p>
-            <strong>NSHOPVN.COM © 2019 - 2021</strong>
+            <strong>VSHOPVN.COM © 2025 - 2025</strong>
           </p>
         </div>
         <div className="flex justify-center items-center gap-2">

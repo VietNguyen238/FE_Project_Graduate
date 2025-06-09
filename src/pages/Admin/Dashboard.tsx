@@ -37,17 +37,23 @@ export default function Dashboard() {
   const orders = useSelector((state: any) => state.order.orders) || [];
 
   const totalOrder = orders.reduce(
-    (total: number, order: { total: number }) => total + (order?.total || 0),
+    (total: number, order: { total: number; status: string }) =>
+      total + (order?.status === "received" ? order?.total || 0 : 0),
     0
   );
 
   const totalProductOrder = orders.reduce(
-    (total: number, order: { orders: Array<{ quantity: number }> }) =>
+    (
+      total: number,
+      order: { orders: Array<{ quantity: number }>; status: string }
+    ) =>
       total +
-      (order?.orders?.reduce(
-        (orderTotal, item) => orderTotal + (item?.quantity || 0),
-        0
-      ) || 0),
+      (order?.status === "received"
+        ? order?.orders?.reduce(
+            (orderTotal, item) => orderTotal + (item?.quantity || 0),
+            0
+          ) || 0
+        : 0),
     0
   );
 
@@ -72,7 +78,7 @@ export default function Dashboard() {
     const currentDate = new Date();
 
     orders.forEach((order: any) => {
-      if (!order?.createdAt) return;
+      if (!order?.createdAt || order?.status !== "received") return;
       const orderDate = new Date(order.createdAt);
       const monthDiff =
         (currentDate.getMonth() - orderDate.getMonth() + 12) % 12;
@@ -103,7 +109,7 @@ export default function Dashboard() {
     const currentDate = new Date();
 
     orders.forEach((order: any) => {
-      if (!order?.createdAt) return;
+      if (!order?.createdAt || order?.status !== "received") return;
       const orderDate = new Date(order.createdAt);
       const dayDiff = Math.floor(
         (currentDate.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24)

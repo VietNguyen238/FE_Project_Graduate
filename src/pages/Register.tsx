@@ -42,11 +42,12 @@ export default function Register() {
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    setErrors({});
 
     try {
       FormRegister.parse(formData);
       register(formData);
+
+      setErrors({});
       navigate("/login");
     } catch (error) {
       if (error instanceof z.ZodError) {

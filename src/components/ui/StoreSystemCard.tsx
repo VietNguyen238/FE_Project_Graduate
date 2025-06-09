@@ -5,7 +5,6 @@ interface Props {
   workingTime: string;
   address: string;
   phone1: string;
-  phone2: string;
   technicalNumber: string;
   image: string;
   map: any;
@@ -16,7 +15,6 @@ export default function StoreSystemCard({
   workingTime,
   address,
   phone1,
-  phone2,
   technicalNumber,
   image,
   map,
@@ -40,13 +38,6 @@ export default function StoreSystemCard({
             >
               {phone1}
             </a>{" "}
-            –{" "}
-            <a
-              className="text-link hover:text-title_color"
-              href={`tel:${phone2}`}
-            >
-              {phone2}
-            </a>
             <br />
             Kỹ thuật :{" "}
             <a
@@ -56,7 +47,7 @@ export default function StoreSystemCard({
               {technicalNumber}
             </a>
             <br />
-            📧 info@nshopvn.com
+            📧 info@vshopvn.com
           </p>
           <div className="w-full mt-8 flex justify-center items-center">
             <img src={image} alt={image} className="w-[320px]" />

@@ -25,6 +25,7 @@ interface CartItem {
 
 export default function Cart() {
   const cart = useSelector((state: any) => state.cart.items);
+  const user = useSelector((state: any) => state.user.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { order, setOrder } = useOrderContext();
@@ -34,6 +35,12 @@ export default function Cart() {
   useEffect(() => {
     setTitle("Giỏ hàng");
   }, [setTitle]);
+
+  useEffect(() => {
+    if (!user.id) {
+      navigate("/login");
+    }
+  }, [user.id, navigate]);
 
   const totalProduct = useMemo(() => {
     if (!cart || !Array.isArray(cart)) return 0;
@@ -61,6 +68,10 @@ export default function Cart() {
   };
 
   const handleStore = () => {
+    if (!user.id) {
+      navigate("/login");
+      return;
+    }
     navigate("/checkout/takeaway");
     setOrder({
       ...order,
@@ -92,6 +103,14 @@ export default function Cart() {
     });
   };
 
+  const handleOrder = () => {
+    if (!user.id) {
+      navigate("/login");
+      return;
+    }
+    navigate("/checkout");
+  };
+
   useEffect(() => {
     const fetchCart = async () => {
       await getCart(dispatch);
@@ -111,7 +130,6 @@ export default function Cart() {
                 title={item.productId.nameProduct}
                 image={item.productId.imageUrl}
                 newPrice={item.productId.newPrice}
-                color={item.productId.color}
                 quantities={item.quantity}
                 price={item.productId.price}
                 onQuantityChange={handleQuantityChange}
@@ -146,7 +164,7 @@ export default function Cart() {
                 title="Đặt hàng"
                 bg_color="bg-[#ee4444]"
                 text_color="text-[#ffffff]"
-                onClick={() => navigate("/checkout")}
+                onClick={handleOrder}
               />
             </div>
           </div>

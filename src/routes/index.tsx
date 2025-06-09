@@ -19,6 +19,7 @@ import Check from "../pages/Check";
 import Profile from "../pages/Profile";
 import ChangePassword from "../pages/ChangePassword";
 import Takeaway from "../pages/Takeaway";
+import Evaluate from "../pages/Evaluate";
 
 export default function AppRouter() {
   return (
@@ -180,6 +181,14 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFooter={false}>
             <Takeaway />
+          </Layout>
+        }
+      />
+      <Route
+        path="/account/review"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Evaluate />
           </Layout>
         }
       />

@@ -21,7 +21,6 @@ export default function StoreSystem() {
           title={item.title}
           address={item.address}
           phone1={item.phone1}
-          phone2={item.phone2}
           technicalNumber={item.technicalNumber}
           workingTime={item.workingTime}
           image={item.image}

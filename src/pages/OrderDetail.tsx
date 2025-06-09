@@ -68,6 +68,10 @@ export default function OrderDetail() {
     navigate("/account/orders");
   };
 
+  const handleReview = async () => {
+    navigate("/account/review");
+  };
+
   const paymentMethod = actionPaymentMethod(order.paymentMethod);
 
   return (
@@ -261,11 +265,29 @@ export default function OrderDetail() {
             disabled={order.status !== "waitForConfirmation"}
           />
           <Button
-            title="Đã nhận đơn hàng"
-            bg_color={order.status === "delivered" ? "bg-green-400" : "bg-gray"}
+            title={
+              order.status === "received"
+                ? "Đánh giá sản phẩm"
+                : "Đã nhận đơn hàng"
+            }
+            bg_color={
+              order.status === "delivered"
+                ? "bg-green-400"
+                : order.status === "received"
+                ? "bg-green-400"
+                : "bg-gray"
+            }
             text_color="text-white"
-            onClick={handleReceived}
-            disabled={order.status !== "delivered"}
+            onClick={
+              order.status === "delivered"
+                ? handleReceived
+                : order.status === "received"
+                ? handleReview
+                : undefined
+            }
+            disabled={
+              order.status !== "delivered" && order.status !== "received"
+            }
           />
         </div>
       </div>

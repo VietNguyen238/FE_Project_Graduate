@@ -25,6 +25,7 @@ export default function OrderAdmin() {
   useEffect(() => {
     getAllOrder(dispatch);
   }, [order]);
+  console.log(order);
 
   const handleStatusChange = async (orderId: string, newStatus: string) => {
     await updateUserOrder({ status: newStatus }, dispatch, orderId);

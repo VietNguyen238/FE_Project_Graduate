@@ -55,8 +55,7 @@ import im_may_in from "./../../src/assets/images/im_may_in.png";
 import im_module from "./../../src/assets/images/im_module.png";
 import im_robot from "./../../src/assets/images/im_robot.png";
 import im_ui from "./../../src/assets/images/im_ui.png";
-import im_quan_9 from "./../../src/assets/images/im_quan_9.png";
-import im_tan_phu from "./../../src/assets/images/im_tan_phu.png";
+import im_zalo from "./../../src/assets/images/im_zalo.jpg";
 import im_membership from "./../../src/assets/images/im_membership.png";
 import im_car from "./../../src/assets/images/im_car.png";
 import im_logo from "./../../src/assets/images/im_logo.png";
@@ -108,8 +107,7 @@ export const assetsSvg = {
 export const assetsImage = {
   im_protect: im_protect,
   im_logo: im_logo,
-  im_quan_9: im_quan_9,
-  im_tan_phu: im_tan_phu,
+  im_zalo: im_zalo,
   im_ui: im_ui,
   im_robot: im_robot,
   im_module: im_module,

@@ -9,6 +9,8 @@ import { formatDate } from "../components/utils/formatDate";
 import { formatPrice } from "../components/utils/format_price";
 import { getAddress } from "../services/addressService";
 import Button from "../components/ui/Button";
+import { actionPaymentMethod } from "../constants/action";
+import { ProductDetailProps } from "../types";
 
 export default function OrderDetail() {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ export default function OrderDetail() {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const order = useSelector((state: any) => state.order.orders);
-
+  console.log(order);
   useEffect(() => {
     const fetchOrder = async () => {
       if (id) {
@@ -59,6 +61,8 @@ export default function OrderDetail() {
     await updateUserOrder({ status: "received" }, dispatch, id as string);
     navigate("/account/orders");
   };
+
+  const paymentMethod = actionPaymentMethod(order.paymentMethod);
 
   return (
     <div className="flex justify-center mb-8 mt-3">
@@ -121,7 +125,7 @@ export default function OrderDetail() {
                     <td className="border border-gray-300 p-2">
                       <Link
                         to={`/product/${item.productId._id}`}
-                        className="text-blue-600 hover:underline"
+                        className="text-blue-600 hover:underline cursor-pointer"
                       >
                         {item.productId.nameProduct}
                       </Link>
@@ -139,17 +143,19 @@ export default function OrderDetail() {
                 </tbody>
               ))}
               <tfoot>
-                <tr>
-                  <th
-                    colSpan={3}
-                    className="border border-gray-300 p-2 text-left font-normal"
-                  >
-                    Phí vận chuyển:
-                  </th>
-                  <td className="border border-gray-300 p-2 text-right col-span-4">
-                    {formatPrice(order.shippingFee)}₫
-                  </td>
-                </tr>
+                {order.paymentMethod != "store" && (
+                  <tr>
+                    <th
+                      colSpan={3}
+                      className="border border-gray-300 p-2 text-left font-normal"
+                    >
+                      Phí vận chuyển:
+                    </th>
+                    <td className="border border-gray-300 p-2 text-right col-span-4">
+                      {formatPrice(order.shippingFee)}₫
+                    </td>
+                  </tr>
+                )}
                 <tr>
                   <th
                     colSpan={3}
@@ -165,20 +171,39 @@ export default function OrderDetail() {
             </table>
             <hr className="my-4" />
             <div className="space-y-2">
-              <div className="grid grid-cols-5 items-start">
-                <p className="text-title_color font-medium">Thanh toán:</p>
-                <div className="col-span-4">
-                  <p className="">Thanh toán trực tuyến</p>
-                  <a
-                    href="/checkout/processing/?order_id=163832&order_key=wc_order_63k6T5BFnFcAS"
-                    className="flex items-center text-red-600 hover:underline mt-1 text-sm"
-                  ></a>
+              {order.paymentMethod != "store" ? (
+                <div className="grid grid-cols-5 items-start">
+                  <p className="text-title_color font-medium">Thanh toán:</p>
+                  <div className="col-span-4">
+                    <p className="">{paymentMethod}</p>
+                    <a
+                      href="/checkout/processing/?order_id=163832&order_key=wc_order_63k6T5BFnFcAS"
+                      className="flex items-center text-red-600 hover:underline mt-1 text-sm"
+                    ></a>
+                  </div>
                 </div>
-              </div>
-              <div className="grid grid-cols-5">
-                <p className="text-title_color font-medium">Vận chuyển:</p>
-                <p className="col-span-4">{order.shippingMethod}</p>
-              </div>
+              ) : (
+                <div className="grid grid-cols-5 items-start">
+                  <p className="text-title_color font-medium">Ngày lấy:</p>
+                  <div className="col-span-4">
+                    <p className="">{order.pickupDate}</p>
+                  </div>
+                  <p className="text-title_color font-medium">Giờ lấy:</p>
+                  <div className="col-span-4">
+                    <p className="">{order.pickupTime}</p>
+                  </div>
+                  <p className="text-title_color font-medium">Hình thức:</p>
+                  <div className="col-span-4">
+                    <p className="">{paymentMethod}</p>
+                  </div>
+                </div>
+              )}
+              {order.paymentMethod != "store" && (
+                <div className="grid grid-cols-5">
+                  <p className="text-title_color font-medium">Vận chuyển:</p>
+                  <p className="col-span-4">{order.shippingMethod}</p>
+                </div>
+              )}
             </div>
             <hr className="my-4" />
             <h2 className="text-lg font-semibold">Thông tin khách hàng</h2>
@@ -195,16 +220,20 @@ export default function OrderDetail() {
                 <p className="text-title_color font-medium">Email:</p>
                 <p className="col-span-4">{order.userId.email}</p>
               </div>
-              <div className="grid grid-cols-5">
-                <p className="text-title_color font-medium">Thành phố:</p>
-                <p className="col-span-4">
-                  {order.ward}, {order.district}, {order.province}
-                </p>
-              </div>
-              <div className="grid grid-cols-5">
-                <p className="text-title_color font-medium">Địa chỉ:</p>
-                <p className="col-span-4">{order.address}</p>
-              </div>
+              {order.paymentMethod != "store" && (
+                <>
+                  <div className="grid grid-cols-5">
+                    <p className="text-title_color font-medium">Thành phố:</p>
+                    <p className="col-span-4">
+                      {order.ward}, {order.district}, {order.province}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-5">
+                    <p className="text-title_color font-medium">Địa chỉ:</p>
+                    <p className="col-span-4">{order.address}</p>
+                  </div>
+                </>
+              )}
             </div>
             <hr className="my-4" />
             <div className="flex justify-between items-center">

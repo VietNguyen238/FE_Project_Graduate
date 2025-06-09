@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input } from "antd";
-import InputText from "../components/ui/InputText";
-import Title from "../components/ui/Title";
-import Button from "../components/ui/Button";
-import Option from "../components/ui/Option";
-import { getCategory } from "../services/CategoryService";
-import { getAProduct } from "../services/productService";
-import { useParams } from "react-router-dom";
+import InputText from "../../components/ui/InputText";
+import Title from "../../components/ui/Title";
+import Button from "../../components/ui/Button";
+import Option from "../../components/ui/Option";
+import { getCategory } from "../../services/CategoryService";
+import { getAProduct, updateProduct } from "../../services/productService";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface FormData {
   nameProduct: string;
@@ -21,16 +21,17 @@ interface FormData {
 }
 
 const formFields = [
-  { title: "Product Name", name: "nameProduct", type: "text" },
-  { title: "Price", name: "price", type: "number" },
-  { title: "New Price", name: "newPrice", type: "number" },
-  { title: "Quantity", name: "quantity", type: "number" },
+  { title: "Tên sản phẩm", name: "nameProduct", type: "text" },
+  { title: "Giá", name: "price", type: "number" },
+  { title: "Giá mới", name: "newPrice", type: "number" },
+  { title: "Số lượng", name: "quantity", type: "number" },
 ] as const;
 
 const { TextArea } = Input;
 
 export default function UpdateProduct() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const category = useSelector((state: any) => state.category.items);
   const { id } = useParams();
 
@@ -75,7 +76,7 @@ export default function UpdateProduct() {
         .join("");
       setFormData((prev) => ({
         ...prev,
-        basicInformation: (prev.basicInformation || "") + imageHtml,
+        description: (prev.description || "") + imageHtml,
       }));
     } else {
       setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
@@ -100,7 +101,10 @@ export default function UpdateProduct() {
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
-    console.log("Form Data:", formData);
+    if (id) {
+      updateProduct(id, formData);
+      navigate("/admin/product");
+    }
   };
 
   useEffect(() => {
@@ -135,7 +139,7 @@ export default function UpdateProduct() {
         <div key={index} className="relative">
           <img
             src={url}
-            alt={`Preview ${index + 1}`}
+            alt={`Xem trước ${index + 1}`}
             className="w-full h-32 object-cover rounded-md"
           />
           <button
@@ -157,7 +161,7 @@ export default function UpdateProduct() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <div className="text-h4 text-title_color font-medium mb-2">
-              Image product:
+              Hình ảnh sản phẩm:
             </div>
             <div className="border border-zinc-400 rounded-md p-4">
               <input
@@ -188,7 +192,7 @@ export default function UpdateProduct() {
           ))}
 
           <Option
-            title="Category"
+            title="Danh mục"
             selected={formData.categoryId}
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, categoryId: e.target.value }))
@@ -197,28 +201,27 @@ export default function UpdateProduct() {
               code: cat._id,
               name: cat.name,
             }))}
-            option="Select a category"
+            option="Chọn danh mục"
             htmlFor="category"
           />
 
           <div>
             <div className="text-h4 text-title_color font-medium">
-              Description:
+              {" "}
+              Thông tin cơ bản:
             </div>
             <TextArea
-              name="description"
-              value={formData.description}
+              name="basicInformation"
+              value={formData.basicInformation}
               onChange={handleInputChange}
-              placeholder="Enter product description"
+              placeholder="Nhập thông tin cơ bản sản phẩm"
               className="w-full px-2 py-1 border border-zinc-400 rounded-md mt-2"
               rows={4}
             />
           </div>
 
           <div>
-            <div className="text-h4 text-title_color font-medium">
-              Basic Information:
-            </div>
+            <div className="text-h4 text-title_color font-medium">Mô tả:</div>
             <div className="border border-zinc-400 rounded-md p-4">
               <div className="mb-4">
                 <input
@@ -236,10 +239,10 @@ export default function UpdateProduct() {
                 {renderImagePreview(basicPreviewUrls, true)}
               </div>
               <TextArea
-                name="basicInformation"
-                value={formData.basicInformation}
+                name="description"
+                value={formData.description}
                 onChange={handleInputChange}
-                placeholder="Enter HTML content with images"
+                placeholder="Nhập nội dung HTML với hình ảnh"
                 className="w-full px-2 py-1 border border-zinc-400 rounded-md"
                 rows={6}
               />
@@ -247,7 +250,7 @@ export default function UpdateProduct() {
           </div>
 
           <Button
-            title="Update Product"
+            title="Cập nhật sản phẩm"
             bg_color="bg-blue-500"
             text_color="text-white"
             onClick={handleSubmit}

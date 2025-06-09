@@ -6,6 +6,8 @@ import Title from "../../components/ui/Title";
 import Button from "../../components/ui/Button";
 import Option from "../../components/ui/Option";
 import { getCategory } from "../../services/CategoryService";
+import { createProduct } from "../../services/productService";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   nameProduct: string;
@@ -29,6 +31,7 @@ const { TextArea } = Input;
 
 export default function AddProduct() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const category = useSelector((state: any) => state.category.items);
 
   const [formData, setFormData] = useState<FormData>({
@@ -97,7 +100,8 @@ export default function AddProduct() {
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
-    console.log("Form Data:", formData);
+    createProduct(formData);
+    navigate("/admin/product");
   };
 
   useEffect(() => {
@@ -110,7 +114,7 @@ export default function AddProduct() {
         <div key={index} className="relative">
           <img
             src={url}
-            alt={`Preview ${index + 1}`}
+            alt={`Xem trước ${index + 1}`}
             className="w-full h-32 object-cover rounded-md"
           />
           <button
@@ -178,15 +182,16 @@ export default function AddProduct() {
 
           <div>
             <div className="text-h4 text-title_color font-medium">
+              {" "}
               Thông tin cơ bản:
             </div>
             <TextArea
               name="basicInformation"
               value={formData.basicInformation}
               onChange={handleInputChange}
-              placeholder="Nhập nội dung HTML với hình ảnh"
+              placeholder="Nhập thông tin cơ bản sản phẩm"
               className="w-full px-2 py-1 border border-zinc-400 rounded-md mt-2"
-              rows={6}
+              rows={4}
             />
           </div>
 
@@ -212,9 +217,9 @@ export default function AddProduct() {
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                placeholder="Nhập mô tả sản phẩm"
+                placeholder="Nhập nội dung HTML với hình ảnh"
                 className="w-full px-2 py-1 border border-zinc-400 rounded-md"
-                rows={4}
+                rows={6}
               />
             </div>
           </div>

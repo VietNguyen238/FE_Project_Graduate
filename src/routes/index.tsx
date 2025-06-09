@@ -18,6 +18,7 @@ import Payment from "../pages/Payment";
 import Check from "../pages/Check";
 import Profile from "../pages/Profile";
 import ChangePassword from "../pages/ChangePassword";
+import Takeaway from "../pages/Takeaway";
 
 export default function AppRouter() {
   return (
@@ -171,6 +172,14 @@ export default function AppRouter() {
         element={
           <Layout isNavigate={true} isFooter={false}>
             <OrderDetail />
+          </Layout>
+        }
+      />{" "}
+      <Route
+        path="/checkout/takeaway"
+        element={
+          <Layout isNavigate={true} isFooter={false}>
+            <Takeaway />
           </Layout>
         }
       />

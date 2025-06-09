@@ -139,7 +139,9 @@ export default function ProductDetail() {
         <div className="col-span-7 text-title_color">
           <div className="text-h2 font-medium">{product.nameProduct}</div>
           <div className="text-h4 text-gray">
-            {product.categoryId?.name || "Chưa phân loại"}
+            {typeof product.categoryId === "string"
+              ? product.categoryId
+              : product.categoryId?.name || "Chưa phân loại"}
           </div>
           <div className="text-h2 font-bold text-rose-600 mt-2">
             {formatPrice(product.newPrice ? product.newPrice : product.price)}₫
@@ -169,9 +171,10 @@ export default function ProductDetail() {
               Còn {product.quantity} sản phẩm.
             </div>
           )}
-          <div className="text-h4 mt-3 whitespace-pre-wrap">
-            {product.description}
-          </div>
+          <div
+            className="text-h4 mt-3 whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: product.basicInformation }}
+          />
           <div className="text-h4 font-bold mt-6">SẢN PHẨM CÙNG LOẠI</div>
           <div className="text-h4 mt-2 flex gap-4">
             {product.color?.map(
@@ -225,7 +228,10 @@ export default function ProductDetail() {
       {isShow && <Freeship isOpen={isShow} onClose={() => setIsShow(false)} />}
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Chi tiết sản phẩm</div>
-        <div className="whitespace-pre-wrap">{product.description}</div>
+        <div
+          className="whitespace-pre-wrap"
+          dangerouslySetInnerHTML={{ __html: product.description || "" }}
+        />
       </div>
       <div className="p-4 shadow mt-4 bg-white">
         <div className="font-medium text-h3">Sản phẩm liên quan</div>
@@ -244,8 +250,8 @@ export default function ProductDetail() {
               <Review
                 key={index}
                 comment={review.comment}
-                image={review.userId.imageUrl}
-                name={review.userId.name}
+                image={review.userId?.imageUrl || ""}
+                name={review.userId?.name || "Anonymous"}
                 rate={review.rating}
                 time={review.createdAt}
                 isLast={reviews.length - 1 == index && true}

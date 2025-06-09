@@ -7,6 +7,7 @@ import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteCart, getCart, updateUserCart } from "../services/cartService";
 import { useDispatch, useSelector } from "react-redux";
+import { useOrderContext } from "../context/OrderContext";
 
 interface CartItem {
   _id: string;
@@ -25,7 +26,9 @@ export default function Cart() {
   const cart = useSelector((state: any) => state.cart.items);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { order, setOrder } = useOrderContext();
+  console.log(order);
+  console.log(cart);
   const totalProduct = useMemo(() => {
     if (!cart || !Array.isArray(cart)) return 0;
     return cart.reduce((total: number, item: CartItem) => {
@@ -49,6 +52,38 @@ export default function Cart() {
     if (cartItem) {
       await deleteCart(cartItem._id, dispatch);
     }
+  };
+
+  const handleStore = () => {
+    navigate("/checkout/takeaway");
+    setOrder({
+      ...order,
+      orders: cart.map(
+        (item: {
+          productId: {
+            _id: string;
+            nameProduct: string;
+            price: number;
+            newPrice: number;
+          };
+          quantity: number;
+        }) => ({
+          productId: item.productId._id,
+          nameProduct: item.productId.nameProduct,
+          price: item.productId.price,
+          newPrice: item.productId.newPrice,
+          quantity: item.quantity,
+        })
+      ),
+      shippingFee: 0,
+      total: totalProduct,
+      paymentMethod: "store",
+      shippingMethod: "",
+      address: "",
+      district: "",
+      ward: "",
+      province: "",
+    });
   };
 
   useEffect(() => {
@@ -99,6 +134,7 @@ export default function Cart() {
                 title="Nhận tại cửa hàng"
                 text_color="bg-[#ee8744]"
                 bg_color="text-[#ffffff]"
+                onClick={handleStore}
               />
               <Button
                 title="Đặt hàng"

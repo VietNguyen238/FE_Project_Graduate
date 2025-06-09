@@ -47,3 +47,16 @@ export const selectSort = (selectedSort: string, products: any[]) => {
   }
   return sortedProducts;
 };
+
+export const actionPaymentMethod = (paymentMethod: string) => {
+  switch (paymentMethod) {
+    case "cod":
+      return "Thanh toán khi nhận hàng";
+    case "vnpay":
+      return "Thanh toán trực tuyến";
+    case "store":
+      return "Vui lòng đến cửa hàng để thanh toán và nhận hàng";
+    default:
+      return "Chưa chọn phương thức vận chuyển";
+  }
+};

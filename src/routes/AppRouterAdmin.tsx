@@ -4,7 +4,7 @@ import Layout from "../components/layout";
 import Dashboard from "../pages/Admin/Dashboard";
 import AddProduct from "../pages/Admin/AddProduct";
 import ProductList from "../pages/Admin/ProductList";
-import UpdateProduct from "../pages/UpdateProduct";
+import UpdateProduct from "../pages/Admin/UpdateProduct";
 import OrderAdmin from "../pages/Admin/OrderAdmin";
 
 export default function AppRouterAdmin() {

@@ -1,3 +1,4 @@
+import { toastSuccess } from "../components/utils/toast";
 import { axiosDelete, axiosGet, axiosPost } from "../config/axios";
 import { updateProduct as updateProductAction } from "../store/productSlice";
 
@@ -12,20 +13,21 @@ const getAProduct = async (id: string) => {
   return product;
 };
 
-const createProduct = async (form: any, dispatch: any) => {
-  const product = await axiosPost({ link: "/product", form });
-  dispatch(updateProductAction(product));
+const createProduct = async (form: any) => {
+  const product = await axiosPost({ link: "/product/add", form });
+  toastSuccess("Thêm sản phẩm thành công!");
   return product;
 };
 
 const updateProduct = async (id: string, form: any) => {
   const product = await axiosPost({ link: `/product/${id}`, form });
+  toastSuccess("Cập nhật sản phẩm thành công!");
   return product;
 };
 
-const deleteProduct = async (id: string, dispatch: any) => {
+const deleteProduct = async (id: string) => {
   const product = await axiosDelete({ link: `/product/${id}` });
-  dispatch(updateProductAction(product));
+  toastSuccess("Xóa sản phẩm thành công!");
   return product;
 };
 

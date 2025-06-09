@@ -1,4 +1,3 @@
-import axios from "axios";
 import ButtonOrder from "../components/ui/ButtonOrder";
 import Title from "../components/ui/Title";
 import { useOrderContext } from "../context/OrderContext";
@@ -9,49 +8,76 @@ import { Link, useNavigate } from "react-router-dom";
 import { addOrder } from "../services/orderService";
 import { useDispatch } from "react-redux";
 import { actionPaymentMethod } from "../constants/action";
+import { useTitleContext } from "../context/TitleContext";
+import { UserProps } from "../types";
 
-export default function Check() {
+const getTomorrowDate = () => {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  const day = String(tomorrow.getDate()).padStart(2, "0");
+  const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+  const year = tomorrow.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
+
+export default function Takeaway() {
   const [note, setNote] = useState<string>("");
   const { order, setOrder } = useOrderContext();
-  const user = useSelector((state: any) => state.user.user);
+  const user = useSelector(
+    (state: { user: { user: UserProps } }) => state.user.user
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [pickupDate] = useState(getTomorrowDate());
+  const [pickupTime, setPickupTime] = useState("10:00");
+  const { setTitle } = useTitleContext();
 
   useEffect(() => {
-    setOrder({ ...order, note: note, status: "waitForConfirmation" });
-  }, [note]);
+    setTitle("Takeaway");
+  }, [setTitle]);
 
-  const payment = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3000/api/v1/payment/create_payment?amount=${order.total}`
-      );
-
-      window.location.href = data.paymentUrl;
-    } catch (error) {
-      console.error("Payment error:", error);
+  useEffect(() => {
+    if (order) {
+      setOrder({ ...order, note: note, status: "waitForConfirmation" });
     }
-  };
+  }, []);
 
-  const cod = async () => {
-    await addOrder(order, dispatch);
-  };
+  const handleOrder = async () => {
+    try {
+      if (order) {
+        const orderData = {
+          ...order,
+          note: note,
+          status: "waitForConfirmation",
+          pickupDate: pickupDate,
+          pickupTime: pickupTime,
+        };
 
-  const handleOrder = () => {
-    if (order.paymentMethod === "cod") {
-      cod();
-      navigate("/");
-    } else if (order.paymentMethod === "vnpay") {
-      payment();
+        await addOrder(orderData, dispatch);
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
     }
   };
 
   const paymentMethod = actionPaymentMethod(order.paymentMethod);
 
+  if (!order || !order.paymentMethod) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-center mb-8 mt-3">
       <div className="w-[600px]">
-        <Title title="Đặt hàng - Kiểm tra thông tin" />
+        <Title title="Đặt hàng nhận tại Nshop" />
         <div className="bg-white p-6 shadow">
           <div>
             <div className="text-h3 font-medium mb-4">Kiểm tra thông tin</div>
@@ -67,15 +93,35 @@ export default function Check() {
               <span className="w-36 text-h4 font-medium">Email:</span>
               <span className="ml-2 text-h4 col-span-4">{user.email}</span>
             </div>
-            <div className="mb-1 grid grid-cols-5">
-              <span className="w-36 text-h4 font-medium">Thành phố:</span>
-              <span className="ml-2 text-h4 col-span-4">
-                {order.ward}, {order.district}, {order.province}
-              </span>
+            <div className="mb-4">
+              <label className="block text-h4 font-medium mb-4 mt-6">
+                Hẹn lấy ngày
+              </label>
+              <div className="flex items-center mb-4">
+                <input
+                  type="radio"
+                  id="tomorrowPickup"
+                  name="pickupDate"
+                  value={pickupDate}
+                  checked
+                  readOnly
+                  className="mr-2"
+                />
+                <label htmlFor="tomorrowPickup" className="text-h4">
+                  Ngày mai {pickupDate}
+                </label>
+              </div>
             </div>
-            <div className="mb-4 grid grid-cols-5">
-              <span className="w-36 text-h4 font-medium">Địa chỉ:</span>
-              <span className="ml-2 text-h4 col-span-4">{order.address}</span>
+            <div className="mb-4">
+              <label className="block text-h4 font-medium mb-4 mt-6">
+                Thời gian lấy hàng
+              </label>
+              <input
+                type="time"
+                value={pickupTime}
+                onChange={(e) => setPickupTime(e.target.value)}
+                className="w-full border border-gray rounded py-1 px-2 focus:outline-blue-400"
+              />
             </div>
             <div className="text-h3 font-medium mb-4 mt-6">
               Thông tin đơn hàng
@@ -97,48 +143,38 @@ export default function Check() {
                   </th>
                 </tr>
               </thead>
-              {order.orders.map((item, index) => (
-                <tbody key={index}>
-                  <tr>
-                    <td className="p-2 border border-gray">
-                      <Link
-                        to={`/product/${item.productId}`}
-                        className="text-blue-600 hover:underline"
-                      >
-                        {item.nameProduct}
-                      </Link>
-                    </td>
-                    <td className="p-2 border border-gray text-right">
-                      {item.quantity}
-                    </td>
-                    <td className="p-2 border border-gray text-right">
-                      {formatPrice(
-                        item.newPrice == 0 ? item.price : item.newPrice
-                      )}
-                      ₫
-                    </td>
-                    <td className="p-2 border border-gray text-right">
-                      {formatPrice(
-                        (item.newPrice == 0 ? item.price : item.newPrice) *
-                          item.quantity
-                      )}
-                      ₫
-                    </td>
-                  </tr>
-                </tbody>
-              ))}
+              {order.orders &&
+                order.orders.map((item, index) => (
+                  <tbody key={index}>
+                    <tr>
+                      <td className="p-2 border border-gray">
+                        <Link
+                          to={`/product/${item.productId}`}
+                          className="text-blue-600 hover:underline"
+                        >
+                          {item.nameProduct}
+                        </Link>
+                      </td>
+                      <td className="p-2 border border-gray text-right">
+                        {item.quantity}
+                      </td>
+                      <td className="p-2 border border-gray text-right">
+                        {formatPrice(
+                          item.newPrice == 0 ? item.price : item.newPrice
+                        )}
+                        ₫
+                      </td>
+                      <td className="p-2 border border-gray text-right">
+                        {formatPrice(
+                          (item.newPrice == 0 ? item.price : item.newPrice) *
+                            item.quantity
+                        )}
+                        ₫
+                      </td>
+                    </tr>
+                  </tbody>
+                ))}
               <tfoot>
-                <tr className="bg-gray-50">
-                  <th
-                    colSpan={3}
-                    className="p-2 border border-gray text-left font-medium"
-                  >
-                    Phí vận chuyển:
-                  </th>
-                  <td className="p-2 border border-gray text-right">
-                    {formatPrice(order.shippingFee)}₫
-                  </td>
-                </tr>
                 <tr className="bg-gray-100">
                   <th
                     colSpan={3}
@@ -156,12 +192,6 @@ export default function Check() {
               <span className="w-36 text-h4 font-medium">Thanh toán:</span>
               <span className="ml-2 text-h4 col-span-4">{paymentMethod}</span>
             </div>
-            <div className="mb-2 grid grid-cols-5">
-              <span className="w-36 text-h4 font-medium">Vận chuyển:</span>
-              <span className="ml-2 text-h4 col-span-4">
-                {order.shippingMethod}
-              </span>
-            </div>
             <div className="mb-4 grid grid-cols-5">
               <span className="w-36 text-h4 font-medium">Giảm giá:</span>
               <button className="ml-2 col-span-4 w-[150px] text-h4 px-3 py-1 border border-blue-400 text-blue-500 rounded hover:bg-blue-50 text-sm">
@@ -177,11 +207,7 @@ export default function Check() {
                 placeholder="Ghi chú cho nhân viên bán hàng hoặc cho nhân viên vận chuyển"
               />
             </div>
-            <ButtonOrder
-              onClick={handleOrder}
-              isPayment={order.paymentMethod == "vnpay" && true}
-              isOrder={order.paymentMethod == "cod" && true}
-            />
+            <ButtonOrder onClick={handleOrder} isOrder={true} />
           </div>
         </div>
       </div>

@@ -77,7 +77,7 @@ export type ShippingProps = {
   shippingFee: number;
 };
 
-interface Category {
+export interface Category {
   _id: string;
   name: string;
   slug: string;
@@ -97,7 +97,7 @@ export interface ProductDetailProps {
   price: number;
   newPrice?: number;
   imageUrl: string[];
-  categoryId?: Category;
+  categoryId?: Category | string;
   quantity: number;
   description?: string;
   color?: { colorProduct: string }[];
@@ -121,8 +121,6 @@ export interface UserProps {
   name: string;
   phone: string;
   email: string;
-  dateOfBirth: string;
-  sex: string;
   image: string;
   admin: boolean;
   addressUserId: AddressProps[];

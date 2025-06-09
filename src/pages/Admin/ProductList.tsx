@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import Title from "../../components/ui/Title";
-import { getAllProduct } from "../../services/productService";
+import { getAllProduct, deleteProduct } from "../../services/productService";
 import { ProductProps } from "../../types";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { assetsImage } from "../../constants/assets";
 import { useDispatch } from "react-redux";
+import InputSearchAdmin from "../../components/ui/InputSearchAdmin";
+import { useTitleContext } from "../../context/TitleContext";
 
 export default function ProductList() {
   const navigate = useNavigate();
@@ -14,8 +16,14 @@ export default function ProductList() {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const itemsPerPage = 10;
+  const [searchTerm, setSearchTerm] = useState("");
+  const { setTitle } = useTitleContext();
 
-  const fetchProduct = async (pageNum: number) => {
+  useEffect(() => {
+    setTitle("Danh sách sản phẩm");
+  }, [setTitle]);
+
+  const fetchProduct = async (_pageNum: number) => {
     try {
       setLoading(true);
       const apiProduct = await getAllProduct(dispatch);
@@ -35,16 +43,36 @@ export default function ProductList() {
     setCurrentPage(event.selected);
   };
 
-  // Calculate pagination
   const endOffset = (currentPage + 1) * itemsPerPage;
   const startOffset = currentPage * itemsPerPage;
-  const currentItems = products.slice(startOffset, endOffset);
+  const currentItems = products
+    .filter((product) =>
+      product.nameProduct.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .slice(startOffset, endOffset);
   const pageCount = Math.ceil(products.length / itemsPerPage);
+
+  const handleDeleteProduct = async (id: string) => {
+    if (window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+      try {
+        await deleteProduct(id);
+        fetchProduct(1);
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
+    }
+  };
 
   return (
     <div>
       <Title title="Danh sách sản phẩm" />
       <div className="bg-white p-6">
+        <div className="mb-4">
+          <InputSearchAdmin
+            placeholder="Tìm kiếm theo tên sản phẩm..."
+            onSearch={setSearchTerm}
+          />
+        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -84,7 +112,7 @@ export default function ProductList() {
             <tbody className="bg-white divide-y divide-gray-200">
               {currentItems?.map((product) => (
                 <tr key={product._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3">
+                  <td className="px-2 py-1">
                     <div className="h-24 w-16 flex items-center justify-center overflow-hidden bg-gray-100 rounded">
                       <img
                         src={
@@ -97,12 +125,15 @@ export default function ProductList() {
                       />
                     </div>
                   </td>
-                  <td className="px-6 py-4">
+                  <td
+                    className="px-3 py-2 cursor-pointer"
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  >
                     <div className="text-sm font-medium text-gray-900">
                       {product.nameProduct}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 py-2 whitespace-nowrap">
                     <div className="flex items-center gap-2">
                       {product.newPrice ? (
                         <>
@@ -120,18 +151,26 @@ export default function ProductList() {
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
                     {product.quantity}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      onClick={() =>
-                        navigate(`/admin/product/update/${product._id}`)
-                      }
-                      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-                    >
-                      Cập nhật
-                    </button>
+                  <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() =>
+                          navigate(`/admin/product/update/${product._id}`)
+                        }
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                      >
+                        Cập nhật
+                      </button>
+                      <button
+                        onClick={() => handleDeleteProduct(product._id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+                      >
+                        Xóa
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

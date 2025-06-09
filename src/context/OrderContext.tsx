@@ -17,7 +17,8 @@ interface OrderContextProps {
 const OrderContext = createContext<OrderContextProps | undefined>(undefined);
 
 const initialOrderState: OrderProps = {
-  userId: {} as UserProps,
+  _id: "",
+  userId: { _id: "", name: "" },
   orders: [],
   province: "",
   district: "",
@@ -30,6 +31,7 @@ const initialOrderState: OrderProps = {
   total: 0,
   freeship: 0,
   note: "",
+  createdAt: new Date().toISOString(),
 };
 
 export function OrderProvider({ children }: { children: ReactNode }) {

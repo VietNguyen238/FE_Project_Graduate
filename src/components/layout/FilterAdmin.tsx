@@ -10,12 +10,12 @@ export default function FilterAdmin({ children }: ChildrenProps) {
 
   const menuItems = [
     { path: "/admin", label: "Bảng điều khiển" },
-    { path: "/admin/product/add", label: "Quản lý sản phẩm" },
+    { path: "/admin/product", label: "Quản lý sản phẩm" },
     { path: "/admin/orders", label: "Đơn hàng" },
   ];
   const productItems = [
-    { path: "/admin/product/add", label: "Thêm sản phẩm" },
     { path: "/admin/product", label: "Danh sách sản phẩm" },
+    { path: "/admin/product/add", label: "Thêm sản phẩm" },
   ];
 
   return (

@@ -47,12 +47,12 @@ export default function CartCard({
 
   return (
     <>
-      <div
-        className="bg-white p-4 cursor-pointer"
-        onClick={() => handelProduct(id)}
-      >
+      <div className="bg-white p-4 cursor-pointer">
         <div className="mb-3 flex justify-between items-start">
-          <div className="flex items-center justify-start gap-2">
+          <div
+            className="flex items-center justify-start gap-2"
+            onClick={() => handelProduct(id)}
+          >
             <img
               className="h-[50px] w-[50px] bg-cover"
               src={image}

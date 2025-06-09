@@ -9,21 +9,24 @@ import { env } from "./config/env.ts";
 import { Provider } from "react-redux";
 import store from "./store";
 import { OrderProvider } from "./context/OrderContext.tsx";
+import { TitleProvider } from "./context/TitleContext.tsx";
 
 const clientId = env.GG_CLIENT_ID;
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <GoogleOAuthProvider clientId={clientId}>
-      <OrderProvider>
-        <NavigateProvider>
-          <FilterProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </FilterProvider>
-        </NavigateProvider>
-      </OrderProvider>
+      <TitleProvider>
+        <OrderProvider>
+          <NavigateProvider>
+            <FilterProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </FilterProvider>
+          </NavigateProvider>
+        </OrderProvider>
+      </TitleProvider>
     </GoogleOAuthProvider>
   </Provider>
 );
